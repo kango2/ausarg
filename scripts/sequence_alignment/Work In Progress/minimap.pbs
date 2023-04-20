@@ -1,0 +1,98 @@
+#!/bin/bash
+#PBS -N minimap2_script
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=48:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -l jobfs=400GB
+#PBS -M kirat.alreja@anu.edu.au
+
+# Load required modules
+module load minimap2/2.24
+module load samtools/1.12
+
+# Usage function to display help
+usage() {
+    echo "Usage: $0 -r REFERENCE_ASSEMBLY -q QUERY_FASTQ -t SEQUENCING_TECHNOLOGY -d DIRECTORY_PATH" 1>&2
+    exit 1
+}
+
+# Parse command line options
+while getopts ":r:q:t:d:" opt; do
+  case $opt in
+    r)
+      REFERENCE_ASSEMBLY="$OPTARG"
+      ;;
+    q)
+      QUERY_FASTQ="$OPTARG"
+      ;;
+    t)
+      SEQUENCING_TECHNOLOGY="$OPTARG"
+      ;;
+    d)
+      DIRECTORY_PATH="$OPTARG"
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+# Check if all required options are provided
+if [ -z "$REFERENCE_ASSEMBLY" ] || [ -z "$QUERY_FASTQ" ] || [ -z "$SEQUENCING_TECHNOLOGY" ] || [ -z "$DIRECTORY_PATH" ]; then
+    usage
+fi
+
+# Set minimap2 preset based on sequencing technology
+case $SEQUENCING_TECHNOLOGY in
+    PacBio)
+        MINIMAP_PRESET="map-pb"
+        TECH_PATH="pacbio"
+        ;;
+    ONT)
+        MINIMAP_PRESET="map-ont"
+        TECH_PATH="ONT"
+        ;;
+    Illumina)
+        TECH_PATH="illumina"
+        echo "Enter the read type (single-end, paired-end, or singleton): "
+        read READ_TYPE
+
+        case $READ_TYPE in
+            single-end|singleton)
+                MINIMAP_PRESET="sr"
+                ;;
+            paired-end)
+                MINIMAP_PRESET="pe"
+                ;;
+            *)
+                echo "Invalid read type: $READ_TYPE" >&2
+                exit 1
+                ;;
+        esac
+        ;;
+    *)
+        echo "Invalid sequencing technology: $SEQUENCING_TECHNOLOGY" >&2
+        exit 1
+        ;;
+esac
+
+# Extract unique identifiers of the query genome and reference genome
+QUERY_IDENTIFIER=$(basename $QUERY_FASTQ | cut -d "_" -f 1)
+REFERENCE_IDENTIFIER=$(basename $REFERENCE_ASSEMBLY | sed 's/\.[^.]*$//')
+
+# Generate the folders inside the user directory path
+mkdir -p "$DIRECTORY_PATH/$TECH_PATH/$QUERY_IDENTIFIER/$REFERENCE_IDENTIFIER"
+
+# Generate the output file path (.sam)
+OUTPUT_FILEPATH="$DIRECTORY_PATH/$TECH_PATH/$QUERY_IDENTIFIER/$REFERENCE_IDENTIFIER/${QUERY_IDENTIFIER}_${REFERENCE_IDENTIFIER}.bam"
+
+# Run minimap2 and samtools
+minimap2 -ax $MINIMAP_PRESET -t $PBS_NCPUS $REFERENCE_ASSEMBLY $QUERY_FASTQ | \
+samtools view -u - | \
+samtools sort -u -m 4G -T $PBS_JOBFS/tmp -O BAM --reference $REFERENCE_ASSEMBLY --threads 48 -o $OUTPUT_FILEPATH 
+
+samtools index -c $OUTPUT_FILEPATH
