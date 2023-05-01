@@ -1,3 +1,0 @@
-/g/data/xl04/bpadata/Tiliqua_rugosa/clean/illumina/dnaseq/350743_R1.clean.fq.gz
-/g/data/xl04/bpadata/Tiliqua_rugosa/clean/illumina/dnaseq/350743_R2.clean.fq.gz
-/g/data/xl04/bpadata/Tiliqua_rugosa/clean/illumina/dnaseq/350743_singletons.fq.gz
