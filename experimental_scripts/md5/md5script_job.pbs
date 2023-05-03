@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#PBS -N md5gen
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=02:00:00
+#PBS -l mem=4GB
+#PBS -l ncpus=8
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -M kirat.alreja@anu.edu.au
+
+# Load the required modules
+module load biopython/1.79
+
+# Change to the directory containing the input file
+cd /g/data/xl04/ka6418/assembly/tiliqua_rugosa/rTilRug0.5/rTilRug0.5.asm.hp1.1
+
+# Run the script
+python3 /g/data/xl04/ka6418/sequence_alignment/script/ausarg/scripts/md5/md5script.py /g/data/xl04/ka6418/assembly/tiliqua_rugosa/rTilRug0.5/rTilRug0.5.asm.hp1.1/rTilRug0.5.asm.hp1.1.fasta

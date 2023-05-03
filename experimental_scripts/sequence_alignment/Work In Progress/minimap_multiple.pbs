@@ -1,0 +1,136 @@
+#!/bin/bash
+#PBS -N minimap_multiple
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=48:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -l jobfs=400GB
+#PBS -M kirat.alreja@anu.edu.au
+
+# Load required modules
+module load minimap2/2.24
+module load samtools/1.12
+module load bwa/0.7.17
+
+
+while getopts "r:t:d:f:" opt; do
+  case $opt in
+    r)
+      REFERENCE_ASSEMBLY="$OPTARG"
+      ;;
+    t)
+      SEQUENCING_TECHNOLOGY="$OPTARG"
+      ;;
+    d)
+      DIRECTORY_PATH="$OPTARG"
+      ;;
+    f)
+      QUERY_FASTQ_LIST_FILE="$OPTARG"
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+# Check if all required options are provided
+if [ -z "$REFERENCE_ASSEMBLY" ] || [ -z "$SEQUENCING_TECHNOLOGY" ] || [ -z "$DIRECTORY_PATH" ] || [ -z "$QUERY_FASTQ_LIST_FILE" ]; then
+    usage
+fi
+
+echo "Query FASTQs:"
+for fq in "${QUERY_FASTQS[@]}"; do
+    echo "$fq"
+done
+
+
+case $SEQUENCING_TECHNOLOGY in
+    pacbio)
+        MINIMAP_PRESET="map-pb"
+        TECH_PATH="pacbio"
+        ;;
+    ONT)
+        MINIMAP_PRESET="map-ont"
+        TECH_PATH="ONT"
+        ;;
+    illumina)
+        TECH_PATH="illumina"
+        ;;
+    *)
+        echo "Invalid sequencing technology: $SEQUENCING_TECHNOLOGY" >&2
+        exit 1
+        ;;
+esac
+
+
+# Read the list of query FASTQ files from the input file
+IFS=$'\r\n' GLOBIGNORE='*' command eval 'QUERY_FASTQS=($(cat $QUERY_FASTQ_LIST_FILE))'
+
+# Generate the output file path for the merged BAM file
+QUERY_IDENTIFIER=$(basename ${QUERY_FASTQS[0]} | cut -d "_" -f 1)
+REFERENCE_IDENTIFIER=$(basename $REFERENCE_ASSEMBLY | sed 's/\.[^.]*$//')
+MERGED_OUTPUT_FILEPATH="$DIRECTORY_PATH/$SEQUENCING_TECHNOLOGY/merged/$REFERENCE_IDENTIFIER/${QUERY_IDENTIFIER}_${REFERENCE_IDENTIFIER}_merged.bam"
+
+mkdir -p "$DIRECTORY_PATH/$SEQUENCING_TECHNOLOGY/merged/$REFERENCE_IDENTIFIER"
+
+# Initialize an array to store the individual BAM filepaths
+BAM_FILEPATHS=()
+
+# Process each query file
+for QUERY_FASTQ in "${QUERY_FASTQS[@]}"; do
+    # Extract the unique identifier of the query genome
+    QUERY_IDENTIFIER=$(basename $QUERY_FASTQ | cut -d "_" -f 1)
+
+    # Generate the folders inside the user directory path
+    mkdir -p "$DIRECTORY_PATH/$SEQUENCING_TECHNOLOGY/$QUERY_IDENTIFIER/$REFERENCE_IDENTIFIER"
+
+    # Generate the output file path (.bam)
+    OUTPUT_FILEPATH="$DIRECTORY_PATH/$SEQUENCING_TECHNOLOGY/$QUERY_IDENTIFIER/$REFERENCE_IDENTIFIER/${QUERY_IDENTIFIER}_${REFERENCE_IDENTIFIER}.bam"
+
+    if [ "$SEQUENCING_TECHNOLOGY" == "Illumina" ]; then
+        SUFFIX=$(basename $QUERY_FASTQ | awk -F'_' '{print $NF}' | cut -d. -f1)
+        case $SUFFIX in
+            R1|R2)
+                PAIR_IDENTIFIER=$(basename $QUERY_FASTQ | cut -d "_" -f 2 | sed 's/R\([12]\)/\1/')
+                LANE_IDENTIFIER=$(basename $QUERY_FASTQ | cut -d "_" -f 3)
+                if [ "$PAIR_IDENTIFIER" == "1" ]; then
+                    PAIRED_FASTQ=$(echo "$QUERY_FASTQ" | sed 's/_R1_/_R2_/')
+                    OUTPUT_FILEPATH_LANE="$DIRECTORY_PATH/$SEQUENCING_TECHNOLOGY/$QUERY_IDENTIFIER/$REFERENCE_IDENTIFIER/${QUERY_IDENTIFIER}_${REFERENCE_IDENTIFIER}_${LANE_IDENTIFIER}.bam"
+                    bwa mem -t $PBS_NCPUS $REFERENCE_ASSEMBLY $QUERY_FASTQ $PAIRED_FASTQ | \
+                    samtools view -u - | \
+                    samtools sort -u -m 4G -T $PBS_JOBFS/tmp -O BAM --reference $REFERENCE_ASSEMBLY --threads 48 -o $OUTPUT_FILEPATH_LANE
+                    BAM_FILEPATHS+=("$OUTPUT_FILEPATH_LANE")
+                else
+                    continue
+                fi
+                ;;
+            *)
+                bwa mem -t $PBS_NCPUS $REFERENCE_ASSEMBLY $QUERY_FASTQ | \
+                samtools view -u - | \
+                samtools sort -u -m 4G -T $PBS_JOBFS/tmp -O BAM --reference $REFERENCE_ASSEMBLY --threads 48 -o $OUTPUT_FILEPATH
+                ;;
+        esac
+    else
+        minimap2 -ax $MINIMAP_PRESET -t $PBS_NCPUS $REFERENCE_ASSEMBLY $QUERY_FASTQ | \
+        samtools view -u - | \
+        samtools sort -u -m 4G -T $PBS_JOBFS/tmp -O BAM --reference $REFERENCE_ASSEMBLY --threads 48 -o $OUTPUT_FILEPATH
+    fi
+
+    # Index the output BAM file
+    samtools index -c $OUTPUT_FILEPATH
+
+    # Append the output BAM filepath to the array
+    BAM_FILEPATHS+=("$OUTPUT_FILEPATH")
+done
+
+# Merge the individual BAM files
+samtools merge -f -c -p $MERGED_OUTPUT_FILEPATH "${BAM_FILEPATHS[@]}"
+
+# Index the merged BAM file
+samtools index -c $MERGED_OUTPUT_FILEPATH
+
+

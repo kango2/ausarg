@@ -1,0 +1,119 @@
+#!/bin/bash
+#PBS -N pac-ont-multiple
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=48:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -l jobfs=400GB
+#PBS -M kirat.alreja@anu.edu.au
+
+# Load required modules
+module load minimap2/2.24
+module load samtools/1.12
+
+
+while getopts "r:t:d:f:" opt; do
+  case $opt in
+    r)
+      reference_assembly="$OPTARG"
+      ;;
+    t)
+      sequencing_technology="$OPTARG"
+      ;;
+    d)
+      directory_path="$OPTARG"
+      ;;
+    f)
+      query_fastq_list_file="$OPTARG"
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+# Check if all required options are provided
+if [ -z "$reference_assembly" ] || [ -z "$sequencing_technology" ] || [ -z "$directory_path" ] || [ -z "$query_fastq_list_file" ]; then
+    usage
+fi
+
+case $sequencing_technology in
+    pacbio)
+        minimap_preset="map-pb"
+        tech_path="pacbio"
+        ;;
+    ont)
+        minimap_preset="map-ont"
+        tech_path="ont"
+        ;;
+    illumina)
+        tech_path="illumina"
+        echo "Enter the read type (single-end, paired-end, or singleton): "
+        read read_type
+
+        case $read_type in
+            single-end|singleton)
+                minimap_preset="sr"
+                ;;
+            paired-end)
+                minimap_preset="pe"
+                ;;
+            *)
+                echo "Invalid read type: $read_type" >&2
+                exit 1
+                ;;
+        esac
+        ;;
+    *)
+        echo "Invalid sequencing technology: $sequencing_technology" >&2
+        exit 1
+        ;;
+esac
+
+
+# Read the list of query FASTQ files from the input file
+IFS=$'\r\n' GLOBIGNORE='*' command eval 'query_fastqs=($(cat $query_fastq_list_file))'
+
+# Generate the output file path for the merged BAM file
+query_identifier=$(basename ${query_fastqs[0]} | cut -d "_" -f 1)
+reference_identifier=$(basename $reference_assembly | sed 's/\.[^.]*$//')
+merged_output_filepath="$directory_path/$sequencing_technology/merged/$reference_identifier/${query_identifier}_${reference_identifier}_merged.bam"
+
+mkdir -p "$directory_path/$sequencing_technology/merged/$reference_identifier"
+
+# Initialize an array to store the individual BAM filepaths
+bam_filepaths=()
+
+# Process each query file
+for query_fastq in "${query_fastqs[@]}"; do
+    # Extract the unique identifier of the query genome
+    query_identifier=$(basename $query_fastq | cut -d "_" -f 1)
+
+    # Generate the folders inside the user directory path
+    mkdir -p "$directory_path/$sequencing_technology/$query_identifier/$reference_identifier"
+
+    # Generate the output file path (.bam)
+    output_filepath="$directory_path/$sequencing_technology/$query_identifier/$reference_identifier/${query_identifier}_${reference_identifier}.bam"
+
+    # Run minimap2 and samtools
+    minimap2 -ax $minimap_preset -t $PBS_NCPUS $reference_assembly $query_fastq | \
+    samtools view -u - | \
+    samtools sort -u -m 4G -T $PBS_JOBFS/tmp -O BAM --reference $reference_assembly --threads 48 -o $output_filepath
+
+    # Index the output BAM file
+    samtools index -c $output_filepath
+
+    # Append the output BAM filepath to the array
+    bam_filepaths+=("$output_filepath")
+done
+
+# Merge the individual BAM files
+samtools merge -f -c -p $merged_output_filepath "${bam_filepaths[@]}"
+
+# Index the merged BAM file
+samtools index -c $merged_output_filepath
+
