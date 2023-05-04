@@ -62,7 +62,9 @@ def main(fasta_file):
         with open(fasta_file, 'r') as f_in:
             fasta_stats = get_fasta_stats(f_in)
 
-    output_file = assembly_id + "_stats.csv"
+    output_dir = os.path.dirname(fasta_file)
+    output_file = os.path.join(output_dir, assembly_id + "_stats.csv")
+    
     header = ['Assembly ID', 'Compressed MD5', 'Uncompressed MD5', 'Total Length', 'N50', 'N90', 'L50', 'L90', '#N per 100kbp', 'Number of Contigs', 'Largest Contig']
     row = [assembly_id, compressed_md5, uncompressed_md5] + fasta_stats
 
