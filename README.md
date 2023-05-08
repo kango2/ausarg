@@ -58,8 +58,25 @@ We are working towards creating two comprehensive metadata table for our assembl
 -   GC%: The percentage of the genome that consists of the nucleotides G and C, which can affect gene expression and function, as well as provide information on the  **quality of the sequencing and assembly processes**.
 
 #### Specialised Metrics 
-- BUSCO Evaluation 
-- Heterozygosity Score
-- Error rate estimations 
+-   **BUSCO score**  - The BUSCO score reflects the completeness and correctness of the genome assembly by comparing it to a set of conserved genes. A higher BUSCO score is preferred, indicating a more complete and accurate assembly.
+-   **Error rate estimations**  - Error rate estimations can provide an estimate of the quality of the assembly in terms of base pair accuracy and gene structure.
+-   **Heterozygosity rate**  - The heterozygosity rate can impact the quality of the assembly, especially for species with high levels of genetic diversity. High heterozygosity rates can lead to higher fragmentation and lower contiguity of the assembly.
+
+
+# Sequence Alignment 
+We have a sequence alignment script for PacBio, ONT and Illumina data which can take multiple input files, align them to raw reads, merge them and output a sorted .BAM file along with an index file. The working of the script is as follows : 
+
+![Sequence Alignment Script](https://i.ibb.co/09K5CB2/Screenshot-2023-05-08-at-4-03-34-pm.png)
+
+When multiple files are supplied, 
+
+![multiple files](https://i.ibb.co/P50yQxp/Screenshot-2023-05-08-at-4-07-00-pm.png)
+
+Lastly, the directories and names are automatically generated to maintain an organised file structure. 
+
+![file directories](https://i.ibb.co/TB4C9Mk/Screenshot-2023-05-08-at-4-09-29-pm.png)
+
+ - The reasoning behind this file structure is that every Query file will have multiple References aligned to the same, so it makes sense to have folders for those references inside the Query file name folder
+ - The file names generated represent the hierarchy of the folders the file is located in 
 
 
