@@ -1,0 +1,37 @@
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+[E::hts_open_format] Failed to open file "Options:" : Protocol not supported
+samtools view: failed to open "Options:" for reading: Protocol not supported
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: $OUTPUT_DIR/$output_bam: ambiguous redirect
+/local/spool/pbs/mom_priv/jobs/82637193.gadi-pbs.SC: line 36: /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/: Is a directory
+
+======================================================================================
+                  Resource Usage on 2023-05-05 15:21:57:
+   Job Id:             82637193.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      16.75
+   NCPUs Requested:    16                     NCPUs Used: 16              
+                                           CPU Time Used: 00:30:59        
+   Memory Requested:   64.0GB                Memory Used: 64.0GB          
+   Walltime requested: 01:00:00            Walltime Used: 00:31:24        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

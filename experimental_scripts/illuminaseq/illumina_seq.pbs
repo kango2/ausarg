@@ -1,0 +1,99 @@
+#!/bin/bash
+
+#PBS -N pac-ont-multiple
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=24:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -l jobfs=400GB
+#PBS -M kirat.alreja@anu.edu.au
+
+# Usage: qsub -F "<file_list.txt> <reference_genome.fasta>" illumina_alignment.pbs
+
+# Set default values for input arguments
+file_list=""
+reference_genome=""
+
+# Parse command line arguments
+while getopts ":f:r:" opt; do
+  case $opt in
+    f)
+      file_list="$OPTARG"
+      ;;
+    r)
+      reference_genome="$OPTARG"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Check that required arguments were provided
+if [ -z "$file_list" ] || [ -z "$reference_genome" ]; then
+  echo "Usage: $0 -f <file_list.txt> -r <reference_genome.fasta>" >&2
+  exit 1
+fi
+
+
+# Load required modules
+module load bwa
+module load samtools
+
+# Assign input arguments to variables
+file_list="$1"
+reference_genome="$2"
+
+# Set up temporary directory
+tmp_dir=$(mktemp -d)
+
+# Define the number of threads to be used
+num_threads=8
+
+# Loop over input files and process them with BWA
+for file_path in $(cat "$file_list")
+do
+    filename=$(basename "$file_path")
+    filename_no_ext="${filename%.*}"
+    filename_parts=(${filename_no_ext//_/ })
+    sample_name="${filename_parts[0]}_${filename_parts[1]}"
+
+    if [[ "$filename" == *"_singletons.fq.gz" ]]; then
+        # Handle singleton reads
+        bwa mem -t $num_threads "$reference_genome" "$file_path" | samtools view --threads $num_threads -b -f 4 - > "$tmp_dir/$sample_name.singletons.bam"
+    elif [[ "$filename" == *"_R1_"*".fq.gz" ]]; then
+        # Handle paired-end reads
+        read1="$file_path"
+        read2="${read1/R1_/R2_}"
+        bwa mem -t $num_threads "$reference_genome" "$read1" "$read2" | samtools view --threads $num_threads -b -f 1 -F 12 - > "$tmp_dir/$sample_name.paired.bam"
+    elif [[ "$filename" == *"_R1.fq.gz" ]]; then
+        # Handle single-end reads
+        bwa mem -t $num_threads "$reference_genome" "$file_path" | samtools view --threads $num_threads -b -f 0x40 -F 0x80 - > "$tmp_dir/$sample_name.single.bam"
+    fi
+done
+
+# Merge BAM files and sort/index the resulting BAM file
+if ls "$tmp_dir"/*.paired.bam 1>/dev/null 2>&1; then
+    samtools merge --threads $num_threads "$tmp_dir/all_reads.bam" "$tmp_dir"/*.singletons.bam "$tmp_dir"/*.paired.bam "$tmp_dir"/*.single.bam
+else
+    samtools merge --threads $num_threads "$tmp_dir/all_reads.bam" "$tmp_dir"/*.singletons.bam "$tmp_dir"/*.single.bam
+fi
+
+samtools sort --threads $num_threads "$tmp_dir/all_reads.bam" -o "$tmp_dir/all_reads.sorted.bam"
+samtools index --threads $num_threads "$tmp_dir/all_reads.sorted.bam"
+
+# Copy output files to the input file directory
+output_dir=$(dirname "$(cat "$file_list" | head -n 1)")
+cp "$tmp_dir/all_reads.sorted.bam" "$output_dir"
+cp "$tmp_dir/all_reads.sorted.bam.bai" "$output_dir"
+
+# Clean up temporary directory
+rm -rf "$tmp_dir"

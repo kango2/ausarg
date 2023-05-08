@@ -1,0 +1,26 @@
+#!/bin/bash
+#PBS -N pac-ont-multiple
+#PBS -P xl04
+#PBS -q express
+#PBS -l walltime=24:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -l jobfs=400GB
+#PBS -M kirat.alreja@anu.edu.au
+
+#!/bin/bash
+
+# Load the Samtools module
+module load samtools
+
+# Define the input BAM file and output file name
+input_bam=/g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1/350719_assembly.haplotype1_merged.bam
+output_file=/g/data/xl04/ka6418/ausarg/experimental_scripts/bam/my_qc_stats.txt
+
+# Use Samtools flagstat to generate QC statistics
+samtools flagstat $input_bam > $output_file
+
+# Print the output to the console
+cat $output_file
