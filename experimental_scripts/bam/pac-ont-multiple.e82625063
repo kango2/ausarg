@@ -1,5 +1,0 @@
-Loading bcftools/1.12
-  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2
-Note: none of --samples-file, --ploidy or --ploidy-file given, assuming all sites are diploid
-[warning] samtools mpileup option `u` is functional, but deprecated. Please switch to using bcftools mpileup in future.
-[mpileup] 1 samples in 1 input files
