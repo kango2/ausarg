@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -N gnuplot
+#PBS -N coveragestats
 #PBS -P xl04
 #PBS -q normal
 #PBS -l walltime=1:00:00
@@ -9,6 +9,6 @@
 #PBS -l wd
 #PBS -M kirat.alreja@anu.edu.au
 
-module load Rlib
+module load pythonlib
 
-Rscript coverageplot.R
+python3 /g/data/xl04/ka6418/ausarg/experimental_scripts/bam/coveragestats.py
