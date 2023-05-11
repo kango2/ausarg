@@ -1,3 +1,11 @@
+# New to Bioinformatics or Genome Assembly in general?
+This starters guide will cover the basics and essential steps you need to know about. Look for the table of contents and jump to the topic you'd like to learn more about. 
+# Table of Contents
+
+- [Sequence Alignment](#sequence-alignment)
+
+# Sequence Alignment 
+
 ## The Significance
 
 By definition, Sequence Alignment is the process of comparing and detecting similarities between biological sequences. In the context of our task, we are using this process between the raw sequencing data and the genome assemblies. When used as a validation technique for the assembly, we align the raw reads back to the assembly - and get alignment patterns as the result. These patterns can be further analysed and examined to obtain errors and inconsistencies in the assembly. Some of these can include :
