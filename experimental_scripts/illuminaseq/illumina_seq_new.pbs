@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -N illuminaseq
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=12:00:00
+#PBS -l mem=64GB
+#PBS -l ncpus=32
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -M kirat.alreja@anu.edu.au
+
+module load bwa 
+
+# Define the reference genome file path
+reference="/g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.hp1.fasta"
+
+# Define the input file containing the list of input files
+input_list="/g/data/xl04/ka6418/ausarg/experimental_scripts/illuminaseq/file_list.txt"
+
+# Loop through all input files listed in the input file
+while read -r file; do
+    # Check if the input file is a paired-end read file
+    if [[ $file == *_R1.clean.fq.gz ]]; then
+        # Extract the sample name from the file name
+        sample=$(basename "${file%_R1.clean.fq.gz}")
+        # Align the paired-end reads using BWA MEM
+        bwa mem -t $PBS_NCPUS"$reference" "$sample"_R1.clean.fq.gz "$sample"_R2.clean.fq.gz > "${sample}_paired.sam"
+    # Check if the input file is a singleton read file
+    elif [[ $file == *_singletons.fq.gz ]]; then
+        # Extract the sample name from the file name
+        sample=$(basename "${file%_singletons.fq.gz}")
+        # Align the singleton reads using BWA MEM
+        bwa mem -t $PBS_NCPUS "$reference" "$sample"_singletons.fq.gz > "${sample}_singleton.sam"
+    fi
+done < "$input_list"
