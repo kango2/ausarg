@@ -2,7 +2,7 @@
 #PBS -N bam_coverage
 #PBS -P xl04
 #PBS -q normal
-#PBS -l walltime=48:00:00
+#PBS -l walltime=2:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l storage=gdata/xl04+gdata/if89
@@ -11,5 +11,4 @@
 #PBS -M kirat.alreja@anu.edu.au
 
 module load samtools 
-cd /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/assembly.haplotype1
-samtools depth 350719_assembly.haplotype1_merged.bam  > coverage.txt
+samtools depth -aa -Q 0 /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/rTilRug0.5.asm/350719_rTilRug0.5.asm_merged.bam  > /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/rTilRug0.5.asm/read_alignment.depth

@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -N cov_generator
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=1:00:00
+#PBS -l mem=32GB
+#PBS -l ncpus=16
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -M kirat.alreja@anu.edu.au
+
+module load singularity
+
+singularity exec /g/data/xl04/ka6418/busco_downloads/flagger_latest.sif depth2cov \
+  -d /g/data/xl04/ka6418/sequence_alignment/bam_outputs/tiliqua_rugosa/pacbio/merged/rTilRug0.5.asm/read_alignment.depth \
+  -f /g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.fasta.fai \
+  -o rTilRug0.5.asm.cov
+
+singularity exec /g/data/xl04/ka6418/busco_downloads/flagger_latest.sif cov2counts \
+-i /g/data/xl04/ka6418/ausarg/temp/flagger/rTilRug0.5.asm.cov \
+-o /g/data/xl04/ka6418/ausarg/temp/flagger/rTilRug0.5.asm.counts 
