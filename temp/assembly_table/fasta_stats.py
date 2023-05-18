@@ -4,6 +4,7 @@ import hashlib
 import gzip
 import csv
 from Bio import SeqIO
+import subprocess
 
 def md5(file_path, is_compressed=False):
     hash_md5 = hashlib.md5()
@@ -74,6 +75,18 @@ def main(fasta_file):
         csv_writer.writerow(row)
 
     print(f"Statistics saved in {output_file}")
+
+    busco_path = os.path.join(os.path.dirname(fasta_file), "evaluation/busco")
+    if os.path.exists(busco_path):
+        # Find "short_summary" JSON file
+        json_files = [f for f in os.listdir(busco_path) if f.startswith("short_summary") and f.endswith(".json")]
+        if json_files:
+            json_file = os.path.join(busco_path, json_files[0])
+
+            # Run update_csv.py script with fasta and json file paths as arguments
+            update_csv_script = "/g/data/xl04/ka6418/ausarg/temp/assembly_table/busco_extension.py"
+            command = f"python3 {update_csv_script} --json_file {json_file} --csv_file {output_file}"
+            subprocess.run(command, shell=True)
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
