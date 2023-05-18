@@ -1,0 +1,27 @@
+#!/bin/bash
+#PBS -N rest_pipeline 
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=2:00:00
+#PBS -l mem=64GB
+#PBS -l ncpus=16
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -M kirat.alreja@anu.edu.au
+
+module load singularity
+module load bcftools
+
+
+singularity exec /g/data/xl04/ka6418/docker_images/pepper_deepvariant_r0.8.sif call_variant \
+  -b "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/read_alignment.sorted_qname.bam" \
+  -f "/g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.fasta" \
+  -o "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output.vcf" \
+  -t 16 \
+  --ont_r9_guppy5_sup \
+  --pepper_include_supplementary \
+  --dv_min_mapping_quality 0 \
+  --pepper_min_mapping_quality 0 \
+
+## Get the biallelic snps
+bcftools view -Ov -f PASS -m2 -M2 -v snps -e 'FORMAT/VAF<~{vafCutoff} | FORMAT/GQ<~{qCutoff}' "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output.vcf" > "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output_snp.vcf"

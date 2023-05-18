@@ -1,0 +1,421 @@
+[W::bam_hdr_read] EOF marker is absent. The input is probably truncated
+[bam_sort_core] merging from 160 files and 16 in-memory blocks...
+[2023-05-17 10:26:14] # Parsed reads = 100000
+[2023-05-17 10:26:24] # Parsed reads = 200000
+[2023-05-17 10:26:35] # Parsed reads = 300000
+[2023-05-17 10:26:45] # Parsed reads = 400000
+[2023-05-17 10:26:55] # Parsed reads = 500000
+[2023-05-17 10:27:07] # Parsed reads = 600000
+[2023-05-17 10:27:18] # Parsed reads = 700000
+[2023-05-17 10:27:28] # Parsed reads = 800000
+[2023-05-17 10:27:39] # Parsed reads = 900000
+[2023-05-17 10:27:50] # Parsed reads = 1000000
+[2023-05-17 10:28:00] # Parsed reads = 1100000
+[2023-05-17 10:28:10] # Parsed reads = 1200000
+[2023-05-17 10:28:21] # Parsed reads = 1300000
+[2023-05-17 10:28:33] # Parsed reads = 1400000
+[2023-05-17 10:28:43] # Parsed reads = 1500000
+[2023-05-17 10:28:56] # Parsed reads = 1600000
+[2023-05-17 10:29:07] # Parsed reads = 1700000
+[2023-05-17 10:29:17] # Parsed reads = 1800000
+[2023-05-17 10:29:35] # Parsed reads = 1900000
+[2023-05-17 10:29:46] # Parsed reads = 2000000
+[2023-05-17 10:29:56] # Parsed reads = 2100000
+[2023-05-17 10:30:07] # Parsed reads = 2200000
+[2023-05-17 10:30:17] # Parsed reads = 2300000
+[2023-05-17 10:30:27] # Parsed reads = 2400000
+[2023-05-17 10:30:38] # Parsed reads = 2500000
+[2023-05-17 10:30:48] # Parsed reads = 2600000
+[2023-05-17 10:30:59] # Parsed reads = 2700000
+[2023-05-17 10:31:09] # Parsed reads = 2800000
+[2023-05-17 10:31:19] # Parsed reads = 2900000
+[2023-05-17 10:31:29] # Parsed reads = 3000000
+[2023-05-17 10:31:39] # Parsed reads = 3100000
+[2023-05-17 10:31:50] # Parsed reads = 3200000
+[2023-05-17 10:32:00] # Parsed reads = 3300000
+[2023-05-17 10:32:10] # Parsed reads = 3400000
+[2023-05-17 10:32:21] # Parsed reads = 3500000
+[2023-05-17 10:32:33] # Parsed reads = 3600000
+[2023-05-17 10:32:44] # Parsed reads = 3700000
+[2023-05-17 10:32:54] # Parsed reads = 3800000
+[2023-05-17 10:33:07] # Parsed reads = 3900000
+[2023-05-17 10:33:17] # Parsed reads = 4000000
+[2023-05-17 10:33:41] # Parsed reads = 4100000
+[2023-05-17 10:33:51] # Parsed reads = 4200000
+[2023-05-17 10:34:01] # Parsed reads = 4300000
+[2023-05-17 10:34:12] # Parsed reads = 4400000
+[2023-05-17 10:34:22] # Parsed reads = 4500000
+[2023-05-17 10:34:32] # Parsed reads = 4600000
+[2023-05-17 10:34:42] # Parsed reads = 4700000
+[2023-05-17 10:34:52] # Parsed reads = 4800000
+[2023-05-17 10:35:03] # Parsed reads = 4900000
+[2023-05-17 10:35:12] # Parsed reads = 5000000
+[2023-05-17 10:35:22] # Parsed reads = 5100000
+[2023-05-17 10:35:33] # Parsed reads = 5200000
+[2023-05-17 10:35:43] # Parsed reads = 5300000
+[2023-05-17 10:35:53] # Parsed reads = 5400000
+[2023-05-17 10:36:03] # Parsed reads = 5500000
+[2023-05-17 10:36:13] # Parsed reads = 5600000
+[2023-05-17 10:36:23] # Parsed reads = 5700000
+[2023-05-17 10:36:48] # Parsed reads = 5800000
+[2023-05-17 10:36:58] # Parsed reads = 5900000
+[2023-05-17 10:37:08] # Parsed reads = 6000000
+[2023-05-17 10:37:19] # Parsed reads = 6100000
+[2023-05-17 10:37:29] # Parsed reads = 6200000
+[2023-05-17 10:37:41] # Parsed reads = 6300000
+[2023-05-17 10:37:51] # Parsed reads = 6400000
+[2023-05-17 10:38:01] # Parsed reads = 6500000
+[2023-05-17 10:38:11] # Parsed reads = 6600000
+[2023-05-17 10:38:20] # Total parsed reads = 6688686
+[2023-05-17 10:38:20] Writing index file /g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/read_alignment.sorted_qname.bam.secphase.index
+[2023-05-17 10:38:20] Done!
+[2023-05-17 10:38:21] [thread index = 14] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 11] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 4] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 3] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 5] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 15] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 2] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 0] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 8] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 13] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 6] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 12] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 7] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 1] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 9] Started parsing alignments
+[2023-05-17 10:38:21] [thread index = 10] Started parsing alignments
+[2023-05-17 10:41:13] [thread index = 15] #parsed alignments = 20000, #parsed reads = 9792, #modifed by phased variants = 0, #modifed_by_markers = 66
+[2023-05-17 10:41:22] [thread index = 13] #parsed alignments = 20000, #parsed reads = 10901, #modifed by phased variants = 0, #modifed_by_markers = 72
+[2023-05-17 10:41:22] [thread index = 1] #parsed alignments = 20000, #parsed reads = 10940, #modifed by phased variants = 0, #modifed_by_markers = 72
+[2023-05-17 10:41:22] [thread index = 2] #parsed alignments = 20000, #parsed reads = 11015, #modifed by phased variants = 0, #modifed_by_markers = 72
+[2023-05-17 10:41:23] [thread index = 11] #parsed alignments = 20000, #parsed reads = 11052, #modifed by phased variants = 0, #modifed_by_markers = 72
+[2023-05-17 10:41:24] [thread index = 12] #parsed alignments = 20000, #parsed reads = 10976, #modifed by phased variants = 0, #modifed_by_markers = 73
+[2023-05-17 10:41:25] [thread index = 14] #parsed alignments = 20000, #parsed reads = 11032, #modifed by phased variants = 0, #modifed_by_markers = 74
+[2023-05-17 10:41:25] [thread index = 0] #parsed alignments = 20000, #parsed reads = 10981, #modifed by phased variants = 0, #modifed_by_markers = 74
+[2023-05-17 10:41:26] [thread index = 10] #parsed alignments = 20000, #parsed reads = 10859, #modifed by phased variants = 0, #modifed_by_markers = 76
+[2023-05-17 10:41:28] [thread index = 3] #parsed alignments = 20000, #parsed reads = 11037, #modifed by phased variants = 0, #modifed_by_markers = 77
+[2023-05-17 10:41:28] [thread index = 9] #parsed alignments = 20000, #parsed reads = 10936, #modifed by phased variants = 0, #modifed_by_markers = 78
+[2023-05-17 10:41:30] [thread index = 6] #parsed alignments = 20000, #parsed reads = 11006, #modifed by phased variants = 0, #modifed_by_markers = 78
+[2023-05-17 10:41:30] [thread index = 8] #parsed alignments = 20000, #parsed reads = 10977, #modifed by phased variants = 0, #modifed_by_markers = 78
+[2023-05-17 10:41:30] [thread index = 7] #parsed alignments = 20000, #parsed reads = 10936, #modifed by phased variants = 0, #modifed_by_markers = 79
+[2023-05-17 10:41:31] [thread index = 5] #parsed alignments = 20000, #parsed reads = 10882, #modifed by phased variants = 0, #modifed_by_markers = 79
+[2023-05-17 10:41:33] [thread index = 4] #parsed alignments = 20000, #parsed reads = 10871, #modifed by phased variants = 0, #modifed_by_markers = 81
+[2023-05-17 10:43:17] [thread index = 2] #parsed alignments = 40000, #parsed reads = 21294, #modifed by phased variants = 0, #modifed_by_markers = 139
+[2023-05-17 10:43:17] [thread index = 1] #parsed alignments = 40000, #parsed reads = 21921, #modifed by phased variants = 0, #modifed_by_markers = 139
+[2023-05-17 10:43:18] [thread index = 14] #parsed alignments = 40000, #parsed reads = 21914, #modifed by phased variants = 0, #modifed_by_markers = 139
+[2023-05-17 10:43:19] [thread index = 0] #parsed alignments = 40000, #parsed reads = 21941, #modifed by phased variants = 0, #modifed_by_markers = 139
+[2023-05-17 10:43:21] [thread index = 12] #parsed alignments = 40000, #parsed reads = 21937, #modifed by phased variants = 0, #modifed_by_markers = 141
+[2023-05-17 10:43:22] [thread index = 11] #parsed alignments = 40000, #parsed reads = 22170, #modifed by phased variants = 0, #modifed_by_markers = 141
+[2023-05-17 10:43:23] [thread index = 13] #parsed alignments = 40000, #parsed reads = 21818, #modifed by phased variants = 0, #modifed_by_markers = 141
+[2023-05-17 10:43:25] [thread index = 15] #parsed alignments = 40000, #parsed reads = 20786, #modifed by phased variants = 0, #modifed_by_markers = 141
+[2023-05-17 10:43:28] [thread index = 5] #parsed alignments = 40000, #parsed reads = 21926, #modifed by phased variants = 0, #modifed_by_markers = 143
+[2023-05-17 10:43:30] [thread index = 3] #parsed alignments = 40000, #parsed reads = 21924, #modifed by phased variants = 0, #modifed_by_markers = 143
+[2023-05-17 10:43:31] [thread index = 9] #parsed alignments = 40000, #parsed reads = 21724, #modifed by phased variants = 0, #modifed_by_markers = 143
+[2023-05-17 10:43:32] [thread index = 10] #parsed alignments = 40000, #parsed reads = 21827, #modifed by phased variants = 0, #modifed_by_markers = 143
+[2023-05-17 10:43:32] [thread index = 7] #parsed alignments = 40000, #parsed reads = 21680, #modifed by phased variants = 0, #modifed_by_markers = 143
+[2023-05-17 10:43:34] [thread index = 6] #parsed alignments = 40000, #parsed reads = 21988, #modifed by phased variants = 0, #modifed_by_markers = 144
+[2023-05-17 10:43:37] [thread index = 8] #parsed alignments = 40000, #parsed reads = 22008, #modifed by phased variants = 0, #modifed_by_markers = 147
+[2023-05-17 10:43:39] [thread index = 4] #parsed alignments = 40000, #parsed reads = 21853, #modifed by phased variants = 0, #modifed_by_markers = 150
+[2023-05-17 10:45:11] [thread index = 2] #parsed alignments = 60000, #parsed reads = 32121, #modifed by phased variants = 0, #modifed_by_markers = 223
+[2023-05-17 10:45:12] [thread index = 1] #parsed alignments = 60000, #parsed reads = 32948, #modifed by phased variants = 0, #modifed_by_markers = 223
+[2023-05-17 10:45:13] [thread index = 0] #parsed alignments = 60000, #parsed reads = 32804, #modifed by phased variants = 0, #modifed_by_markers = 225
+[2023-05-17 10:45:19] [thread index = 14] #parsed alignments = 60000, #parsed reads = 33024, #modifed by phased variants = 0, #modifed_by_markers = 235
+[2023-05-17 10:45:20] [thread index = 11] #parsed alignments = 60000, #parsed reads = 33177, #modifed by phased variants = 0, #modifed_by_markers = 235
+[2023-05-17 10:45:20] [thread index = 12] #parsed alignments = 60000, #parsed reads = 32873, #modifed by phased variants = 0, #modifed_by_markers = 235
+[2023-05-17 10:45:25] [thread index = 5] #parsed alignments = 60000, #parsed reads = 32841, #modifed by phased variants = 0, #modifed_by_markers = 239
+[2023-05-17 10:45:26] [thread index = 13] #parsed alignments = 60000, #parsed reads = 32643, #modifed by phased variants = 0, #modifed_by_markers = 239
+[2023-05-17 10:45:27] [thread index = 10] #parsed alignments = 60000, #parsed reads = 32757, #modifed by phased variants = 0, #modifed_by_markers = 239
+[2023-05-17 10:45:30] [thread index = 3] #parsed alignments = 60000, #parsed reads = 32798, #modifed by phased variants = 0, #modifed_by_markers = 243
+[2023-05-17 10:45:30] [thread index = 15] #parsed alignments = 60000, #parsed reads = 31740, #modifed by phased variants = 0, #modifed_by_markers = 243
+[2023-05-17 10:45:31] [thread index = 6] #parsed alignments = 60000, #parsed reads = 32925, #modifed by phased variants = 0, #modifed_by_markers = 244
+[2023-05-17 10:45:31] [thread index = 9] #parsed alignments = 60000, #parsed reads = 32683, #modifed by phased variants = 0, #modifed_by_markers = 245
+[2023-05-17 10:45:34] [thread index = 8] #parsed alignments = 60000, #parsed reads = 32899, #modifed by phased variants = 0, #modifed_by_markers = 246
+[2023-05-17 10:45:36] [thread index = 7] #parsed alignments = 60000, #parsed reads = 32358, #modifed by phased variants = 0, #modifed_by_markers = 248
+[2023-05-17 10:45:44] [thread index = 4] #parsed alignments = 60000, #parsed reads = 32722, #modifed by phased variants = 0, #modifed_by_markers = 251
+[2023-05-17 10:47:06] [thread index = 0] #parsed alignments = 80000, #parsed reads = 43707, #modifed by phased variants = 0, #modifed_by_markers = 301
+[2023-05-17 10:47:06] [thread index = 1] #parsed alignments = 80000, #parsed reads = 43971, #modifed by phased variants = 0, #modifed_by_markers = 301
+[2023-05-17 10:47:15] [thread index = 2] #parsed alignments = 80000, #parsed reads = 42992, #modifed by phased variants = 0, #modifed_by_markers = 311
+[2023-05-17 10:47:19] [thread index = 11] #parsed alignments = 80000, #parsed reads = 44195, #modifed by phased variants = 0, #modifed_by_markers = 317
+[2023-05-17 10:47:19] [thread index = 12] #parsed alignments = 80000, #parsed reads = 43722, #modifed by phased variants = 0, #modifed_by_markers = 318
+[2023-05-17 10:47:24] [thread index = 8] #parsed alignments = 80000, #parsed reads = 43913, #modifed by phased variants = 0, #modifed_by_markers = 320
+[2023-05-17 10:47:26] [thread index = 14] #parsed alignments = 80000, #parsed reads = 43949, #modifed by phased variants = 0, #modifed_by_markers = 323
+[2023-05-17 10:47:27] [thread index = 10] #parsed alignments = 80000, #parsed reads = 43666, #modifed by phased variants = 0, #modifed_by_markers = 325
+[2023-05-17 10:47:29] [thread index = 5] #parsed alignments = 80000, #parsed reads = 43721, #modifed by phased variants = 0, #modifed_by_markers = 326
+[2023-05-17 10:47:32] [thread index = 6] #parsed alignments = 80000, #parsed reads = 43839, #modifed by phased variants = 0, #modifed_by_markers = 326
+[2023-05-17 10:47:33] [thread index = 4] #parsed alignments = 80000, #parsed reads = 43651, #modifed by phased variants = 0, #modifed_by_markers = 326
+[2023-05-17 10:47:33] [thread index = 13] #parsed alignments = 80000, #parsed reads = 43616, #modifed by phased variants = 0, #modifed_by_markers = 326
+[2023-05-17 10:47:34] [thread index = 15] #parsed alignments = 80000, #parsed reads = 42736, #modifed by phased variants = 0, #modifed_by_markers = 328
+[2023-05-17 10:47:36] [thread index = 9] #parsed alignments = 80000, #parsed reads = 43637, #modifed by phased variants = 0, #modifed_by_markers = 328
+[2023-05-17 10:47:36] [thread index = 3] #parsed alignments = 80000, #parsed reads = 43514, #modifed by phased variants = 0, #modifed_by_markers = 328
+[2023-05-17 10:47:40] [thread index = 7] #parsed alignments = 80000, #parsed reads = 43274, #modifed by phased variants = 0, #modifed_by_markers = 329
+[2023-05-17 10:49:06] [thread index = 1] #parsed alignments = 100000, #parsed reads = 54986, #modifed by phased variants = 0, #modifed_by_markers = 392
+[2023-05-17 10:49:07] [thread index = 11] #parsed alignments = 100000, #parsed reads = 55124, #modifed by phased variants = 0, #modifed_by_markers = 393
+[2023-05-17 10:49:13] [thread index = 0] #parsed alignments = 100000, #parsed reads = 54613, #modifed by phased variants = 0, #modifed_by_markers = 399
+[2023-05-17 10:49:19] [thread index = 10] #parsed alignments = 100000, #parsed reads = 54623, #modifed by phased variants = 0, #modifed_by_markers = 402
+[2023-05-17 10:49:20] [thread index = 8] #parsed alignments = 100000, #parsed reads = 54895, #modifed by phased variants = 0, #modifed_by_markers = 402
+[2023-05-17 10:49:24] [thread index = 2] #parsed alignments = 100000, #parsed reads = 53994, #modifed by phased variants = 0, #modifed_by_markers = 403
+[2023-05-17 10:49:25] [thread index = 5] #parsed alignments = 100000, #parsed reads = 54640, #modifed by phased variants = 0, #modifed_by_markers = 404
+[2023-05-17 10:49:27] [thread index = 12] #parsed alignments = 100000, #parsed reads = 54679, #modifed by phased variants = 0, #modifed_by_markers = 404
+[2023-05-17 10:49:29] [thread index = 4] #parsed alignments = 100000, #parsed reads = 54610, #modifed by phased variants = 0, #modifed_by_markers = 406
+[2023-05-17 10:49:30] [thread index = 9] #parsed alignments = 100000, #parsed reads = 53605, #modifed by phased variants = 0, #modifed_by_markers = 408
+[2023-05-17 10:49:30] [thread index = 14] #parsed alignments = 100000, #parsed reads = 54808, #modifed by phased variants = 0, #modifed_by_markers = 408
+[2023-05-17 10:49:40] [thread index = 13] #parsed alignments = 100000, #parsed reads = 54550, #modifed by phased variants = 0, #modifed_by_markers = 415
+[2023-05-17 10:49:40] [thread index = 3] #parsed alignments = 100000, #parsed reads = 54391, #modifed by phased variants = 0, #modifed_by_markers = 415
+[2023-05-17 10:49:41] [thread index = 6] #parsed alignments = 100000, #parsed reads = 54670, #modifed by phased variants = 0, #modifed_by_markers = 416
+[2023-05-17 10:49:47] [thread index = 7] #parsed alignments = 100000, #parsed reads = 54158, #modifed by phased variants = 0, #modifed_by_markers = 420
+[2023-05-17 10:49:49] [thread index = 15] #parsed alignments = 100000, #parsed reads = 53679, #modifed by phased variants = 0, #modifed_by_markers = 421
+[2023-05-17 10:50:57] [thread index = 1] #parsed alignments = 120000, #parsed reads = 65941, #modifed by phased variants = 0, #modifed_by_markers = 459
+[2023-05-17 10:50:59] [thread index = 11] #parsed alignments = 120000, #parsed reads = 66008, #modifed by phased variants = 0, #modifed_by_markers = 460
+[2023-05-17 10:51:15] [thread index = 0] #parsed alignments = 120000, #parsed reads = 65540, #modifed by phased variants = 0, #modifed_by_markers = 469
+[2023-05-17 10:51:19] [thread index = 8] #parsed alignments = 120000, #parsed reads = 65629, #modifed by phased variants = 0, #modifed_by_markers = 470
+[2023-05-17 10:51:19] [thread index = 10] #parsed alignments = 120000, #parsed reads = 65632, #modifed by phased variants = 0, #modifed_by_markers = 471
+[2023-05-17 10:51:22] [thread index = 4] #parsed alignments = 120000, #parsed reads = 65349, #modifed by phased variants = 0, #modifed_by_markers = 475
+[2023-05-17 10:51:26] [thread index = 5] #parsed alignments = 120000, #parsed reads = 65498, #modifed by phased variants = 0, #modifed_by_markers = 479
+[2023-05-17 10:51:26] [thread index = 2] #parsed alignments = 120000, #parsed reads = 64945, #modifed by phased variants = 0, #modifed_by_markers = 479
+[2023-05-17 10:51:31] [thread index = 3] #parsed alignments = 120000, #parsed reads = 64649, #modifed by phased variants = 0, #modifed_by_markers = 482
+[2023-05-17 10:51:33] [thread index = 9] #parsed alignments = 120000, #parsed reads = 64514, #modifed by phased variants = 0, #modifed_by_markers = 483
+[2023-05-17 10:51:33] [thread index = 12] #parsed alignments = 120000, #parsed reads = 65740, #modifed by phased variants = 0, #modifed_by_markers = 483
+[2023-05-17 10:51:37] [thread index = 14] #parsed alignments = 120000, #parsed reads = 65752, #modifed by phased variants = 0, #modifed_by_markers = 487
+[2023-05-17 10:51:44] [thread index = 6] #parsed alignments = 120000, #parsed reads = 65585, #modifed by phased variants = 0, #modifed_by_markers = 492
+[2023-05-17 10:51:47] [thread index = 7] #parsed alignments = 120000, #parsed reads = 65064, #modifed by phased variants = 0, #modifed_by_markers = 497
+[2023-05-17 10:51:49] [thread index = 13] #parsed alignments = 120000, #parsed reads = 65721, #modifed by phased variants = 0, #modifed_by_markers = 499
+[2023-05-17 10:51:54] [thread index = 15] #parsed alignments = 120000, #parsed reads = 64422, #modifed by phased variants = 0, #modifed_by_markers = 504
+[2023-05-17 10:52:55] [thread index = 1] #parsed alignments = 140000, #parsed reads = 76969, #modifed by phased variants = 0, #modifed_by_markers = 538
+[2023-05-17 10:52:59] [thread index = 11] #parsed alignments = 140000, #parsed reads = 76895, #modifed by phased variants = 0, #modifed_by_markers = 545
+[2023-05-17 10:53:11] [thread index = 10] #parsed alignments = 140000, #parsed reads = 76606, #modifed by phased variants = 0, #modifed_by_markers = 558
+[2023-05-17 10:53:12] [thread index = 8] #parsed alignments = 140000, #parsed reads = 76537, #modifed by phased variants = 0, #modifed_by_markers = 558
+[2023-05-17 10:53:23] [thread index = 5] #parsed alignments = 140000, #parsed reads = 76542, #modifed by phased variants = 0, #modifed_by_markers = 565
+[2023-05-17 10:53:26] [thread index = 3] #parsed alignments = 140000, #parsed reads = 75422, #modifed by phased variants = 0, #modifed_by_markers = 566
+[2023-05-17 10:53:28] [thread index = 4] #parsed alignments = 140000, #parsed reads = 76268, #modifed by phased variants = 0, #modifed_by_markers = 567
+[2023-05-17 10:53:30] [thread index = 0] #parsed alignments = 140000, #parsed reads = 76438, #modifed by phased variants = 0, #modifed_by_markers = 568
+[2023-05-17 10:53:31] [thread index = 2] #parsed alignments = 140000, #parsed reads = 75851, #modifed by phased variants = 0, #modifed_by_markers = 568
+[2023-05-17 10:53:33] [thread index = 9] #parsed alignments = 140000, #parsed reads = 75447, #modifed by phased variants = 0, #modifed_by_markers = 569
+[2023-05-17 10:53:35] [thread index = 12] #parsed alignments = 140000, #parsed reads = 76618, #modifed by phased variants = 0, #modifed_by_markers = 569
+[2023-05-17 10:53:39] [thread index = 14] #parsed alignments = 140000, #parsed reads = 76705, #modifed by phased variants = 0, #modifed_by_markers = 572
+[2023-05-17 10:53:53] [thread index = 6] #parsed alignments = 140000, #parsed reads = 76415, #modifed by phased variants = 0, #modifed_by_markers = 589
+[2023-05-17 10:53:54] [thread index = 7] #parsed alignments = 140000, #parsed reads = 76069, #modifed by phased variants = 0, #modifed_by_markers = 589
+[2023-05-17 10:53:56] [thread index = 13] #parsed alignments = 140000, #parsed reads = 76592, #modifed by phased variants = 0, #modifed_by_markers = 590
+[2023-05-17 10:54:02] [thread index = 15] #parsed alignments = 140000, #parsed reads = 75262, #modifed by phased variants = 0, #modifed_by_markers = 595
+[2023-05-17 10:54:49] [thread index = 1] #parsed alignments = 160000, #parsed reads = 87927, #modifed by phased variants = 0, #modifed_by_markers = 635
+[2023-05-17 10:55:03] [thread index = 11] #parsed alignments = 160000, #parsed reads = 87784, #modifed by phased variants = 0, #modifed_by_markers = 643
+[2023-05-17 10:55:04] [thread index = 10] #parsed alignments = 160000, #parsed reads = 87618, #modifed by phased variants = 0, #modifed_by_markers = 645
+[2023-05-17 10:55:09] [thread index = 8] #parsed alignments = 160000, #parsed reads = 87413, #modifed by phased variants = 0, #modifed_by_markers = 648
+[2023-05-17 10:55:19] [thread index = 9] #parsed alignments = 160000, #parsed reads = 86223, #modifed by phased variants = 0, #modifed_by_markers = 655
+[2023-05-17 10:55:21] [thread index = 5] #parsed alignments = 160000, #parsed reads = 87493, #modifed by phased variants = 0, #modifed_by_markers = 657
+[2023-05-17 10:55:24] [thread index = 3] #parsed alignments = 160000, #parsed reads = 86389, #modifed by phased variants = 0, #modifed_by_markers = 658
+[2023-05-17 10:55:31] [thread index = 0] #parsed alignments = 160000, #parsed reads = 87352, #modifed by phased variants = 0, #modifed_by_markers = 661
+[2023-05-17 10:55:35] [thread index = 4] #parsed alignments = 160000, #parsed reads = 86672, #modifed by phased variants = 0, #modifed_by_markers = 662
+[2023-05-17 10:55:37] [thread index = 2] #parsed alignments = 160000, #parsed reads = 86911, #modifed by phased variants = 0, #modifed_by_markers = 663
+[2023-05-17 10:55:41] [thread index = 12] #parsed alignments = 160000, #parsed reads = 87539, #modifed by phased variants = 0, #modifed_by_markers = 665
+[2023-05-17 10:55:41] [thread index = 14] #parsed alignments = 160000, #parsed reads = 87622, #modifed by phased variants = 0, #modifed_by_markers = 665
+[2023-05-17 10:55:54] [thread index = 6] #parsed alignments = 160000, #parsed reads = 87518, #modifed by phased variants = 0, #modifed_by_markers = 674
+[2023-05-17 10:55:57] [thread index = 13] #parsed alignments = 160000, #parsed reads = 87489, #modifed by phased variants = 0, #modifed_by_markers = 676
+[2023-05-17 10:55:58] [thread index = 7] #parsed alignments = 160000, #parsed reads = 86942, #modifed by phased variants = 0, #modifed_by_markers = 679
+[2023-05-17 10:56:03] [thread index = 15] #parsed alignments = 160000, #parsed reads = 86201, #modifed by phased variants = 0, #modifed_by_markers = 682
+[2023-05-17 10:56:41] [thread index = 1] #parsed alignments = 180000, #parsed reads = 97876, #modifed by phased variants = 0, #modifed_by_markers = 720
+[2023-05-17 10:57:02] [thread index = 10] #parsed alignments = 180000, #parsed reads = 98665, #modifed by phased variants = 0, #modifed_by_markers = 728
+[2023-05-17 10:57:04] [thread index = 8] #parsed alignments = 180000, #parsed reads = 98286, #modifed by phased variants = 0, #modifed_by_markers = 730
+[2023-05-17 10:57:08] [thread index = 11] #parsed alignments = 180000, #parsed reads = 98762, #modifed by phased variants = 0, #modifed_by_markers = 732
+[2023-05-17 10:57:13] [thread index = 9] #parsed alignments = 180000, #parsed reads = 97160, #modifed by phased variants = 0, #modifed_by_markers = 736
+[2023-05-17 10:57:14] [thread index = 5] #parsed alignments = 180000, #parsed reads = 98343, #modifed by phased variants = 0, #modifed_by_markers = 738
+[2023-05-17 10:57:21] [thread index = 3] #parsed alignments = 180000, #parsed reads = 97358, #modifed by phased variants = 0, #modifed_by_markers = 742
+[2023-05-17 10:57:26] [thread index = 4] #parsed alignments = 180000, #parsed reads = 96157, #modifed by phased variants = 0, #modifed_by_markers = 748
+[2023-05-17 10:57:27] [thread index = 0] #parsed alignments = 180000, #parsed reads = 98267, #modifed by phased variants = 0, #modifed_by_markers = 750
+[2023-05-17 10:57:43] [thread index = 2] #parsed alignments = 180000, #parsed reads = 97784, #modifed by phased variants = 0, #modifed_by_markers = 759
+[2023-05-17 10:57:45] [thread index = 14] #parsed alignments = 180000, #parsed reads = 98273, #modifed by phased variants = 0, #modifed_by_markers = 760
+[2023-05-17 10:57:48] [thread index = 12] #parsed alignments = 180000, #parsed reads = 98406, #modifed by phased variants = 0, #modifed_by_markers = 764
+[2023-05-17 10:57:55] [thread index = 13] #parsed alignments = 180000, #parsed reads = 98403, #modifed by phased variants = 0, #modifed_by_markers = 771
+[2023-05-17 10:57:59] [thread index = 7] #parsed alignments = 180000, #parsed reads = 97908, #modifed by phased variants = 0, #modifed_by_markers = 773
+[2023-05-17 10:58:01] [thread index = 6] #parsed alignments = 180000, #parsed reads = 98516, #modifed by phased variants = 0, #modifed_by_markers = 779
+[2023-05-17 10:58:09] [thread index = 15] #parsed alignments = 180000, #parsed reads = 97155, #modifed by phased variants = 0, #modifed_by_markers = 783
+[2023-05-17 10:58:35] [thread index = 1] #parsed alignments = 200000, #parsed reads = 108733, #modifed by phased variants = 0, #modifed_by_markers = 801
+[2023-05-17 10:58:56] [thread index = 8] #parsed alignments = 200000, #parsed reads = 109123, #modifed by phased variants = 0, #modifed_by_markers = 815
+[2023-05-17 10:59:03] [thread index = 9] #parsed alignments = 200000, #parsed reads = 108202, #modifed by phased variants = 0, #modifed_by_markers = 820
+[2023-05-17 10:59:08] [thread index = 5] #parsed alignments = 200000, #parsed reads = 109298, #modifed by phased variants = 0, #modifed_by_markers = 824
+[2023-05-17 10:59:09] [thread index = 10] #parsed alignments = 200000, #parsed reads = 109647, #modifed by phased variants = 0, #modifed_by_markers = 824
+[2023-05-17 10:59:13] [thread index = 3] #parsed alignments = 200000, #parsed reads = 108268, #modifed by phased variants = 0, #modifed_by_markers = 827
+[2023-05-17 10:59:14] [thread index = 11] #parsed alignments = 200000, #parsed reads = 109643, #modifed by phased variants = 0, #modifed_by_markers = 828
+[2023-05-17 10:59:29] [thread index = 0] #parsed alignments = 200000, #parsed reads = 109093, #modifed by phased variants = 0, #modifed_by_markers = 838
+[2023-05-17 10:59:30] [thread index = 4] #parsed alignments = 200000, #parsed reads = 107205, #modifed by phased variants = 0, #modifed_by_markers = 838
+[2023-05-17 10:59:50] [thread index = 14] #parsed alignments = 200000, #parsed reads = 109195, #modifed by phased variants = 0, #modifed_by_markers = 848
+[2023-05-17 10:59:50] [thread index = 2] #parsed alignments = 200000, #parsed reads = 108687, #modifed by phased variants = 0, #modifed_by_markers = 848
+[2023-05-17 10:59:54] [thread index = 12] #parsed alignments = 200000, #parsed reads = 109432, #modifed by phased variants = 0, #modifed_by_markers = 853
+[2023-05-17 10:59:55] [thread index = 13] #parsed alignments = 200000, #parsed reads = 109359, #modifed by phased variants = 0, #modifed_by_markers = 855
+[2023-05-17 11:00:00] [thread index = 7] #parsed alignments = 200000, #parsed reads = 108833, #modifed by phased variants = 0, #modifed_by_markers = 859
+[2023-05-17 11:00:03] [thread index = 6] #parsed alignments = 200000, #parsed reads = 109519, #modifed by phased variants = 0, #modifed_by_markers = 860
+[2023-05-17 11:00:08] [thread index = 15] #parsed alignments = 200000, #parsed reads = 108084, #modifed by phased variants = 0, #modifed_by_markers = 862
+[2023-05-17 11:00:34] [thread index = 1] #parsed alignments = 220000, #parsed reads = 119714, #modifed by phased variants = 0, #modifed_by_markers = 878
+[2023-05-17 11:00:58] [thread index = 8] #parsed alignments = 220000, #parsed reads = 120006, #modifed by phased variants = 0, #modifed_by_markers = 891
+[2023-05-17 11:01:02] [thread index = 9] #parsed alignments = 220000, #parsed reads = 119092, #modifed by phased variants = 0, #modifed_by_markers = 894
+[2023-05-17 11:01:09] [thread index = 10] #parsed alignments = 220000, #parsed reads = 120662, #modifed by phased variants = 0, #modifed_by_markers = 897
+[2023-05-17 11:01:11] [thread index = 5] #parsed alignments = 220000, #parsed reads = 120181, #modifed by phased variants = 0, #modifed_by_markers = 899
+[2023-05-17 11:01:13] [thread index = 3] #parsed alignments = 220000, #parsed reads = 119204, #modifed by phased variants = 0, #modifed_by_markers = 900
+[2023-05-17 11:01:21] [thread index = 11] #parsed alignments = 220000, #parsed reads = 120680, #modifed by phased variants = 0, #modifed_by_markers = 904
+[2023-05-17 11:01:31] [thread index = 0] #parsed alignments = 220000, #parsed reads = 120060, #modifed by phased variants = 0, #modifed_by_markers = 914
+[2023-05-17 11:01:35] [thread index = 4] #parsed alignments = 220000, #parsed reads = 118128, #modifed by phased variants = 0, #modifed_by_markers = 915
+[2023-05-17 11:01:51] [thread index = 14] #parsed alignments = 220000, #parsed reads = 120141, #modifed by phased variants = 0, #modifed_by_markers = 926
+[2023-05-17 11:01:55] [thread index = 2] #parsed alignments = 220000, #parsed reads = 119633, #modifed by phased variants = 0, #modifed_by_markers = 929
+[2023-05-17 11:01:57] [thread index = 12] #parsed alignments = 220000, #parsed reads = 120266, #modifed by phased variants = 0, #modifed_by_markers = 929
+[2023-05-17 11:02:02] [thread index = 6] #parsed alignments = 220000, #parsed reads = 120354, #modifed by phased variants = 0, #modifed_by_markers = 932
+[2023-05-17 11:02:05] [thread index = 7] #parsed alignments = 220000, #parsed reads = 119932, #modifed by phased variants = 0, #modifed_by_markers = 934
+[2023-05-17 11:02:06] [thread index = 15] #parsed alignments = 220000, #parsed reads = 119009, #modifed by phased variants = 0, #modifed_by_markers = 936
+[2023-05-17 11:02:08] [thread index = 13] #parsed alignments = 220000, #parsed reads = 120273, #modifed by phased variants = 0, #modifed_by_markers = 936
+[2023-05-17 11:02:35] [thread index = 1] #parsed alignments = 240000, #parsed reads = 130723, #modifed by phased variants = 0, #modifed_by_markers = 946
+[2023-05-17 11:02:52] [thread index = 8] #parsed alignments = 240000, #parsed reads = 130576, #modifed by phased variants = 0, #modifed_by_markers = 961
+[2023-05-17 11:03:02] [thread index = 9] #parsed alignments = 240000, #parsed reads = 130056, #modifed by phased variants = 0, #modifed_by_markers = 966
+[2023-05-17 11:03:10] [thread index = 5] #parsed alignments = 240000, #parsed reads = 131134, #modifed by phased variants = 0, #modifed_by_markers = 971
+[2023-05-17 11:03:14] [thread index = 10] #parsed alignments = 240000, #parsed reads = 131564, #modifed by phased variants = 0, #modifed_by_markers = 972
+[2023-05-17 11:03:21] [thread index = 3] #parsed alignments = 240000, #parsed reads = 130076, #modifed by phased variants = 0, #modifed_by_markers = 976
+[2023-05-17 11:03:26] [thread index = 11] #parsed alignments = 240000, #parsed reads = 131691, #modifed by phased variants = 0, #modifed_by_markers = 981
+[2023-05-17 11:03:30] [thread index = 4] #parsed alignments = 240000, #parsed reads = 129095, #modifed by phased variants = 0, #modifed_by_markers = 984
+[2023-05-17 11:03:30] [thread index = 0] #parsed alignments = 240000, #parsed reads = 130986, #modifed by phased variants = 0, #modifed_by_markers = 984
+[2023-05-17 11:03:50] [thread index = 14] #parsed alignments = 240000, #parsed reads = 131182, #modifed by phased variants = 0, #modifed_by_markers = 997
+[2023-05-17 11:03:53] [thread index = 12] #parsed alignments = 240000, #parsed reads = 131265, #modifed by phased variants = 0, #modifed_by_markers = 1001
+[2023-05-17 11:03:59] [thread index = 2] #parsed alignments = 240000, #parsed reads = 130581, #modifed by phased variants = 0, #modifed_by_markers = 1004
+[2023-05-17 11:04:01] [thread index = 6] #parsed alignments = 240000, #parsed reads = 131374, #modifed by phased variants = 0, #modifed_by_markers = 1007
+[2023-05-17 11:04:02] [thread index = 15] #parsed alignments = 240000, #parsed reads = 129788, #modifed by phased variants = 0, #modifed_by_markers = 1007
+[2023-05-17 11:04:04] [thread index = 7] #parsed alignments = 240000, #parsed reads = 130746, #modifed by phased variants = 0, #modifed_by_markers = 1007
+[2023-05-17 11:04:10] [thread index = 13] #parsed alignments = 240000, #parsed reads = 131228, #modifed by phased variants = 0, #modifed_by_markers = 1014
+[2023-05-17 11:04:33] [thread index = 1] #parsed alignments = 260000, #parsed reads = 141701, #modifed by phased variants = 0, #modifed_by_markers = 1027
+[2023-05-17 11:04:51] [thread index = 8] #parsed alignments = 260000, #parsed reads = 141422, #modifed by phased variants = 0, #modifed_by_markers = 1031
+[2023-05-17 11:04:58] [thread index = 9] #parsed alignments = 260000, #parsed reads = 139674, #modifed by phased variants = 0, #modifed_by_markers = 1035
+[2023-05-17 11:05:09] [thread index = 5] #parsed alignments = 260000, #parsed reads = 142131, #modifed by phased variants = 0, #modifed_by_markers = 1049
+[2023-05-17 11:05:10] [thread index = 10] #parsed alignments = 260000, #parsed reads = 142518, #modifed by phased variants = 0, #modifed_by_markers = 1050
+[2023-05-17 11:05:23] [thread index = 11] #parsed alignments = 260000, #parsed reads = 142649, #modifed by phased variants = 0, #modifed_by_markers = 1064
+[2023-05-17 11:05:25] [thread index = 3] #parsed alignments = 260000, #parsed reads = 140920, #modifed by phased variants = 0, #modifed_by_markers = 1067
+[2023-05-17 11:05:26] [thread index = 0] #parsed alignments = 260000, #parsed reads = 141872, #modifed by phased variants = 0, #modifed_by_markers = 1068
+[2023-05-17 11:05:27] [thread index = 4] #parsed alignments = 260000, #parsed reads = 140078, #modifed by phased variants = 0, #modifed_by_markers = 1068
+[2023-05-17 11:05:45] [thread index = 12] #parsed alignments = 260000, #parsed reads = 142271, #modifed by phased variants = 0, #modifed_by_markers = 1082
+[2023-05-17 11:05:50] [thread index = 14] #parsed alignments = 260000, #parsed reads = 142251, #modifed by phased variants = 0, #modifed_by_markers = 1086
+[2023-05-17 11:05:53] [thread index = 2] #parsed alignments = 260000, #parsed reads = 141458, #modifed by phased variants = 0, #modifed_by_markers = 1087
+[2023-05-17 11:05:56] [thread index = 15] #parsed alignments = 260000, #parsed reads = 140681, #modifed by phased variants = 0, #modifed_by_markers = 1089
+[2023-05-17 11:06:00] [thread index = 7] #parsed alignments = 260000, #parsed reads = 141684, #modifed by phased variants = 0, #modifed_by_markers = 1089
+[2023-05-17 11:06:06] [thread index = 6] #parsed alignments = 260000, #parsed reads = 142293, #modifed by phased variants = 0, #modifed_by_markers = 1091
+[2023-05-17 11:06:07] [thread index = 13] #parsed alignments = 260000, #parsed reads = 142019, #modifed by phased variants = 0, #modifed_by_markers = 1091
+[2023-05-17 11:06:31] [thread index = 1] #parsed alignments = 280000, #parsed reads = 152714, #modifed by phased variants = 0, #modifed_by_markers = 1103
+[2023-05-17 11:06:51] [thread index = 8] #parsed alignments = 280000, #parsed reads = 152325, #modifed by phased variants = 0, #modifed_by_markers = 1114
+[2023-05-17 11:06:59] [thread index = 9] #parsed alignments = 280000, #parsed reads = 150627, #modifed by phased variants = 0, #modifed_by_markers = 1119
+[2023-05-17 11:07:04] [thread index = 5] #parsed alignments = 280000, #parsed reads = 153100, #modifed by phased variants = 0, #modifed_by_markers = 1121
+[2023-05-17 11:07:08] [thread index = 10] #parsed alignments = 280000, #parsed reads = 153294, #modifed by phased variants = 0, #modifed_by_markers = 1124
+[2023-05-17 11:07:19] [thread index = 11] #parsed alignments = 280000, #parsed reads = 153660, #modifed by phased variants = 0, #modifed_by_markers = 1128
+[2023-05-17 11:07:21] [thread index = 0] #parsed alignments = 280000, #parsed reads = 152797, #modifed by phased variants = 0, #modifed_by_markers = 1129
+[2023-05-17 11:07:24] [thread index = 4] #parsed alignments = 280000, #parsed reads = 150929, #modifed by phased variants = 0, #modifed_by_markers = 1129
+[2023-05-17 11:07:25] [thread index = 3] #parsed alignments = 280000, #parsed reads = 151811, #modifed by phased variants = 0, #modifed_by_markers = 1130
+[2023-05-17 11:07:44] [thread index = 12] #parsed alignments = 280000, #parsed reads = 153260, #modifed by phased variants = 0, #modifed_by_markers = 1145
+[2023-05-17 11:07:48] [thread index = 2] #parsed alignments = 280000, #parsed reads = 152396, #modifed by phased variants = 0, #modifed_by_markers = 1148
+[2023-05-17 11:07:49] [thread index = 14] #parsed alignments = 280000, #parsed reads = 153126, #modifed by phased variants = 0, #modifed_by_markers = 1149
+[2023-05-17 11:07:52] [thread index = 15] #parsed alignments = 280000, #parsed reads = 151585, #modifed by phased variants = 0, #modifed_by_markers = 1151
+[2023-05-17 11:07:56] [thread index = 13] #parsed alignments = 280000, #parsed reads = 151330, #modifed by phased variants = 0, #modifed_by_markers = 1152
+[2023-05-17 11:07:58] [thread index = 7] #parsed alignments = 280000, #parsed reads = 152648, #modifed by phased variants = 0, #modifed_by_markers = 1153
+[2023-05-17 11:08:04] [thread index = 6] #parsed alignments = 280000, #parsed reads = 153239, #modifed by phased variants = 0, #modifed_by_markers = 1153
+[2023-05-17 11:08:31] [thread index = 1] #parsed alignments = 300000, #parsed reads = 163854, #modifed by phased variants = 0, #modifed_by_markers = 1178
+[2023-05-17 11:08:46] [thread index = 8] #parsed alignments = 300000, #parsed reads = 163296, #modifed by phased variants = 0, #modifed_by_markers = 1185
+[2023-05-17 11:08:51] [thread index = 9] #parsed alignments = 300000, #parsed reads = 161476, #modifed by phased variants = 0, #modifed_by_markers = 1187
+[2023-05-17 11:08:58] [thread index = 5] #parsed alignments = 300000, #parsed reads = 164002, #modifed by phased variants = 0, #modifed_by_markers = 1189
+[2023-05-17 11:09:09] [thread index = 11] #parsed alignments = 300000, #parsed reads = 164326, #modifed by phased variants = 0, #modifed_by_markers = 1195
+[2023-05-17 11:09:13] [thread index = 10] #parsed alignments = 300000, #parsed reads = 164238, #modifed by phased variants = 0, #modifed_by_markers = 1198
+[2023-05-17 11:09:19] [thread index = 3] #parsed alignments = 300000, #parsed reads = 162016, #modifed by phased variants = 0, #modifed_by_markers = 1203
+[2023-05-17 11:09:21] [thread index = 0] #parsed alignments = 300000, #parsed reads = 163683, #modifed by phased variants = 0, #modifed_by_markers = 1203
+[2023-05-17 11:09:28] [thread index = 4] #parsed alignments = 300000, #parsed reads = 161860, #modifed by phased variants = 0, #modifed_by_markers = 1211
+[2023-05-17 11:09:41] [thread index = 12] #parsed alignments = 300000, #parsed reads = 164266, #modifed by phased variants = 0, #modifed_by_markers = 1220
+[2023-05-17 11:09:44] [thread index = 2] #parsed alignments = 300000, #parsed reads = 163302, #modifed by phased variants = 0, #modifed_by_markers = 1222
+[2023-05-17 11:09:50] [thread index = 7] #parsed alignments = 300000, #parsed reads = 163639, #modifed by phased variants = 0, #modifed_by_markers = 1227
+[2023-05-17 11:09:51] [thread index = 14] #parsed alignments = 300000, #parsed reads = 164081, #modifed by phased variants = 0, #modifed_by_markers = 1227
+[2023-05-17 11:09:51] [thread index = 13] #parsed alignments = 300000, #parsed reads = 161482, #modifed by phased variants = 0, #modifed_by_markers = 1227
+[2023-05-17 11:09:53] [thread index = 15] #parsed alignments = 300000, #parsed reads = 162527, #modifed by phased variants = 0, #modifed_by_markers = 1228
+[2023-05-17 11:10:05] [thread index = 6] #parsed alignments = 300000, #parsed reads = 164204, #modifed by phased variants = 0, #modifed_by_markers = 1232
+[2023-05-17 11:10:26] [thread index = 1] #parsed alignments = 320000, #parsed reads = 174836, #modifed by phased variants = 0, #modifed_by_markers = 1249
+[2023-05-17 11:10:44] [thread index = 8] #parsed alignments = 320000, #parsed reads = 174220, #modifed by phased variants = 0, #modifed_by_markers = 1258
+[2023-05-17 11:10:50] [thread index = 9] #parsed alignments = 320000, #parsed reads = 172527, #modifed by phased variants = 0, #modifed_by_markers = 1261
+[2023-05-17 11:10:56] [thread index = 5] #parsed alignments = 320000, #parsed reads = 174962, #modifed by phased variants = 0, #modifed_by_markers = 1264
+[2023-05-17 11:11:03] [thread index = 11] #parsed alignments = 320000, #parsed reads = 175243, #modifed by phased variants = 0, #modifed_by_markers = 1268
+[2023-05-17 11:11:12] [thread index = 10] #parsed alignments = 320000, #parsed reads = 175111, #modifed by phased variants = 0, #modifed_by_markers = 1271
+[2023-05-17 11:11:16] [thread index = 3] #parsed alignments = 320000, #parsed reads = 172866, #modifed by phased variants = 0, #modifed_by_markers = 1274
+[2023-05-17 11:11:18] [thread index = 0] #parsed alignments = 320000, #parsed reads = 174573, #modifed by phased variants = 0, #modifed_by_markers = 1274
+[2023-05-17 11:11:28] [thread index = 4] #parsed alignments = 320000, #parsed reads = 172887, #modifed by phased variants = 0, #modifed_by_markers = 1283
+[2023-05-17 11:11:37] [thread index = 12] #parsed alignments = 320000, #parsed reads = 175336, #modifed by phased variants = 0, #modifed_by_markers = 1289
+[2023-05-17 11:11:45] [thread index = 2] #parsed alignments = 320000, #parsed reads = 174204, #modifed by phased variants = 0, #modifed_by_markers = 1294
+[2023-05-17 11:11:51] [thread index = 14] #parsed alignments = 320000, #parsed reads = 175075, #modifed by phased variants = 0, #modifed_by_markers = 1298
+[2023-05-17 11:11:53] [thread index = 7] #parsed alignments = 320000, #parsed reads = 174685, #modifed by phased variants = 0, #modifed_by_markers = 1300
+[2023-05-17 11:11:53] [thread index = 15] #parsed alignments = 320000, #parsed reads = 173486, #modifed by phased variants = 0, #modifed_by_markers = 1300
+[2023-05-17 11:11:56] [thread index = 13] #parsed alignments = 320000, #parsed reads = 172382, #modifed by phased variants = 0, #modifed_by_markers = 1302
+[2023-05-17 11:12:03] [thread index = 6] #parsed alignments = 320000, #parsed reads = 175068, #modifed by phased variants = 0, #modifed_by_markers = 1306
+[2023-05-17 11:12:24] [thread index = 1] #parsed alignments = 340000, #parsed reads = 185778, #modifed by phased variants = 0, #modifed_by_markers = 1314
+[2023-05-17 11:12:45] [thread index = 8] #parsed alignments = 340000, #parsed reads = 185224, #modifed by phased variants = 0, #modifed_by_markers = 1326
+[2023-05-17 11:12:46] [thread index = 9] #parsed alignments = 340000, #parsed reads = 183475, #modifed by phased variants = 0, #modifed_by_markers = 1327
+[2023-05-17 11:12:55] [thread index = 5] #parsed alignments = 340000, #parsed reads = 185657, #modifed by phased variants = 0, #modifed_by_markers = 1337
+[2023-05-17 11:13:04] [thread index = 11] #parsed alignments = 340000, #parsed reads = 186133, #modifed by phased variants = 0, #modifed_by_markers = 1341
+[2023-05-17 11:13:09] [thread index = 10] #parsed alignments = 340000, #parsed reads = 186020, #modifed by phased variants = 0, #modifed_by_markers = 1348
+[2023-05-17 11:13:11] [thread index = 3] #parsed alignments = 340000, #parsed reads = 183801, #modifed by phased variants = 0, #modifed_by_markers = 1350
+[2023-05-17 11:13:21] [thread index = 0] #parsed alignments = 340000, #parsed reads = 185561, #modifed by phased variants = 0, #modifed_by_markers = 1351
+[2023-05-17 11:13:29] [thread index = 4] #parsed alignments = 340000, #parsed reads = 183745, #modifed by phased variants = 0, #modifed_by_markers = 1357
+[2023-05-17 11:13:35] [thread index = 12] #parsed alignments = 340000, #parsed reads = 186151, #modifed by phased variants = 0, #modifed_by_markers = 1364
+[2023-05-17 11:13:47] [thread index = 2] #parsed alignments = 340000, #parsed reads = 185154, #modifed by phased variants = 0, #modifed_by_markers = 1385
+[2023-05-17 11:13:52] [thread index = 7] #parsed alignments = 340000, #parsed reads = 185625, #modifed by phased variants = 0, #modifed_by_markers = 1388
+[2023-05-17 11:13:53] [thread index = 15] #parsed alignments = 340000, #parsed reads = 184328, #modifed by phased variants = 0, #modifed_by_markers = 1389
+[2023-05-17 11:13:54] [thread index = 14] #parsed alignments = 340000, #parsed reads = 186043, #modifed by phased variants = 0, #modifed_by_markers = 1390
+[2023-05-17 11:13:59] [thread index = 6] #parsed alignments = 340000, #parsed reads = 186024, #modifed by phased variants = 0, #modifed_by_markers = 1392
+[2023-05-17 11:14:03] [thread index = 13] #parsed alignments = 340000, #parsed reads = 183391, #modifed by phased variants = 0, #modifed_by_markers = 1395
+[2023-05-17 11:14:35] [thread index = 1] #parsed alignments = 360000, #parsed reads = 196778, #modifed by phased variants = 0, #modifed_by_markers = 1419
+[2023-05-17 11:14:40] [thread index = 9] #parsed alignments = 360000, #parsed reads = 194385, #modifed by phased variants = 0, #modifed_by_markers = 1423
+[2023-05-17 11:14:50] [thread index = 8] #parsed alignments = 360000, #parsed reads = 196122, #modifed by phased variants = 0, #modifed_by_markers = 1434
+[2023-05-17 11:15:00] [thread index = 5] #parsed alignments = 360000, #parsed reads = 196641, #modifed by phased variants = 0, #modifed_by_markers = 1436
+[2023-05-17 11:15:04] [thread index = 11] #parsed alignments = 360000, #parsed reads = 197037, #modifed by phased variants = 0, #modifed_by_markers = 1441
+[2023-05-17 11:15:09] [thread index = 3] #parsed alignments = 360000, #parsed reads = 194757, #modifed by phased variants = 0, #modifed_by_markers = 1444
+[2023-05-17 11:15:13] [thread index = 10] #parsed alignments = 360000, #parsed reads = 196909, #modifed by phased variants = 0, #modifed_by_markers = 1446
+[2023-05-17 11:15:20] [thread index = 0] #parsed alignments = 360000, #parsed reads = 196524, #modifed by phased variants = 0, #modifed_by_markers = 1449
+[2023-05-17 11:15:30] [thread index = 4] #parsed alignments = 360000, #parsed reads = 194734, #modifed by phased variants = 0, #modifed_by_markers = 1456
+[2023-05-17 11:15:36] [thread index = 12] #parsed alignments = 360000, #parsed reads = 197142, #modifed by phased variants = 0, #modifed_by_markers = 1459
+[2023-05-17 11:15:49] [thread index = 2] #parsed alignments = 360000, #parsed reads = 196068, #modifed by phased variants = 0, #modifed_by_markers = 1468
+[2023-05-17 11:15:57] [thread index = 6] #parsed alignments = 360000, #parsed reads = 196995, #modifed by phased variants = 0, #modifed_by_markers = 1472
+[2023-05-17 11:16:00] [thread index = 7] #parsed alignments = 360000, #parsed reads = 196532, #modifed by phased variants = 0, #modifed_by_markers = 1475
+[2023-05-17 11:16:00] [thread index = 15] #parsed alignments = 360000, #parsed reads = 195342, #modifed by phased variants = 0, #modifed_by_markers = 1475
+[2023-05-17 11:16:02] [thread index = 14] #parsed alignments = 360000, #parsed reads = 196987, #modifed by phased variants = 0, #modifed_by_markers = 1475
+[2023-05-17 11:16:03] [thread index = 13] #parsed alignments = 360000, #parsed reads = 194323, #modifed by phased variants = 0, #modifed_by_markers = 1477
+[2023-05-17 11:16:34] [thread index = 1] #parsed alignments = 380000, #parsed reads = 207694, #modifed by phased variants = 0, #modifed_by_markers = 1492
+[2023-05-17 11:16:36] [thread index = 9] #parsed alignments = 380000, #parsed reads = 205211, #modifed by phased variants = 0, #modifed_by_markers = 1493
+[2023-05-17 11:16:49] [thread index = 8] #parsed alignments = 380000, #parsed reads = 206900, #modifed by phased variants = 0, #modifed_by_markers = 1500
+[2023-05-17 11:16:55] [thread index = 5] #parsed alignments = 380000, #parsed reads = 207528, #modifed by phased variants = 0, #modifed_by_markers = 1504
+[2023-05-17 11:17:05] [thread index = 11] #parsed alignments = 380000, #parsed reads = 208009, #modifed by phased variants = 0, #modifed_by_markers = 1514
+[2023-05-17 11:17:07] [thread index = 3] #parsed alignments = 380000, #parsed reads = 205655, #modifed by phased variants = 0, #modifed_by_markers = 1514
+[2023-05-17 11:17:11] [thread index = 10] #parsed alignments = 380000, #parsed reads = 207795, #modifed by phased variants = 0, #modifed_by_markers = 1519
+[2023-05-17 11:17:25] [thread index = 0] #parsed alignments = 380000, #parsed reads = 207546, #modifed by phased variants = 0, #modifed_by_markers = 1525
+[2023-05-17 11:17:31] [thread index = 4] #parsed alignments = 380000, #parsed reads = 205554, #modifed by phased variants = 0, #modifed_by_markers = 1531
+[2023-05-17 11:17:40] [thread index = 12] #parsed alignments = 380000, #parsed reads = 207992, #modifed by phased variants = 0, #modifed_by_markers = 1537
+[2023-05-17 11:17:44] [thread index = 2] #parsed alignments = 380000, #parsed reads = 206986, #modifed by phased variants = 0, #modifed_by_markers = 1541
+[2023-05-17 11:17:58] [thread index = 6] #parsed alignments = 380000, #parsed reads = 207960, #modifed by phased variants = 0, #modifed_by_markers = 1548
+[2023-05-17 11:17:59] [thread index = 14] #parsed alignments = 380000, #parsed reads = 208006, #modifed by phased variants = 0, #modifed_by_markers = 1548
+[2023-05-17 11:18:00] [thread index = 13] #parsed alignments = 380000, #parsed reads = 205249, #modifed by phased variants = 0, #modifed_by_markers = 1549
+[2023-05-17 11:18:02] [thread index = 7] #parsed alignments = 380000, #parsed reads = 207425, #modifed by phased variants = 0, #modifed_by_markers = 1550
+[2023-05-17 11:18:04] [thread index = 15] #parsed alignments = 380000, #parsed reads = 206349, #modifed by phased variants = 0, #modifed_by_markers = 1551
+[2023-05-17 11:18:39] [thread index = 9] #parsed alignments = 400000, #parsed reads = 216140, #modifed by phased variants = 0, #modifed_by_markers = 1575
+[2023-05-17 11:18:40] [thread index = 1] #parsed alignments = 400000, #parsed reads = 218644, #modifed by phased variants = 0, #modifed_by_markers = 1575
+[2023-05-17 11:18:50] [thread index = 8] #parsed alignments = 400000, #parsed reads = 218036, #modifed by phased variants = 0, #modifed_by_markers = 1581
+[2023-05-17 11:18:59] [thread index = 5] #parsed alignments = 400000, #parsed reads = 218469, #modifed by phased variants = 0, #modifed_by_markers = 1586
+[2023-05-17 11:19:03] [thread index = 3] #parsed alignments = 400000, #parsed reads = 216638, #modifed by phased variants = 0, #modifed_by_markers = 1590
+[2023-05-17 11:19:07] [thread index = 11] #parsed alignments = 400000, #parsed reads = 218909, #modifed by phased variants = 0, #modifed_by_markers = 1596
+[2023-05-17 11:19:11] [thread index = 10] #parsed alignments = 400000, #parsed reads = 218777, #modifed by phased variants = 0, #modifed_by_markers = 1601
+[2023-05-17 11:19:22] [thread index = 0] #parsed alignments = 400000, #parsed reads = 218434, #modifed by phased variants = 0, #modifed_by_markers = 1609
+[2023-05-17 11:19:29] [thread index = 4] #parsed alignments = 400000, #parsed reads = 216597, #modifed by phased variants = 0, #modifed_by_markers = 1617
+[2023-05-17 11:19:42] [thread index = 12] #parsed alignments = 400000, #parsed reads = 218894, #modifed by phased variants = 0, #modifed_by_markers = 1622
+[2023-05-17 11:19:47] [thread index = 2] #parsed alignments = 400000, #parsed reads = 217879, #modifed by phased variants = 0, #modifed_by_markers = 1624
+[2023-05-17 11:19:59] [thread index = 13] #parsed alignments = 400000, #parsed reads = 216206, #modifed by phased variants = 0, #modifed_by_markers = 1637
+[2023-05-17 11:19:59] [thread index = 14] #parsed alignments = 400000, #parsed reads = 218963, #modifed by phased variants = 0, #modifed_by_markers = 1638
+[2023-05-17 11:20:02] [thread index = 6] #parsed alignments = 400000, #parsed reads = 218985, #modifed by phased variants = 0, #modifed_by_markers = 1640
+[2023-05-17 11:20:06] [thread index = 15] #parsed alignments = 400000, #parsed reads = 217193, #modifed by phased variants = 0, #modifed_by_markers = 1644
+[2023-05-17 11:20:07] [thread index = 7] #parsed alignments = 400000, #parsed reads = 218128, #modifed by phased variants = 0, #modifed_by_markers = 1645
+[2023-05-17 11:21:40] Number of reads modified by phased variants = 0
+[2023-05-17 11:21:40] Number of reads modified by marker score = 1681
+[2023-05-17 11:21:40] Total length of read blocks modified by phased variants: 0.
+[2023-05-17 11:21:40] Total number of read blocks modified by phased variants: 0.
+[2023-05-17 11:21:40] read blocks modified by phased variants are saved in /g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/secphase.modified_read_blocks.variants.bed.
+[2023-05-17 11:21:40] Total length of read blocks modified by markers: 33886482.
+[2023-05-17 11:21:40] Total number of read blocks modified by markers: 2720.
+[2023-05-17 11:21:40] read blocks modified by markers are saved in /g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/secphase.modified_read_blocks.markers.bed.
+[2023-05-17 11:21:40] Total length of projected variant blocks on all haplotypes: 0.
+[2023-05-17 11:21:40] Total number of projected variant blocks on all haplotypes: 0.
+[2023-05-17 11:21:40] projected variant blocks on all haplotypes are saved in /g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/secphase.variant_blocks.bed.
+[2023-05-17 11:21:40] Total length of projected marker blocks on all haplotypes: 8992.
+[2023-05-17 11:21:40] Total number of projected marker blocks on all haplotypes: 8992.
+[2023-05-17 11:21:40] projected marker blocks on all haplotypes are saved in /g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/secphase.marker_blocks.bed.
