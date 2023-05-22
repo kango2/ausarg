@@ -1,5 +1,0 @@
-Loading bcftools/1.12
-  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2
-FATAL:   could not open image /g/data/xl04/ka6418/docker_images/pepper_deepvariant_r0.8.sif: SIF image /g/data/xl04/ka6418/docker_images/pepper_deepvariant_r0.8.sif is corrupted: wrong partition size
-[E::hts_open_format] Failed to open file "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output.vcf" : No such file or directory
-Failed to read from /g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output.vcf: No such file or directory
