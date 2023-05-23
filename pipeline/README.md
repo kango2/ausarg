@@ -165,8 +165,15 @@ Taking inspiration from the above structure, we aspire to replicate it for our d
 We are using DNA Sequencing data from five primary technologies, to benefit from the complementary strengths of each approach.
 - **PacBio Hifi** - Long reads that can span repetitive and complex genomic regions. It is useful for resolving structural variations and producing high-quality consensus sequences. Used for accurate and contiguous genome assemblies. 
 - **ONT Ultralong** - Long reads similar to PacBio, but offers additional sequence information to account for genomic gaps and resolving repetitive regions. 
-- **Illumina** - 
-- **HiC** - 
-- **RNASeq** - 
+- **Illumina** - Used for generating short reads at high throughput. We utilise it for generating large amounts of data to aid in error correction, genome polishing and validation of the final assembly.
+- **HiC** - Used for scaffolding contigs and improving the overall accuracy and contiguity of the assembly. Provides informaiton about >to do
+- **RNASeq** - Used for gene prediction, annotation and validation of the assembly and particularly useful for providing insights into the functional elements of the genome. 
 
-Here is a list 
+Here is a list of tools we used to pre-process our sequencing data (adapter removal & quality filtering), along with explanations and their versions. 
+
+| Tool            | Version     | Reads Type                              |
+|-----------------|-------------|------------------------------------------|
+| DeepConsensus     | TODO       | PacBioHifi |
+| Guppy/Dorado   | TODO      | ONT       |
+| Trimmomatic | TODO | Illumina |
+
