@@ -1,14 +1,67 @@
-# File organisation
+# Genome Assembly Pipeline 
 
+A comprehensive overview of the pipeline, including the explanation of the steps involved - along with softwares used and their versions. 
+
+Table of Contents
+=================
+
+- [Data Management](#data-management)
+- [Data Prepatation](#data-preparation)
+- [Assembly Generation](#assembly-generation)
+- [Assembly Evaluation](#assembly-evaluation)
+
+---
+## Data Management 
+### File Directories 
 To arrange and organise our files on NCI Gadi, we derived inspiration from the structure followed by VGP (https://vertebrategenomesproject.org). Here is a rough sturture followed by VGP -
 
-  
-![VGP structrure](https://i.ibb.co/cQpfG6n/Screenshot-2023-05-08-at-1-18-39-pm.png)
+---
 
-![VGP Nomenclature
-](https://i.ibb.co/gjLVpbK/Screenshot-2023-05-08-at-1-27-11-pm.png)
+**VGP File Structure**
 
-We can observe the following key points :
+- species
+  - specie_name
+    - version
+      - Automated Assembly
+        - ...
+        - Intemediates
+          - hifiasm
+          - ...
+      - Curated Assembly
+         - ...
+        - Evaluation
+          - busco
+          - genomescope
+          - merqury
+          - pretest
+          - quast
+      - Genomic Data
+        - raw data
+
+---
+
+**VGP Nomenclature**
+
+- Specie Names : [amr..]SpeNme[1,2,3]
+where 
+  - [amr..] represents the specie type 
+  - SpeNme are the initials of the specie 
+  - [1,2,3] refers to the version number 
+
+---
+
+Following the above convention, an example name generated would be `bAmmCau1` 
+
+- **Assembly Names** : [amr..]SpeNme[1,2,3] . org . asmType . date. fasta . gz 
+where 
+  - [amr..]SpeNme[1,2,3] is the specie name, as explained above 
+  - org is the abbreviation of the organisation which worked on the assembly 
+  - asmType is the type of assembly, such as "cur" for curated
+  - date is the date on which the assembly was generated
+
+Following the above convention, an example assembly name generated would be `bAmmCau1.pri.cur.20230231.fasta.gz`
+
+**We can observe the following key points :**
 
  -  The automated assembly results and the curated assembly are stored in separate folders, resulting in an extensive representation of the process followed to reach the final results 
  - The automated assembly folder has a repository of intermediate files from all the tools and softwares used, along with a metadata file indicating the assembly process, software versions and some other details. 
@@ -17,16 +70,51 @@ We can observe the following key points :
 
 Taking inspiration from the above structure, we aspire to replicate it for our data. Since we are only getting started with the process, we have temporarily organised our data as follows:
 
-![AusARG files](https://i.ibb.co/tZwhGJk/Screenshot-2023-05-08-at-1-40-12-pm.png%5B)
+---
 
- - Our raw data is currently residing at "/g/data/xl04/bpadata" on NCI Gadi, and the processing is currently being conducted by Kirat Alreja (Bioinformatics Support Officer, ANU)  in his folder, "ka6418". We will eventually move this to a shared folder similar to "bpadata"
- - We are yet to download and organise all the raw data as well, so the whole process is going hand-in-hand with manual curation & evaluation. 
+**Processed Files**
 
-# Metadata Tables
-We are working towards creating two comprehensive metadata table for our assembly file, which serve as a combined integrity and evaluation check. There are two tables, Sequence Table and Assembly Table. 
+- species
+    - specie_name
+        - version
+            - assembly
+            - metadata
+            - evaluation
 
-## Sequence Table
-![Sequence Table](https://i.ibb.co/Lhj97V8/Screenshot-2023-05-08-at-2-12-57-pm.png)
+---
+
+**Raw Files**
+
+- bpadata
+    - specie_name
+        - raw
+            - Pacbio
+            - ONT
+            - Illumina
+        - clean
+            - pacbio
+            - ONT
+            - Illumina
+
+
+---
+ - Our raw data is currently residing at `/g/data/xl04/bpadata` on NCI Gadi, and the processing is currently being conducted by Kirat Alreja (Bioinformatics Support Officer, ANU)  in his folder, `ka6418`. We will eventually move this to a shared folder similar to `bpadata`
+ - We are yet to download and organise all the raw data as well, so the whole process is going hand-in-hand with manual curation & evaluation.
+
+ ### MD5 Metadata Tables 
+
+ We are working towards creating two comprehensive metadata table for our assembly file, which serve as a combined integrity and evaluation check. There are two tables, Sequence Table and Assembly Table. 
+
+#### Sequence Table
+
+| Assembly_ID (FK) | Sequence_ID (PK) | Length | Order In File | MD5 Sumcheck |
+|----------|----------|----------|----------|----------|
+|          |          |          |          |          |
+|          |          |          |          |          |
+|          |          |          |          |          |
+|          |          |          |          |          |
+|          |          |          |          |          |
+
 
  - **Assembly ID** : Name of the Assembly file, it acts as there foreign key and will eventually help us set up a connection between the Sequence Table and the Assembly Table 
  - **Sequence ID** : Name of every sequence of the Assembly file 
@@ -34,10 +122,16 @@ We are working towards creating two comprehensive metadata table for our assembl
  - **Order In File** : The current order of the sequence inside the assembly file - will help us maintain a visualisation of how the sequences are rearranged
  - **MD5 Sumcheck** : MD5 for every sequence 
 
-## Assembly Table 
-![assembly table](https://i.ibb.co/ZJzLn91/Screenshot-2023-05-08-at-3-39-49-pm.png)
- 
- 
+#### Assembly Table 
+
+| Assembly_ID (PK) | Length | Uncompressed MD5 | Compressed MD5 | Metrics |
+|----------|----------|----------|----------|----------|
+|          |          |          |          |          |
+|          |          |          |          |          |
+|          |          |          |          |          |
+|          |          |          |          |          |
+|          |          |          |          |          |
+
 
  - **Assembly ID** : Name of the Assembly File 
  - **Length** : Length of the entire assembly 
@@ -45,9 +139,9 @@ We are working towards creating two comprehensive metadata table for our assembl
  - **Compressed MD5** : MD5 sumcheck of the .gz / compressed file, -   The reasoning behind having both Uncompressed MD5 and Compressed MD5 is that the sumcheck changes when you uncompress a .GZ file, and also when you recompress the same. Having both the metrics ensures that we can verify integrity in the case if anyone recompresses an existing .fasta file.
  - **Metrics** : Several columns with assembly evaluation metrics, discussed below 
 
-### Metrics 
+#### Metrics 
 
-#### General Metrics
+##### General Metrics
 -   N50: The length of the shortest sequence that covers 50% of the total assembly, indicating the  **continuity**  of the assembly.
 -   N90: The length of the shortest sequence that covers 90% of the total assembly, providing  **a more stringent measure of assembly continuity.**
 -   L50: The number of sequences required to reach 50% of the assembly length, reflecting the  **fragmentation of the assembly**.
@@ -57,26 +151,29 @@ We are working towards creating two comprehensive metadata table for our assembl
 -   Total number of scaffolds: The number of contigs/scaffolds in the assembly,  **reflecting the level of fragmentation of the assembly.**
 -   GC%: The percentage of the genome that consists of the nucleotides G and C, which can affect gene expression and function, as well as provide information on the  **quality of the sequencing and assembly processes**.
 
-#### Specialised Metrics 
+##### Specialised Metrics 
 -   **BUSCO score**  - The BUSCO score reflects the completeness and correctness of the genome assembly by comparing it to a set of conserved genes. A higher BUSCO score is preferred, indicating a more complete and accurate assembly.
 -   **Error rate estimations**  - Error rate estimations can provide an estimate of the quality of the assembly in terms of base pair accuracy and gene structure.
 -   **Heterozygosity rate**  - The heterozygosity rate can impact the quality of the assembly, especially for species with high levels of genetic diversity. High heterozygosity rates can lead to higher fragmentation and lower contiguity of the assembly.
 
+## NCBI Metadata
 
-# Sequence Alignment 
-We have a sequence alignment script for PacBio, ONT and Illumina data which can take multiple input files, align them to raw reads, merge them and output a sorted .BAM file along with an index file. The working of the script is as follows : 
+>To Do, consult with Hardip 
 
-![Sequence Alignment Script](https://i.ibb.co/09K5CB2/Screenshot-2023-05-08-at-4-03-34-pm.png)
+---
+# Data Prepatation
+We are using DNA Sequencing data from five primary technologies, to benefit from the complementary strengths of each approach.
+- **PacBio Hifi** - Long reads that can span repetitive and complex genomic regions. It is useful for resolving structural variations and producing high-quality consensus sequences. Used for accurate and contiguous genome assemblies. 
+- **ONT Ultralong** - Long reads similar to PacBio, but offers additional sequence information to account for genomic gaps and resolving repetitive regions. 
+- **Illumina** - Used for generating short reads at high throughput. We utilise it for generating large amounts of data to aid in error correction, genome polishing and validation of the final assembly.
+- **HiC** - Used for scaffolding contigs and improving the overall accuracy and contiguity of the assembly. Provides informaiton about >to do
+- **RNASeq** - Used for gene prediction, annotation and validation of the assembly and particularly useful for providing insights into the functional elements of the genome. 
 
-When multiple files are supplied, 
+Here is a list of tools we used to pre-process our sequencing data (adapter removal & quality filtering), along with explanations and their versions. 
 
-![multiple files](https://i.ibb.co/P50yQxp/Screenshot-2023-05-08-at-4-07-00-pm.png)
-
-Lastly, the directories and names are automatically generated to maintain an organised file structure. 
-
-![file directories](https://i.ibb.co/TB4C9Mk/Screenshot-2023-05-08-at-4-09-29-pm.png)
-
- - The reasoning behind this file structure is that every Query file will have multiple References aligned to the same, so it makes sense to have folders for those references inside the Query file name folder
- - The file names generated represent the hierarchy of the folders the file is located in 
-
+| Tool            | Version     | Reads Type                              |
+|-----------------|-------------|------------------------------------------|
+| DeepConsensus     | TODO       | PacBioHifi |
+| Guppy/Dorado   | TODO      | ONT       |
+| Trimmomatic | TODO | Illumina |
 
