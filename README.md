@@ -177,7 +177,7 @@ Here is a list of tools we used to pre-process our sequencing data (adapter remo
 | Guppy/Dorado   | TODO      | ONT       |
 | Trimmomatic | TODO | Illumina |
 
-#Assembly Generation 
+# Assembly Generation 
 
 Similar to the data preparation step, we use a number of tools & techniques to benefit from the complimentary strengths of each approach. 
 
