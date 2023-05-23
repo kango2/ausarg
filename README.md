@@ -195,3 +195,8 @@ Similar to the data preparation step, we use a number of tools & techniques to b
 
 [4] : Flye Development Team. (2023). "Flye is a de novo assembler for single-molecule sequencing reads." Available at: https://github.com/fenderglass/Flye [Accessed 23 May 2023]​
 
+
+## Assembly Evaluation 
+
+![Correctness](/g/data/xl04/ka6418/ausarg/images/corectness.png)
+
