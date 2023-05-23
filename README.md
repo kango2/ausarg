@@ -177,3 +177,21 @@ Here is a list of tools we used to pre-process our sequencing data (adapter remo
 | Guppy/Dorado   | TODO      | ONT       |
 | Trimmomatic | TODO | Illumina |
 
+#Assembly Generation 
+
+Similar to the data preparation step, we use a number of tools & techniques to benefit from the complimentary strengths of each approach. 
+
+1. **Verkko**: This is an iterative, graph-based pipeline for assembling complete, diploid genomes. It begins with a multiplex de Bruijn graph built from long, accurate reads, progressively simplifies this graph by integrating ultra-long reads and haplotype-specific markers. The result is a phased, diploid assembly of both haplotypes, with many chromosomes automatically assembled from telomere to telomere. In a test on the HG002 human genome, 20 of 46 diploid chromosomes were assembled without gaps at 99.9997% accuracy​. [[1]](https://www.nature.com/articles/s41587-023-01662-6)
+2. **Hifiasm**: A de novo assembler that takes advantage of long high-fidelity sequence reads to represent the haplotype information in a phased assembly graph. It strives to preserve the contiguity of all haplotypes, which makes it particularly effective for studying sequence variations in a genome. [[2]](https://www.nature.com/articles/s41592-020-01056-5)
+3. **Canu**: This tool specializes in assembling PacBio or Oxford Nanopore sequences and operates in three phases: correction, trimming, and assembly. It improves the accuracy of bases in reads, trims reads to high-quality sequences, and orders the reads into contigs. Canu can resume incomplete assemblies and will auto-detect computational resources and scale itself to fit, using all available resources. [[3]](https://canu.readthedocs.io/en/latest/quick-start.html)
+4. **Flye**: This is a de novo assembler for single-molecule sequencing reads, such as those produced by PacBio and Oxford Nanopore Technologies. It's designed for a wide range of datasets, from small bacterial projects to large mammalian-scale assemblies. It uses a repeat graph as the core data structure, which is built using approximate sequence matches and can tolerate the higher noise of SMS reads. However, it typically produces collapsed assemblies of diploid genomes, represented by a single mosaic haplotype. [[4]](https://github.com/fenderglass/Flye)
+
+
+[1] : Telomere-to-Telomere consortium. (2023). "The Telomere-to-Telomere consortium recently assembled the first truly complete sequence of a human genome." Available at: https://www.nature.com/articles/s41587-023-01662-6 [Accessed 23 May 2023]​
+
+[2] : Hifiasm Team. (2023). "Haplotype-resolved de novo assembly is the ultimate solution to the study of sequence variations in a genome." Available at: https://www.nature.com/articles/s41592-020-01056-5 [Accessed 23 May 2023]
+
+[3] : Canu Documentation. (2023). "Canu specializes in assembling PacBio or Oxford Nanopore sequences." Available at: https://canu.readthedocs.io/en/latest/quick-start.html [Accessed 23 May 2023]
+
+[4] : Flye Development Team. (2023). "Flye is a de novo assembler for single-molecule sequencing reads." Available at: https://github.com/fenderglass/Flye [Accessed 23 May 2023]​
+

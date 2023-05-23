@@ -1,9 +1,0 @@
-Error for command "exec": requires at least 2 arg(s), only received 1
-
-Usage:
-  singularity [global options...] exec [exec options...] <container> <command>
-
-Run 'singularity --help' for more detailed usage information.
-[E::hts_idx_push] Chromosome blocks not continuous
-[E::sam_index] Read '0000c8ff-49f7-488a-a8d0-982bdf6eda76' with ref_name='haplotype2-0000383', ref_length=46809113, flags=0, pos=37215297 cannot be indexed
-samtools index: failed to create index for "/g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected.bam"

@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -N to_index
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=2:00:00
+#PBS -l mem=64GB
+#PBS -l ncpus=16
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -M kirat.alreja@anu.edu.au
+
+module load samtools
+
+samtools index -b /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun.bam /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun.bam.bai
