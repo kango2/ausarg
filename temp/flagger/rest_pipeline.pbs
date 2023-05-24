@@ -1,12 +1,13 @@
 #!/bin/bash
 #PBS -N rest_pipeline 
 #PBS -P xl04
-#PBS -q express
-#PBS -l walltime=0:10:00
-#PBS -l mem=4GB
-#PBS -l ncpus=2
+#PBS -q normal
+#PBS -l walltime=8:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
+#PBS -l jobfs=400GB
 #PBS -M kirat.alreja@anu.edu.au
 
 module load singularity
@@ -14,11 +15,14 @@ module load bcftools
 
 
 singularity exec /g/data/xl04/ka6418/docker_images/pepper_deepvariant_r0.8.sif run_pepper_margin_deepvariant call_variant \
-  -b "/g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun.bam" \
+  -b "/g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam" \
   -f "/g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.fasta" \
-  -o "/g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs" \
-  -t 16 \
-  --ont_r9_guppy5_sup 
+  -o "/g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline" \
+  -t 48 \
+  --ont_r9_guppy5_sup \
+  --pepper_include_supplementary \
+  --dv_min_mapping_quality 0 \
+  --pepper_min_mapping_quality 0 \
 
 ## Get the biallelic snps
 #bcftools view -Ov -f PASS -m2 -M2 -v snps -e 'FORMAT/VAF<~{vafCutoff} | FORMAT/GQ<~{qCutoff}' "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output.vcf" > "/g/data/xl04/ka6418/ausarg-data/flagger_data/primary_pipeline/output_snp.vcf"

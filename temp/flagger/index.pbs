@@ -2,14 +2,14 @@
 #PBS -N to_index
 #PBS -P xl04
 #PBS -q normal
-#PBS -l walltime=4:00:00
-#PBS -l mem=64GB
-#PBS -l ncpus=16
+#PBS -l walltime=6:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
 #PBS -M kirat.alreja@anu.edu.au
 
 module load samtools
-samtools sort /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun.bam -o /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam
+samtools sort -@ 48 /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun.bam -o /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam
 
-samtools index /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam
+samtools  index -@ 48 /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam

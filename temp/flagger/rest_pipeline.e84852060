@@ -1,0 +1,47 @@
+Loading bcftools/1.12
+  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2
+[05-24-2023 10:21:57] INFO: VARIANT CALLING MODULE SELECTED
+[05-24-2023 10:21:57] INFO: [1/9] RUNNING THE FOLLOWING COMMAND
+-------
+mkdir -p /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline; 
+mkdir -p /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/logs; 
+mkdir -p /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files; 
+cp /opt/pepper_models/PEPPER_VARIANT_ONT_R941_GUPPY5_SUP_V8.pkl /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files
+-------
+[05-24-2023 10:21:58] INFO: [2/9] RUNNING THE FOLLOWING COMMAND
+-------
+time pepper_variant call_variant -b /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam -f /g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.fasta -t 48 -m /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PEPPER_VARIANT_ONT_R941_GUPPY5_SUP_V8.pkl -o /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/ --include_supplementary  --no_quantized  -s Sample --ont_r9_guppy5_sup 2>&1 | tee /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/logs/1_pepper.log
+-------
+
+real	159m32.996s
+user	7164m53.837s
+sys	76m21.764s
+[05-24-2023 13:01:31] INFO: [3/9] RUNNING THE FOLLOWING COMMAND
+-------
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_FULL.vcf.gz /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_FULL.vcf.gz.tbi /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_PEPPER.vcf.gz /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_PEPPER.vcf.gz.tbi /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING.vcf.gz /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING.vcf.gz.tbi /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING_SNPs.vcf.gz /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING_SNPs.vcf.gz.tbi /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING_INDEL.vcf.gz /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+mv /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING_INDEL.vcf.gz.tbi /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/; 
+rm -rf /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/pepper/; 
+echo "CONTIGS FOUND IN PEPPER VCF:"; 
+zcat /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PEPPER_VARIANT_FULL.vcf.gz | grep -v '#' | cut -f1 | uniq
+-------
+[05-24-2023 13:01:52] INFO: [4/9] RUNNING THE FOLLOWING COMMAND
+-------
+time margin phase /g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam /g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.fasta /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PEPPER_VARIANT_FULL.vcf.gz /opt/margin_dir/params/phase/allParams.haplotag.ont-r94g507.snp.json -t 48 -V -o /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PHASED.PEPPER_MARGIN 2>&1 | tee /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/logs/2_margin_haplotag.log;
+samtools index -@48 /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PHASED.PEPPER_MARGIN.haplotagged.bam
+-------
+
+real	14m23.166s
+user	392m45.119s
+sys	9m21.324s
+[05-24-2023 13:17:47] INFO: [5/9] RUNNING THE FOLLOWING COMMAND
+-------
+time /opt/deepvariant/bin/run_deepvariant --model_type=WGS --customized_model=/opt/dv_models/ont_deepvariant_vc/dv_ont_r9_guppy5_sup_vc_model_snp --ref=/g/data/xl04/ka6418/species/Tiliqua_Rugosa/rTilRug0.5/assembly/rTilRug0.5.asm.fasta --reads=/g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PHASED.PEPPER_MARGIN.haplotagged.bam --output_vcf=/g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/DEEPVARIANT_OUTPUT_SNP.vcf.gz --sample_name="Sample" --intermediate_results_dir=/g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/dv_intermediate_outputs/ --num_shards=48 --make_examples_extra_args="alt_aligned_pileup=none,realign_reads=false,partition_size=10000,min_base_quality=1,sort_by_haplotypes=true,parse_sam_aux_fields=true,add_hp_channel=true,variant_caller=vcf_candidate_importer,proposed_variants=/g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/intermediate_files/PEPPER_VARIANT_OUTPUT_VARIANT_CALLING_SNPs.vcf.gz" --postprocess_variants_extra_args="use_multiallelic_model=True" 2>&1 | tee /g/data/xl04/ka6418/ausarg-data/flagger_data/pepper-pipeline/logs/5.1_DeepVariant_SNP.log
+-------

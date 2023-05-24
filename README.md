@@ -156,12 +156,12 @@ Taking inspiration from the above structure, we aspire to replicate it for our d
 -   **Error rate estimations**  - Error rate estimations can provide an estimate of the quality of the assembly in terms of base pair accuracy and gene structure.
 -   **Heterozygosity rate**  - The heterozygosity rate can impact the quality of the assembly, especially for species with high levels of genetic diversity. High heterozygosity rates can lead to higher fragmentation and lower contiguity of the assembly.
 
-## NCBI Metadata
+#### NCBI Metadata
 
 >To Do, consult with Hardip 
 
 ---
-# Data Prepatation
+## Data Preparation
 We are using DNA Sequencing data from five primary technologies, to benefit from the complementary strengths of each approach.
 - **PacBio Hifi** - Long reads that can span repetitive and complex genomic regions. It is useful for resolving structural variations and producing high-quality consensus sequences. Used for accurate and contiguous genome assemblies. 
 - **ONT Ultralong** - Long reads similar to PacBio, but offers additional sequence information to account for genomic gaps and resolving repetitive regions. 
@@ -177,7 +177,7 @@ Here is a list of tools we used to pre-process our sequencing data (adapter remo
 | Guppy/Dorado   | TODO      | ONT       |
 | Trimmomatic | TODO | Illumina |
 
-# Assembly Generation 
+## Assembly Generation 
 
 Similar to the data preparation step, we use a number of tools & techniques to benefit from the complimentary strengths of each approach. 
 
@@ -195,9 +195,36 @@ Similar to the data preparation step, we use a number of tools & techniques to b
 
 [4] : Flye Development Team. (2023). "Flye is a de novo assembler for single-molecule sequencing reads." Available at: https://github.com/fenderglass/Flye [Accessed 23 May 2023]​
 
+Tool versions we used for development :
+
+| Tool | Version  | 
+|----------|----------|
+|   Verkko       |          |
+|   HifiASM       |          |
+|   Canu       |          |
+|   Flye       |          |
+
+
 
 ## Assembly Evaluation 
 
+Our assembly evaluation workflow revolves around the 3C criterion of genome assembly evaluation : 
+
+1. **Contiguity**: It evaluates the assembly in terms of number and size of contigs and scaffolds, the pieces found in an assembly. Metrics includes statistics related to maximum length, average length, combined total length, and contig N50 (length-weighted median of ordered contigs or scaffolds). However, contiguity metrics thereof need to be interpreted with caution due they do not contain information on assembly accuracy and completeness.
+
+![Contiguity](https://i.imgur.com/rL5kL9n.png)
+
+2. **Correctness**: it refers to how well those pieces accurately represent the genome sequenced and, in general is acceptable that it is essential to prioritize correctness rather than contiguity. However, correctness is difficult to evaluate if a preliminary reference genome is not available, which is a particular problem for de novo assembly. Mapping and comparison to reference or draft genome (or a consensus sequence) can be used to detect misassemblies, including mismatches, indels, and misjoins.
 
 ![Correctness](https://i.imgur.com/FIKfxxh.png)
+
+3. **Completeness**: it assesses how much of the genome is represented by the pieces of the assembly. This implies the evaluation of ability to assembly not only all the genes, but also to solve all complicated regions, including repetitive sequences and, if it is expected, circularization of genome. The most important metric for this case is the “completeness score”, calculated by the examination of single-copy orthologs conserved genes. In addition, information of known sequences, unexpected variations in coverage, and remapping of reads allows to analyze the consistency of the genome and identification of potentially poorly assembled regions.
+
+![Completeness](https://i.imgur.com/ksn7LS3.png)
+
+TODO : reference - https://www.nature.com/articles/s41598-020-58319-6
+
+
+
+
 
