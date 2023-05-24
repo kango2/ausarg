@@ -137,24 +137,8 @@ Taking inspiration from the above structure, we aspire to replicate it for our d
  - **Length** : Length of the entire assembly 
  - **Uncompressed MD5** : MD5 sumcheck of the .fasta / uncompressed file 
  - **Compressed MD5** : MD5 sumcheck of the .gz / compressed file, -   The reasoning behind having both Uncompressed MD5 and Compressed MD5 is that the sumcheck changes when you uncompress a .GZ file, and also when you recompress the same. Having both the metrics ensures that we can verify integrity in the case if anyone recompresses an existing .fasta file.
- - **Metrics** : Several columns with assembly evaluation metrics, discussed below 
+ - **Metrics** : Several columns with assembly evaluation metrics, discussed in [Assembly Evaluation](#assembly-evaluation)
 
-#### Metrics 
-
-##### General Metrics
--   N50: The length of the shortest sequence that covers 50% of the total assembly, indicating the  **continuity**  of the assembly.
--   N90: The length of the shortest sequence that covers 90% of the total assembly, providing  **a more stringent measure of assembly continuity.**
--   L50: The number of sequences required to reach 50% of the assembly length, reflecting the  **fragmentation of the assembly**.
--   L90: The number of sequences required to reach 90% of the assembly length, providing  **a more stringent measure of assembly fragmentation.**
--   #N per 100kbp: The number of N bases (representing gaps) per 100 kilobase pairs, indicating the  **completeness of the assembly**  and the presence of gaps.
--   Largest scaffold: The length of the longest sequence in the assembly, reflecting the  **ability of the assembly to capture large genomic regions.**
--   Total number of scaffolds: The number of contigs/scaffolds in the assembly,  **reflecting the level of fragmentation of the assembly.**
--   GC%: The percentage of the genome that consists of the nucleotides G and C, which can affect gene expression and function, as well as provide information on the  **quality of the sequencing and assembly processes**.
-
-##### Specialised Metrics 
--   **BUSCO score**  - The BUSCO score reflects the completeness and correctness of the genome assembly by comparing it to a set of conserved genes. A higher BUSCO score is preferred, indicating a more complete and accurate assembly.
--   **Error rate estimations**  - Error rate estimations can provide an estimate of the quality of the assembly in terms of base pair accuracy and gene structure.
--   **Heterozygosity rate**  - The heterozygosity rate can impact the quality of the assembly, especially for species with high levels of genetic diversity. High heterozygosity rates can lead to higher fragmentation and lower contiguity of the assembly.
 
 #### NCBI Metadata
 
@@ -223,6 +207,42 @@ Our assembly evaluation workflow revolves around the 3C criterion of genome asse
 ![Completeness](https://i.imgur.com/ksn7LS3.png)
 
 TODO : reference - https://www.nature.com/articles/s41598-020-58319-6
+
+We assess all these three criteries with a vareity of metrics and tools : 
+
+| Tool Name                      | Evaluation Type   |
+|-------------------------------|-------------------|
+| N50                           | Contiguity        |
+| N90                           | Contiguity        |
+| L50                           | Contiguity        |
+| L90                           | Contiguity        |
+| #N per 100kbp                 | Completeness      |
+| Largest scaffold              | Contiguity        |
+| Total number of scaffolds     | Contiguity        |
+| GC%                           | Completeness      |
+| BUSCO score                   | Completeness      |
+| Error rate estimations        | Correctness       |
+| Heterozygosity rate           | Correctness       |
+
+#### Metrics 
+
+##### General Metrics
+-   N50: The length of the shortest sequence that covers 50% of the total assembly, indicating the  **continuity**  of the assembly.
+-   N90: The length of the shortest sequence that covers 90% of the total assembly, providing  **a more stringent measure of assembly continuity.**
+-   L50: The number of sequences required to reach 50% of the assembly length, reflecting the  **fragmentation of the assembly**.
+-   L90: The number of sequences required to reach 90% of the assembly length, providing  **a more stringent measure of assembly fragmentation.**
+-   #N per 100kbp: The number of N bases (representing gaps) per 100 kilobase pairs, indicating the  **completeness of the assembly**  and the presence of gaps.
+-   Largest scaffold: The length of the longest sequence in the assembly, reflecting the  **ability of the assembly to capture large genomic regions.**
+-   Total number of scaffolds: The number of contigs/scaffolds in the assembly,  **reflecting the level of fragmentation of the assembly.**
+-   GC%: The percentage of the genome that consists of the nucleotides G and C, which can affect gene expression and function, as well as provide information on the  **quality of the sequencing and assembly processes**.
+
+##### Specialised Metrics 
+-   **BUSCO score**  - The BUSCO score reflects the completeness and correctness of the genome assembly by comparing it to a set of conserved genes. A higher BUSCO score is preferred, indicating a more complete and accurate assembly.
+-   **Error rate estimations**  - Error rate estimations can provide an estimate of the quality of the assembly in terms of base pair accuracy and gene structure.
+-   **Heterozygosity rate**  - The heterozygosity rate can impact the quality of the assembly, especially for species with high levels of genetic diversity. High heterozygosity rates can lead to higher fragmentation and lower contiguity of the assembly.
+
+
+
 
 
 
