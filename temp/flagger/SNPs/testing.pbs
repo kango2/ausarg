@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -N testing 
+#PBS -P xl04
+#PBS -q normal
+#PBS -l walltime=5:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l wd
+#PBS -l jobfs=400GB
+#PBS -M kirat.alreja@anu.edu.au
+
+
+module load singularity
+
+singularity exec \
+ /g/data/xl04/ka6418/docker_images/flagger_v0.3.0.sif \
+ filter_alt_reads \
+ -i "/g/data/xl04/ka6418/ausarg-data/flagger_data/bam_outputs/secphase.corrected_secondrun_sorted.bam" \
+ -o "alt_filt.bam" \
+ -f "alt.bam" \
+ -v "/g/data/xl04/ka6418/ausarg/temp/flagger/SNPs/DEEPVARIANT_OUTPUT_SNP_PROCESSED.vcf" \
+ -t 48 \
+ -m 1000 \
+ -r 0.4
