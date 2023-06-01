@@ -19,6 +19,7 @@ To arrange and organise our files on NCI Gadi, we derived inspiration from the s
 
 **VGP File Structure**
 
+```
 - species
   - specie_name
     - version
@@ -37,7 +38,7 @@ To arrange and organise our files on NCI Gadi, we derived inspiration from the s
           - quast
       - Genomic Data
         - raw data
-
+```
 ---
 
 **VGP Nomenclature**
