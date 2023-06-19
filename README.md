@@ -19,6 +19,7 @@ To arrange and organise our files on NCI Gadi, we derived inspiration from the s
 
 **VGP File Structure**
 
+```
 - species
   - specie_name
     - version
@@ -37,7 +38,7 @@ To arrange and organise our files on NCI Gadi, we derived inspiration from the s
           - quast
       - Genomic Data
         - raw data
-
+```
 ---
 
 **VGP Nomenclature**
@@ -73,18 +74,18 @@ Taking inspiration from the above structure, we aspire to replicate it for our d
 ---
 
 **Processed Files**
-
+```
 - species
     - specie_name
         - version
             - assembly
             - metadata
             - evaluation
-
+```
 ---
 
 **Raw Files**
-
+```
 - bpadata
     - specie_name
         - raw
@@ -96,7 +97,7 @@ Taking inspiration from the above structure, we aspire to replicate it for our d
             - ONT
             - Illumina
 
-
+```
 ---
  - Our raw data is currently residing at `/g/data/xl04/bpadata` on NCI Gadi, and the processing is currently being conducted by Kirat Alreja (Bioinformatics Support Officer, ANU)  in his folder, `ka6418`. We will eventually move this to a shared folder similar to `bpadata`
  - We are yet to download and organise all the raw data as well, so the whole process is going hand-in-hand with manual curation & evaluation.
