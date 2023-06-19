@@ -1,0 +1,17 @@
+
+singularity exec /g/data/xl04/ka6418/docker_images/flagger_v0.3.0.sif \
+ cov2counts \
+ -i /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/coverage/read_alignment.cov \
+ -o /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/coverage/read_alignment.counts ;
+
+singularity exec /g/data/xl04/ka6418/docker_images/flagger_v0.3.0.sif \
+ python3 /home/programs/src/fit_gmm.py \
+ --counts /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/coverage/read_alignment.counts \
+ --cov 30 \
+ --output /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/coverage/read_alignment.table ;
+
+singularity exec /g/data/xl04/ka6418/docker_images/flagger_v0.3.0.sif \
+ find_blocks_from_table \
+ -c /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/coverage/read_alignment.cov \
+ -t /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/coverage/read_alignment.table  \
+ -p /g/data/xl04/ka6418/ausarg-data/flagger_bed_generation/bedfiles/TilRug
