@@ -1,0 +1,76 @@
+2023-06-26 19:39:38 INFO:	***** Start a BUSCO v5.4.7 analysis, current time: 06/26/2023 19:39:38 *****
+2023-06-26 19:39:38 INFO:	Configuring BUSCO with local environment
+2023-06-26 19:39:38 INFO:	Mode is genome
+2023-06-26 19:39:38 INFO:	Input file is /g/data/xl04/ausarg_data/Bassiana_duperreyi/assembly/rBasDup0.5.asm.fa
+2023-06-26 19:39:38 INFO:	Using local lineages directory /g/data/xl04/ka6418/docker_images/lineages/vertebrata_odb10
+2023-06-26 19:39:43 INFO:	Running BUSCO using lineage dataset vertebrata_odb10 (eukaryota, 2021-02-19)
+2023-06-26 19:39:43 INFO:	Running 1 job(s) on bbtools, starting at 06/26/2023 19:39:43
+2023-06-26 19:39:48 INFO:	[bbtools]	1 of 1 task(s) completed
+2023-06-26 19:39:48 INFO:	Running 1 job(s) on metaeuk, starting at 06/26/2023 19:39:48
+2023-06-26 20:31:05 INFO:	[metaeuk]	1 of 1 task(s) completed
+2023-06-26 20:31:10 INFO:	***** Run HMMER on gene sequences *****
+2023-06-26 20:31:10 INFO:	Running 3354 job(s) on hmmsearch, starting at 06/26/2023 20:31:10
+2023-06-26 20:31:12 INFO:	[hmmsearch]	336 of 3354 task(s) completed
+2023-06-26 20:31:14 INFO:	[hmmsearch]	671 of 3354 task(s) completed
+2023-06-26 20:31:17 INFO:	[hmmsearch]	1007 of 3354 task(s) completed
+2023-06-26 20:31:20 INFO:	[hmmsearch]	1342 of 3354 task(s) completed
+2023-06-26 20:31:22 INFO:	[hmmsearch]	1677 of 3354 task(s) completed
+2023-06-26 20:31:24 INFO:	[hmmsearch]	2013 of 3354 task(s) completed
+2023-06-26 20:31:25 INFO:	[hmmsearch]	2348 of 3354 task(s) completed
+2023-06-26 20:31:26 INFO:	[hmmsearch]	2684 of 3354 task(s) completed
+2023-06-26 20:31:30 INFO:	[hmmsearch]	3019 of 3354 task(s) completed
+2023-06-26 20:31:58 INFO:	[hmmsearch]	3354 of 3354 task(s) completed
+2023-06-26 20:33:29 INFO:	Validating exons and removing overlapping matches
+2023-06-26 20:33:44 INFO:	315 candidate overlapping regions found
+2023-06-26 20:33:44 INFO:	39938 exons in total
+2023-06-26 20:34:48 INFO:	Extracting missing and fragmented buscos from the file refseq_db.faa...
+2023-06-26 20:35:01 INFO:	Running 1 job(s) on metaeuk, starting at 06/26/2023 20:35:01
+2023-06-26 21:03:15 INFO:	[metaeuk]	1 of 1 task(s) completed
+2023-06-26 21:03:43 INFO:	***** Run HMMER on gene sequences *****
+2023-06-26 21:03:43 INFO:	Running 115 job(s) on hmmsearch, starting at 06/26/2023 21:03:43
+2023-06-26 21:03:44 INFO:	[hmmsearch]	12 of 115 task(s) completed
+2023-06-26 21:03:44 INFO:	[hmmsearch]	23 of 115 task(s) completed
+2023-06-26 21:03:44 INFO:	[hmmsearch]	35 of 115 task(s) completed
+2023-06-26 21:03:44 INFO:	[hmmsearch]	46 of 115 task(s) completed
+2023-06-26 21:03:45 INFO:	[hmmsearch]	58 of 115 task(s) completed
+2023-06-26 21:03:45 INFO:	[hmmsearch]	69 of 115 task(s) completed
+2023-06-26 21:03:45 INFO:	[hmmsearch]	81 of 115 task(s) completed
+2023-06-26 21:03:45 INFO:	[hmmsearch]	92 of 115 task(s) completed
+2023-06-26 21:03:46 INFO:	[hmmsearch]	104 of 115 task(s) completed
+2023-06-26 21:03:58 INFO:	[hmmsearch]	115 of 115 task(s) completed
+2023-06-26 21:04:46 INFO:	Validating exons and removing overlapping matches
+2023-06-26 21:05:01 INFO:	149 candidate overlapping regions found
+2023-06-26 21:05:01 INFO:	36322 exons in total
+2023-06-26 21:05:52 INFO:	Results:	C:98.2%[S:96.9%,D:1.3%],F:0.9%,M:0.9%,n:3354	   
+
+2023-06-26 21:06:16 INFO:	
+
+	--------------------------------------------------
+	|Results from dataset vertebrata_odb10            |
+	--------------------------------------------------
+	|C:98.2%[S:96.9%,D:1.3%],F:0.9%,M:0.9%,n:3354     |
+	|3293	Complete BUSCOs (C)                       |
+	|3249	Complete and single-copy BUSCOs (S)       |
+	|44	Complete and duplicated BUSCOs (D)        |
+	|29	Fragmented BUSCOs (F)                     |
+	|32	Missing BUSCOs (M)                        |
+	|3354	Total BUSCO groups searched               |
+	--------------------------------------------------
+2023-06-26 21:06:16 INFO:	BUSCO analysis done. Total running time: 5198 seconds
+2023-06-26 21:06:16 INFO:	Results written in /g/data/xl04/ka6418/ausarg/temp/busco/g/data/xl04/ausarg_data/Bassiana_duperreyi/assembly/evaluation/busco
+2023-06-26 21:06:16 INFO:	For assistance with interpreting the results, please consult the userguide: https://busco.ezlab.org/busco_userguide.html
+
+2023-06-26 21:06:16 INFO:	Visit this page https://gitlab.com/ezlab/busco#how-to-cite-busco to see how to cite BUSCO
+
+======================================================================================
+                  Resource Usage on 2023-06-26 21:06:19:
+   Job Id:             89065619.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      138.77
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 50:35:48        
+   Memory Requested:   192.0GB               Memory Used: 110.48GB        
+   Walltime requested: 06:00:00            Walltime Used: 01:26:44        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
