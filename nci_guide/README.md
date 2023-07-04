@@ -9,7 +9,6 @@ Table of Contents
 
 ### Conda Environments
 
-
 #### Installing Conda in your local folder 
 We will use MiniConda3 to locally install conda environments in your local folder 
 
@@ -21,10 +20,21 @@ Once you provide the local folder, it should install conda and automatically act
 
 #### Creating new environments 
 
-#### Running them in a PBS script 
-1. Locate your conda.sh script 
-2.
+``` conda create --name myenv ```
 
+Then, you can activate/deactivate the environment using the following commands 
+
+``` conda activate myenv ```
+``` conda deactivate ```
+    
+
+#### Running them in a PBS script 
+Locate your conda.sh script, and add the following files at the start of your script to activate it
+
+``` source /path/to/miniconda/etc/profile.d/conda.sh ```
+``` conda activate trash ```
+
+and that's it! Now you can use conda environments within your PBS scripts. 
 
 
 
