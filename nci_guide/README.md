@@ -29,10 +29,10 @@ Then, you can activate/deactivate the environment using the following commands
     
 
 #### Running them in a PBS script 
-Locate your conda.sh script, and add the following files at the start of your script to activate it
+Locate your conda.sh script, and add the following lines at the start of your script to activate it
 
-``` source /path/to/miniconda/etc/profile.d/conda.sh ```
-``` conda activate trash ```
+``` source /path/to/miniconda/etc/profile.d/conda.sh 
+ conda activate trash ```
 
 and that's it! Now you can use conda environments within your PBS scripts. 
 
