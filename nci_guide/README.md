@@ -33,7 +33,7 @@ Locate your conda.sh script, and add the following lines at the start of your sc
 
 ```bash
 source /path/to/miniconda/etc/profile.d/conda.sh 
-conda activate trash 
+conda activate myenv
 
 ```
 and that's it! Now you can use conda environments within your PBS scripts. 
