@@ -14,14 +14,11 @@ sequencing_technology="$SEQ"
 output_dir="$ODIR"
 
 # Construct output directory path
-#output_dir="$(dirname "$input_file")/../evaluation/length_frequency/tsv"
+
 mkdir -p "$output_dir"  # Create the directory if it doesn't exist
 
-#id=$(basename "$input_file" .fq.gz | rev | cut -d "_" -f 1 | rev)
-#sequencing_technology=$(basename "$input_file" .fq.gz | rev | cut -d "_" -f 2 | rev)
-
 # Construct output file name
-output_file_name=${id}_${sequencing_technology}_length_freq.tsv"
+output_file_name="${output_dir}/${id}_${sequencing_technology}_length_freq.tsv"
 
 echo -e "Read_Length\tRead_Numbers\tFlowcell_ID\tPlatform" > "$output_file_name"
 
