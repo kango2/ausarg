@@ -12,7 +12,7 @@ submit_job() {
     -o "$output_log" \
     -e "$error_log" \
     -v INPUT_FILE="$input_file" \
-    /g/data/xl04/ka6418/jellyfish/dump_to_histo_slave.sh
+    /g/data/xl04/ka6418/ausarg/temp/dump_to_histo/dump_to_histo_slave.sh
 }
 
 # Set the directory where log files will be stored

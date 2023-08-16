@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P xl04
 #PBS -q normal
-#PBS -l walltime=0:30:00
+#PBS -l walltime=0:45:00
 #PBS -l mem=32GB
 #PBS -l ncpus=16
 #PBS -l storage=gdata/xl04+gdata/if89
@@ -9,13 +9,16 @@
 #PBS -M kirat.alreja@anu.edu.au
 
 input_file="$INPUT_FILE"
+id="$ID"
+sequencing_technology="$SEQ"
+output_dir="$ODIR"
 
 # Construct output directory path
-output_dir="$(dirname "$input_file")/../evaluation/length_frequency/tsv"
+#output_dir="$(dirname "$input_file")/../evaluation/length_frequency/tsv"
 mkdir -p "$output_dir"  # Create the directory if it doesn't exist
 
-id=$(basename "$input_file" .fq.gz | rev | cut -d "_" -f 1 | rev)
-sequencing_technology=$(basename "$input_file" .fq.gz | rev | cut -d "_" -f 2 | rev)
+#id=$(basename "$input_file" .fq.gz | rev | cut -d "_" -f 1 | rev)
+#sequencing_technology=$(basename "$input_file" .fq.gz | rev | cut -d "_" -f 2 | rev)
 
 # Construct output file name
 output_file_name=${id}_${sequencing_technology}_length_freq.tsv"

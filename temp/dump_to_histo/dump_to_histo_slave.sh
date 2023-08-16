@@ -8,6 +8,8 @@
 #PBS -l wd
 #PBS -M kirat.alreja@anu.edu.au
 
+module load jellyfish/2.3.0
+
 input_file="$INPUT_FILE"
 
 if [ ! -f "$input_file" ]; then
