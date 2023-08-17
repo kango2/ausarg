@@ -9,7 +9,7 @@ bin_size = 100
 def process_fastq(input_fastq, output_file_name):
     bins = {}
 
-    with gzip.open(input_fastq, "rt") as f:
+    with open(input_fastq, "rt") as f:
         for record in SeqIO.parse(f, "fastq-sanger"):
             sequence_length = len(record.seq)
             avg_qv = round(sum(record.letter_annotations["phred_quality"]) / sequence_length)
