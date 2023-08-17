@@ -11,7 +11,7 @@ if [ -z "$CHUNKS_DIR" ] || [ -z "$CSV_DIR" ]; then
 fi
 
 # Iterate through each chunk in the directory
-for CHUNK in "$CHUNKS_DIR"/*.gz; do
+for CHUNK in "$CHUNKS_DIR"/*.fq; do
 
     # Create an individual PBS script for the chunk
     JOB_FILE="job_$$.pbs"
@@ -21,8 +21,8 @@ for CHUNK in "$CHUNKS_DIR"/*.gz; do
 #PBS -P xl04
 #PBS -q normal
 #PBS -l walltime=0:05:00
-#PBS -l mem=32GB
-#PBS -l ncpus=16
+#PBS -l mem=8GB
+#PBS -l ncpus=4
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
 #PBS -o /g/data/xl04/ka6418/logs
@@ -33,7 +33,7 @@ for CHUNK in "$CHUNKS_DIR"/*.gz; do
 
 module load biopython # Load necessary modules. Adjust as necessary
 
-python3 /g/data/xl04/ka6418/QCflow/qv_concurrent/quality.py "$CHUNK" "$CSV_DIR"
+python3 /g/data/xl04/ka6418/ausarg/temp/qv_frequency_concurrent/quality.py "$CHUNK" "$CSV_DIR"
 
 EOL
 

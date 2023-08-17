@@ -6,7 +6,7 @@ import csv
 
 bin_size = 100
 
-def process_fastq(input_fastq, output_file_name):
+def process_fastq(input_fastq, output_path):
     bins = {}
 
     with open(input_fastq, "rt") as f:
@@ -23,7 +23,8 @@ def process_fastq(input_fastq, output_file_name):
             bins[bin_key]["total_qv"] += avg_qv
             bins[bin_key]["count"] += 1
 
-    output_csv = f"{output_file_name}_{os.path.splitext(os.path.basename(input_fastq))[0]}_quality_freq.csv"
+    input_basename = os.path.splitext(os.path.basename(input_fastq))[0]
+    output_csv = os.path.join(output_path, f"{input_basename}_quality_freq.csv")
 
     with open(output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
@@ -39,10 +40,10 @@ def process_fastq(input_fastq, output_file_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python script_name.py input_fastq.gz output_file_name")
+        print("Usage: python script_name.py input_fastq.gz output_path")
         sys.exit(1)
 
     input_fastq = sys.argv[1]
-    output_file_name = sys.argv[2]
+    output_path = sys.argv[2]
 
-    process_fastq(input_fastq, output_file_name)
+    process_fastq(input_fastq, output_path)
