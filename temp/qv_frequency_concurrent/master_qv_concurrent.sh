@@ -6,7 +6,7 @@
 #PBS -l walltime=1:00:00
 #PBS -l mem=32GB
 #PBS -l ncpus=16
-#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l storage=gdata/xl04+gdata/if89+gdata/te53
 #PBS -l wd
 #PBS -l jobfs=400GB
 #PBS -M kirat.alreja@anu.edu.au
