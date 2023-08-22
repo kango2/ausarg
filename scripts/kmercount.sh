@@ -1,4 +1,7 @@
+#Authors : Hardip Patel, Kirat Alreja, Arthur Georges
+
 #!/bin/bash
+
 #PBS -l ncpus=48
 #PBS -l walltime=04:00:00
 #PBS -l mem=190GB
