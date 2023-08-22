@@ -1,5 +1,3 @@
-#Authors : Hardip Patel, Kirat Alreja, Arthur Georges
-
 #!/bin/bash
 
 #PBS -l ncpus=48
@@ -8,6 +6,8 @@
 #PBS -N kmercount
 #PBS -j oe
 #PBS -l jobfs=400GB
+
+#Authors : Hardip Patel, Kirat Alreja, Arthur Georges
 
 set -ex
 
