@@ -93,29 +93,22 @@ def main():
         format="%(asctime)s:%(levelname)s:%(name)s:%(message)s", level=numeric_level
     )
 
-    if not sys.stdin.isatty():
-        # If data on stdin, set input_data to read from stdin
-        logging.info(f"Reading input from stdin.")
-        input_data = sys.stdin.readlines()
-        if args.infile:
-            # If infile is also set log that it will be ignored
-            logging.warning(
-                f"Ignoring --infile arg {args.infile} and reading data from stdin."
-            )
-    elif args.infile:
-        # If infile is set, check if it exists
+
+    if args.infile:
         if not op.exists(args.infile):
             logging.error(f"dat file not found: {args.infile}")
             sys.exit(1)
-        else:
-            # If file exists, readlines from file
-            logging.info(f"Reading datfile: {args.infile}")
-            with open(args.infile, "r") as fh:
-                input_data = fh.readlines()
+        logging.info(f"Reading datfile: {args.infile}")
+        with open(args.infile, "r") as fh:
+            input_data = fh.readlines()
     else:
-        # Exit if no data on stdin or infile
-        logging.error(f"No input data detected. Exiting.")
-        sys.exit(1)
+        if not sys.stdin.isatty():
+            logging.info(f"Reading input from stdin.")
+            input_data = sys.stdin.readlines()
+        else:
+            logging.error(f"No input data detected. Exiting.")
+            sys.exit(1)
+
 
     # Init feature counter
     counter = 0
