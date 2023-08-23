@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #PBS -l ncpus=48
-#PBS -l walltime=04:00:00
+#PBS -l walltime=48:00:00
 #PBS -l mem=190GB
 #PBS -N kmercount
 #PBS -j oe
