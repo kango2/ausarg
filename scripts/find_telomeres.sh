@@ -2,10 +2,24 @@
 #PBS -N Telomere
 #PBS -q normal
 #PBS -l walltime=0:30:00
-#PBS -l mem=16GB
+#PBS -l mem=64GB
 #PBS -l ncpus=48
 #PBS -l wd
+#PBS -j oe
 #PBS -l jobfs=400GB
+
+#set -ex breaks the script - probably due to trf2gff conversion 
+
+usage() {
+	echo "Usage: qsub -l storage=gdata/if89+gdata/projectcode -o /path/to/stdouterr -P projectcode -v input=/path/to/fasta,output=/path/to/output/csv,permatch=90,copies=100 ./find_telomeres.sh" >&2
+	echo
+	exit 1
+}
+
+[ -z "${input}" ] && usage
+[ -z "${output}" ] && usage
+[ -z "${permatch}" ] && usage
+[ -z "${copies}" ] && usage
 
 module load kentutils/0.0 TRF/4.09.1 biopython/1.79 parallel/20191022 
 
