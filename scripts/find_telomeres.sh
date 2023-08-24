@@ -1,14 +1,11 @@
 #!/bin/bash
 #PBS -N Telomere
-#PBS -P xl04
-#PBS -q express
-#PBS -l walltime=0:05:00
+#PBS -q normal
+#PBS -l walltime=0:30:00
 #PBS -l mem=16GB
 #PBS -l ncpus=48
-#PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
 #PBS -l jobfs=400GB
-#PBS -M kirat.alreja@anu.edu.au
 
 module load kentutils/0.0 TRF/4.09.1 biopython/1.79 parallel/20191022 
 
@@ -17,7 +14,7 @@ outputdir="$output"
 percentage_match="$permatch"
 number_copies="$copies"
 
-faSplit sequence $inputfile 1000 ${PBS_JOBFS}/chunk
+faSplit sequence $inputfile 10000 ${PBS_JOBFS}/chunk
 
 cd ${PBS_JOBFS}
 filelist=$(ls ${PBS_JOBFS}/chunk*)
@@ -39,9 +36,7 @@ awk -F'\t' 'BEGIN {OFS=","}
     }
 ' $(basename "$inputfile" .fasta).gff3 >> $(basename "$inputfile" .fasta).csv
 
-echo "Executing: python3 /g/data/xl04/ka6418/ausarg/scripts/clean_telomere_csv.py \"$(basename "$inputfile" .fasta).csv\" \"$inputfile\" \"$outputdir/$(basename "$inputfile" .fasta)_TRF.csv\" \"$number_copies\" \"$percentage_match\""
-
-python3 /g/data/xl04/ka6418/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_TRF.csv" $number_copies $percentage_match
+python3 /g/data/xl04/ka6418/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
 
 
 
