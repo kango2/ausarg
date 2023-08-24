@@ -1,9 +1,7 @@
 import pandas as pd
-
-if len(sys.argv) != 6:
-    print("Usage: python script_name.py trf_input.csv fasta_file.fasta output.csv min_copies min_perc_match")
-    sys.exit(1)
-
+import sys
+print("Number of arguments:", len(sys.argv))
+print("Arguments:", sys.argv)
 
 trf_input = sys.argv[1]
 trf = pd.read_csv(trf_input)
@@ -64,5 +62,5 @@ result_df['Relative Start'] = (result_df['Start']/result_df['Length']).round(2)
 result_df['Relative End'] = (result_df['End']/result_df['Length']).round(2)
 result_df = result_df[result_df['cons_seq'].isin(telomeric_variations)]
 result_df = result_df[result_df['copies']>=copies]
-result_df = result_df[result_df['perc_match'] >= permatch]
+result_df = result_df[result_df['perc_match']>=permatch]
 result_df.to_csv(output_csv, index=False)
