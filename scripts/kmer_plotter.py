@@ -1,5 +1,3 @@
-# todo make it user-friendly and add arguments
-
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -30,8 +28,9 @@ def filter_data(x_data, y_data, limit=500):
     filtered_y = y_data[:len(filtered_x)]
     return filtered_x, filtered_y
 def automatic_plot_combined(files,save_path=None):
-    file_info = [extract_info_from_filename(file) for file in files]
+    
     files = [os.path.join(directory_path, filename) for filename in os.listdir(directory_path) if filename.endswith('.histo')]
+    file_info = [extract_info_from_filename(file) for file in files]
 
     # Group files by sequencing tech
     grouped_files = defaultdict(list)
