@@ -50,4 +50,4 @@ runcmd.sh -c "jellyfish count --text -g ${PBS_JOBFS}/filegenerator.cmds -G ${fil
 runcmd.sh -c "jellyfish histo -t ${PBS_NCPUS} -o ${OUTDIR}/$sampleID.histo ${PBS_JOBFS}/$sampleID.dump" -t ${sampleID}.kmerhisto -d ${OUTDIR}/$sampleID.kmerhisto.done -f false
 runcmd.sh -c "sort -k1,1 --parallel=${PBS_NCPUS} --buffer-size=80% -T ${PBS_JOBFS} -o ${PBS_JOBFS}/$sampleID.sorted.dump ${PBS_JOBFS}/$sampleID.dump" -t ${sampleID}.kmersort -d ${OUTDIR}/$sampleID.kmersort.done -f false
 runcmd.sh -c "pigz -q -p ${PBS_NCPUS} ${PBS_JOBFS}/$sampleID.sorted.dump" -t ${sampleID}.kmerzip -d ${OUTDIR}/$sampleID.kmerzip.done -f false
-runcmd.sh -c "rsync -a ${PBS_JOBFS}/$sampleID.sorted.dump.gz ${OUTDIR}/" -t ${sampleID}.kmerxfer -d ${OUTDIR}/$sampleID.kmerxfer.done -f false
+runcmd.sh -c "rsync -a ${PBS_JOBFS}/$sampleID.sorted.dump.gz ${OUTDIR}/" -t ${sampleID}.kmerxfer -d ${OUTDIR}/$sampleID.kmerxfer.done -f false                              
