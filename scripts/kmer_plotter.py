@@ -1,3 +1,5 @@
+# todo make it user-friendly and add arguments
+
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
