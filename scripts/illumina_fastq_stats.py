@@ -1,6 +1,3 @@
-#Todo - Generate an output name. Currently, the script expects the output path to state the filename with csv - example.csv. 
-#Modify it to remove csv dependency, becuase json generation depends on that
-
 import csv
 import gzip
 from collections import defaultdict
@@ -133,7 +130,7 @@ def main():
     parser = argparse.ArgumentParser(description='Calculate metrics for Illumina FASTQ files (R1 and R2).')
     parser.add_argument('-R1', type=str, required=True, help='Path to the R1 fastq.gz file.')
     parser.add_argument('-R2', type=str, help='Path to the R2 fastq.gz file. Optional.')
-    parser.add_argument('-o', '--output', type=str, default="statistics.csv", help='Path to the output CSV file.')
+    parser.add_argument('-o', '--output', type=str, default="statistics", help='Base name for the output file (without extension).')
     parser.add_argument('--format', type=str, choices=["csv", "json", "both"], default="csv", help='Output format: csv, json, or both.')
     args = parser.parse_args()
 
@@ -203,18 +200,18 @@ def main():
         metrics_dict = dict(zip(headers, combined_metrics))
 
         if "both" in args.format:
-            with open(args.output, 'w', newline='') as csvfile:
+            with open(args.output + '.csv', 'w', newline='') as csvfile:
                 csvwriter = csv.writer(csvfile)
                 csvwriter.writerow(headers)
                 csvwriter.writerow(combined_metrics)
 
             output_json = args.output.replace('.csv', '.json')
-            with open(output_json, 'w') as jsonfile:
+            with open(output_json + '.json', 'w') as jsonfile:
                 json.dump({"metrics": metrics_dict}, jsonfile, indent=4)
 
 
         if "csv" in args.format:
-            with open(args.output, 'w', newline='') as csvfile:
+            with open(args.output + '.csv', 'w', newline='') as csvfile:
                 csvwriter = csv.writer(csvfile)
                 csvwriter.writerow(headers)
                 csvwriter.writerow(combined_metrics)
@@ -222,7 +219,7 @@ def main():
 
         if "json" in args.format:
             output_json = args.output.replace('.csv', '.json')
-            with open(output_json, 'w') as jsonfile:
+            with open(output_json + '.json', 'w') as jsonfile:
                 json.dump({"metrics": metrics_dict}, jsonfile, indent=4)
 
 
