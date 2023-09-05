@@ -1,3 +1,6 @@
+#Todo - Generate an output name. Currently, the script expects the output path to state the filename with csv - example.csv. 
+#Modify it to remove csv dependency, becuase json generation depends on that
+
 import csv
 import gzip
 from collections import defaultdict
