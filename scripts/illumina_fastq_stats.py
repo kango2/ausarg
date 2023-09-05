@@ -123,19 +123,24 @@ def calculate_gc_content(sequences):
 def get_file_size_gb(file_path):
     """Return the file size in gigabytes."""
     size_in_bytes = os.path.getsize(file_path)
-    size_in_gb = size_in_bytes / (1024 ** 3)
+    size_in_gb = size_in_bytes / (1024 ** 2)
     return round(size_in_gb, 2)
 
 def main():
     parser = argparse.ArgumentParser(description='Calculate metrics for Illumina FASTQ files (R1 and R2).')
     parser.add_argument('-R1', type=str, required=True, help='Path to the R1 fastq.gz file.')
-    parser.add_argument('-R2', type=str, required=True, help='Path to the R2 fastq.gz file.')
+    parser.add_argument('-R2', type=str, help='Path to the R2 fastq.gz file. Optional.')
     parser.add_argument('-o', '--output', type=str, default="statistics.csv", help='Path to the output CSV file.')
+    parser.add_argument('--format', type=str, choices=["csv", "json", "both"], default="csv", help='Output format: csv, json, or both.')
     args = parser.parse_args()
 
     metrics = []
 
-    for fastq_file in [args.R1, args.R2]:
+    fastq_files = [args.R1]
+    if args.R2:
+        fastq_files.append(args.R2)
+
+    for fastq_file in fastq_files:
         sequences, quality_scores, md5_compressed, md5_uncompressed = parse_fastq(fastq_file)
         num_reads = count_reads(sequences)
         total_bases = count_total_bases(sequences)
@@ -146,12 +151,14 @@ def main():
         avg_qv_reads = average_qv_per_read(quality_scores)
         gc_content = calculate_gc_content(sequences)
         file_size = get_file_size_gb(fastq_file)
+        path = os.path.abspath(fastq_file)
 
         # Format nucleotide frequencies
         nucleotide_freq_str = [":".join(str(int(freq)) if float(freq).is_integer() else f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
         overall_content_str = ":".join(str(int(freq)) if float(freq).is_integer() else f"{freq:.2f}" for freq in overall_content)
 
         metrics.append({
+            'path': path,
             'num_reads': num_reads,
             'total_bases': total_bases,
             'avg_read_length': avg_read_length_val,
@@ -165,38 +172,56 @@ def main():
             'file_size_gb': file_size
         })
 
-    output_csv = args.output
-    with open(output_csv, 'w', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        headers = ['Number of reads', 'Number of bases', 'Mean read length', 
-                   'Mean QV at read position', 'Nucleotide count at read position', 
-                   'Nucleotide content ', 'Mean QV per read',
-                   'MD5 (.fastq.gz)', 'MD5 (.fastq)', 'GC', 'File size in GB']
-        csvwriter.writerow(headers)
+        headers = [
+            'File path','Number of reads', 'Number of bases', 'Mean read length',
+            'Mean QV at read position', 'Nucleotide count at read position',
+            'Nucleotide content', 'Mean QV per read',
+            'MD5_zipped', 'MD5_text', 'GC', 'File size in MB'
+        ]
 
         combined_metrics = []
-        keys = ['num_reads', 'total_bases', 'avg_read_length', 'avg_quality_values',
-                'nucleotide_freq', 'overall_content', 'avg_qv_reads', 'md5_compressed', 
-                'md5_uncompressed', 'gc_content', 'file_size_gb']  # Added gc_content and file_size_gb
-
+        keys = [
+            'path','num_reads', 'total_bases', 'avg_read_length', 'avg_quality_values',
+            'nucleotide_freq', 'overall_content', 'avg_qv_reads', 'md5_compressed',
+            'md5_uncompressed', 'gc_content', 'file_size_gb'
+        ]
 
         for key in keys:
             if isinstance(metrics[0][key], list):
-                combined_val = ",".join(str(val) for val in metrics[0][key]) + ";" + ",".join(str(val) for val in metrics[1][key])
+                combined_val = ",".join(str(val) for val in metrics[0][key])
+                if len(metrics) > 1:
+                    combined_val += ";" + ",".join(str(val) for val in metrics[1][key])
             else:
-                combined_val = f"{metrics[0][key]};{metrics[1][key]}"
+                combined_val = f"{metrics[0][key]}"
+                if len(metrics) > 1:
+                    combined_val += f";{metrics[1][key]}"
             combined_metrics.append(combined_val)
-        
-        csvwriter.writerow(combined_metrics)
-    
-    metrics_dict = dict(zip(headers, combined_metrics))
-    
-    # Write to JSON
-    output_json = args.output.replace('.csv', '.json')
-    with open(output_json, 'w') as jsonfile:
-        json.dump({"metrics": metrics_dict}, jsonfile, indent=4)
-    
-    print(f"Statistics saved to {output_csv} and {output_json}")
+
+        metrics_dict = dict(zip(headers, combined_metrics))
+
+        if "both" in args.format:
+            with open(args.output, 'w', newline='') as csvfile:
+                csvwriter = csv.writer(csvfile)
+                csvwriter.writerow(headers)
+                csvwriter.writerow(combined_metrics)
+
+            output_json = args.output.replace('.csv', '.json')
+            with open(output_json, 'w') as jsonfile:
+                json.dump({"metrics": metrics_dict}, jsonfile, indent=4)
+
+
+        if "csv" in args.format:
+            with open(args.output, 'w', newline='') as csvfile:
+                csvwriter = csv.writer(csvfile)
+                csvwriter.writerow(headers)
+                csvwriter.writerow(combined_metrics)
+
+
+        if "json" in args.format:
+            output_json = args.output.replace('.csv', '.json')
+            with open(output_json, 'w') as jsonfile:
+                json.dump({"metrics": metrics_dict}, jsonfile, indent=4)
+
 
 if __name__ == "__main__":
     main()
