@@ -74,7 +74,7 @@ def average_nucleotide_frequencies(sequences):
 
     average_frequencies = []
     for base_counts in total_bases:
-        avg_freq = [base_counts.get(base, 0) / total_reads for base in bases]
+        avg_freq = [base_counts.get(base, 0) for base in bases]
         average_frequencies.append(avg_freq)
 
     return average_frequencies
@@ -89,13 +89,13 @@ def overall_nucleotide_content(sequences):
         for base in seq:
             total_counts[base] += 1
 
-    return [total_counts.get(base, 0) / total_length for base in bases]
+    return [int(total_counts.get(base, 0)) for base in bases]
 
 def average_qv_per_read(quality_scores):
-    """Calculate histogram of average quality values binned in intervals of 10."""
+    """Calculate histogram of average quality values binned in intervals of 1."""
     
-    # Initialize the histogram with 10 bins
-    histogram = [0] * 10
+    # Initialize the histogram with 101 bins (0-100)
+    histogram = [0] * 101
     
     for qs in quality_scores:
         scores = phred_to_quality(qs)
@@ -104,7 +104,7 @@ def average_qv_per_read(quality_scores):
         avg_quality = sum(scores) / len(scores) if scores else 0
         
         # Determine the bin for this average quality
-        bin_index = min(int(avg_quality // 10), 9)  # max bin index is 9 (for values 90-100)
+        bin_index = min(int(avg_quality), 100)  # max bin index is 100
         
         # Increment the count for the determined bin
         histogram[bin_index] += 1
@@ -149,9 +149,9 @@ def main():
     output_csv = args.output
     with open(output_csv, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
-        headers = ['Number of reads', 'Total number of bases', 'Average read length', 
-                   'Average per-base quality values', 'Average per-base nucleotide frequencies', 
-                   'Overall nucleotide content (A,C,G,T)', 'Average QV per read',
+        headers = ['Number of reads', 'Number of bases', 'Mean read length', 
+                   'Mean QV at read position', 'Nucleotide count at read position', 
+                   'Nucleotide content ', 'Mean QV per read',
                    'MD5 (.fastq.gz)', 'MD5 (.fastq)']
         csvwriter.writerow(headers)
 
