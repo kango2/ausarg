@@ -1,11 +1,19 @@
 import csv
 import gzip
 from collections import defaultdict
+import hashlib
 
 def parse_fastq(fastq_file):
-    """Parse the FASTQ file and return a list of sequences and quality scores."""
+    """Parse the FASTQ file and return a list of sequences, quality scores, and MD5 checksums."""
     sequences = []
     quality_scores = []
+    hash_md5_compressed = hashlib.md5()
+    hash_md5_uncompressed = hashlib.md5()
+
+    with open(fastq_file, 'rb') as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5_compressed.update(chunk)
+
     with gzip.open(fastq_file, 'rt') as f:
         for i, line in enumerate(f):
             # Sequence lines are the second line in every set of 4 lines
@@ -14,7 +22,14 @@ def parse_fastq(fastq_file):
             # Quality scores are the fourth line in every set of 4 lines
             elif i % 4 == 3:
                 quality_scores.append(line.strip())
-    return sequences, quality_scores
+
+            # Update the MD5 hash for the uncompressed content
+            hash_md5_uncompressed.update(line.encode())
+
+    md5_compressed = hash_md5_compressed.hexdigest()
+    md5_uncompressed = hash_md5_uncompressed.hexdigest()
+
+    return sequences, quality_scores, md5_compressed, md5_uncompressed
 
 def count_reads(sequences):
     """Count the number of reads from the sequences."""
@@ -29,7 +44,7 @@ def average_read_length(num_reads, total_bases):
     return total_bases / num_reads if num_reads > 0 else 0
 
 def phred_to_quality(phred_string):
-    """Convert Phred encoded quality string to a list of rounded quality values."""
+    """Convert Phred encoded quality string to a list of numerical quality values."""
     return [ord(char) - 33 for char in phred_string]
 
 def average_per_base_quality(quality_scores):
@@ -73,32 +88,40 @@ def overall_nucleotide_content(sequences):
 
     return [total_counts.get(base, 0) / total_length for base in bases]
 
+def average_qv_per_read(quality_scores):
+    """Calculate average quality value (QV) for each read."""
+    return [round(sum(phred_to_quality(qs)) / len(qs)) for qs in quality_scores]
+
 def main():
     fastq_file = "/g/data/xl04/ka6418/ausarg/temp/illumina_fastq/alternate_test.fastq.gz"
     output_csv = "statistics.csv"
     
-    sequences, quality_scores = parse_fastq(fastq_file)
+    sequences, quality_scores, md5_compressed, md5_uncompressed = parse_fastq(fastq_file)
     num_reads = count_reads(sequences)
     total_bases = count_total_bases(sequences)
     avg_read_length_val = average_read_length(num_reads, total_bases)
     avg_quality_values = average_per_base_quality(quality_scores)
     nucleotide_freq = average_nucleotide_frequencies(sequences)
     overall_content = overall_nucleotide_content(sequences)
+    avg_qv_reads = average_qv_per_read(quality_scores)
 
     # Format nucleotide frequencies for CSV
-    nucleotide_freq_str = [",".join(f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
-    overall_content_str = ",".join(f"{freq:.2f}" for freq in overall_content)
+    nucleotide_freq_str = [":".join(f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
+    overall_content_str = ":".join(f"{freq:.2f}" for freq in overall_content)
 
     # Save to CSV
     with open(output_csv, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         headers = ['Number of reads', 'Total number of bases', 'Average read length', 
                    'Average per-base quality values', 'Average per-base nucleotide frequencies', 
-                   'Overall nucleotide content (A,C,G,T)']
+                   'Overall nucleotide content (A,C,G,T)', 'Average QV per read',
+                   'MD5 (.fastq.gz)', 'MD5 (.fastq)']
         csvwriter.writerow(headers)
         csvwriter.writerow([num_reads, total_bases, avg_read_length_val, 
                             ",".join(map(str, avg_quality_values)), 
-                            "|".join(nucleotide_freq_str), overall_content_str])
+                            ",".join(nucleotide_freq_str), overall_content_str, 
+                            ",".join(map(str, avg_qv_reads)),
+                            md5_compressed, md5_uncompressed])
     
     print(f"Statistics saved to {output_csv}")
 
