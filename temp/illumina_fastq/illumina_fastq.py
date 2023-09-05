@@ -3,6 +3,8 @@ import gzip
 from collections import defaultdict
 import hashlib
 import argparse
+import os
+import json
 
 def parse_fastq(fastq_file):
     """Parse the FASTQ file and return a list of sequences, quality scores, and MD5 checksums."""
@@ -89,7 +91,7 @@ def overall_nucleotide_content(sequences):
         for base in seq:
             total_counts[base] += 1
 
-    return [int(total_counts.get(base, 0)) for base in bases]
+    return [total_counts.get(base, 0) for base in bases]
 
 def average_qv_per_read(quality_scores):
     """Calculate histogram of average quality values binned in intervals of 1."""
@@ -111,6 +113,19 @@ def average_qv_per_read(quality_scores):
 
     return histogram
 
+def calculate_gc_content(sequences):
+    """Calculate the GC content percentage for the entire FASTQ file."""
+    total_length = sum(len(seq) for seq in sequences)
+    gc_count = sum(seq.count('G') + seq.count('C') for seq in sequences)
+    gc_content = (gc_count / total_length) * 100 if total_length > 0 else 0
+    return round(gc_content, 2)
+
+def get_file_size_gb(file_path):
+    """Return the file size in gigabytes."""
+    size_in_bytes = os.path.getsize(file_path)
+    size_in_gb = size_in_bytes / (1024 ** 3)
+    return round(size_in_gb, 2)
+
 def main():
     parser = argparse.ArgumentParser(description='Calculate metrics for Illumina FASTQ files (R1 and R2).')
     parser.add_argument('-R1', type=str, required=True, help='Path to the R1 fastq.gz file.')
@@ -129,9 +144,11 @@ def main():
         nucleotide_freq = average_nucleotide_frequencies(sequences)
         overall_content = overall_nucleotide_content(sequences)
         avg_qv_reads = average_qv_per_read(quality_scores)
+        gc_content = calculate_gc_content(sequences)
+        file_size = get_file_size_gb(fastq_file)
 
         # Format nucleotide frequencies
-        nucleotide_freq_str = [":".join(f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
+        nucleotide_freq_str = [":".join(str(int(freq)) if float(freq).is_integer() else f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
         overall_content_str = ":".join(f"{freq:.2f}" for freq in overall_content)
 
         metrics.append({
@@ -143,7 +160,9 @@ def main():
             'overall_content': overall_content_str,
             'avg_qv_reads': avg_qv_reads,
             'md5_compressed': md5_compressed,
-            'md5_uncompressed': md5_uncompressed
+            'md5_uncompressed': md5_uncompressed,
+            'gc_content': gc_content,
+            'file_size_gb': file_size
         })
 
     output_csv = args.output
@@ -152,13 +171,14 @@ def main():
         headers = ['Number of reads', 'Number of bases', 'Mean read length', 
                    'Mean QV at read position', 'Nucleotide count at read position', 
                    'Nucleotide content ', 'Mean QV per read',
-                   'MD5 (.fastq.gz)', 'MD5 (.fastq)']
+                   'MD5 (.fastq.gz)', 'MD5 (.fastq)', 'GC', 'File size in GB']
         csvwriter.writerow(headers)
 
         combined_metrics = []
         keys = ['num_reads', 'total_bases', 'avg_read_length', 'avg_quality_values',
                 'nucleotide_freq', 'overall_content', 'avg_qv_reads', 'md5_compressed', 
-                'md5_uncompressed']
+                'md5_uncompressed', 'gc_content', 'file_size_gb']  # Added gc_content and file_size_gb
+
 
         for key in keys:
             if isinstance(metrics[0][key], list):
@@ -169,7 +189,14 @@ def main():
         
         csvwriter.writerow(combined_metrics)
     
-    print(f"Statistics saved to {output_csv}")
+    metrics_dict = dict(zip(headers, combined_metrics))
+    
+    # Write to JSON
+    output_json = args.output.replace('.csv', '.json')
+    with open(output_json, 'w') as jsonfile:
+        json.dump({"metrics": metrics_dict}, jsonfile, indent=4)
+    
+    print(f"Statistics saved to {output_csv} and {output_json}")
 
 if __name__ == "__main__":
     main()
