@@ -149,7 +149,7 @@ def main():
 
         # Format nucleotide frequencies
         nucleotide_freq_str = [":".join(str(int(freq)) if float(freq).is_integer() else f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
-        overall_content_str = ":".join(f"{freq:.2f}" for freq in overall_content)
+        overall_content_str = ":".join(str(int(freq)) if float(freq).is_integer() else f"{freq:.2f}" for freq in overall_content)
 
         metrics.append({
             'num_reads': num_reads,
