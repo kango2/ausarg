@@ -51,14 +51,16 @@ def phred_to_quality(phred_string):
 def average_per_base_quality(quality_scores):
     """Calculate average per base quality values across all reads."""
     total_scores = [0] * max(len(qs) for qs in quality_scores)
-    total_reads = len(quality_scores)
+    count_scores = [0] * max(len(qs) for qs in quality_scores)  # Count of scores for each position
     
     for qs in quality_scores:
         scores = phred_to_quality(qs)
         for i, score in enumerate(scores):
             total_scores[i] += score
+            count_scores[i] += 1  # Increment count for that position
 
-    return [round(score / total_reads) for score in total_scores]
+    # Calculate average by dividing total score by count for each position
+    return [round(total_scores[i] / count_scores[i]) if count_scores[i] != 0 else 0 for i in range(len(total_scores))]
 
 def average_nucleotide_frequencies(sequences):
     """Calculate average per base nucleotide frequencies (A, C, G, T) across all reads."""
@@ -90,8 +92,24 @@ def overall_nucleotide_content(sequences):
     return [total_counts.get(base, 0) / total_length for base in bases]
 
 def average_qv_per_read(quality_scores):
-    """Calculate average quality value (QV) for each read."""
-    return [round(sum(phred_to_quality(qs)) / len(qs)) for qs in quality_scores]
+    """Calculate histogram of average quality values binned in intervals of 10."""
+    
+    # Initialize the histogram with 10 bins
+    histogram = [0] * 10
+    
+    for qs in quality_scores:
+        scores = phred_to_quality(qs)
+        
+        # Calculate the average quality for this read
+        avg_quality = sum(scores) / len(scores) if scores else 0
+        
+        # Determine the bin for this average quality
+        bin_index = min(int(avg_quality // 10), 9)  # max bin index is 9 (for values 90-100)
+        
+        # Increment the count for the determined bin
+        histogram[bin_index] += 1
+
+    return histogram
 
 def main():
     parser = argparse.ArgumentParser(description='Calculate metrics for Illumina FASTQ files (R1 and R2).')
