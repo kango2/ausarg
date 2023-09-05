@@ -2,6 +2,7 @@ import csv
 import gzip
 from collections import defaultdict
 import hashlib
+import argparse
 
 def parse_fastq(fastq_file):
     """Parse the FASTQ file and return a list of sequences, quality scores, and MD5 checksums."""
@@ -93,23 +94,41 @@ def average_qv_per_read(quality_scores):
     return [round(sum(phred_to_quality(qs)) / len(qs)) for qs in quality_scores]
 
 def main():
-    fastq_file = "/g/data/xl04/ka6418/ausarg/temp/illumina_fastq/alternate_test.fastq.gz"
-    output_csv = "statistics.csv"
-    
-    sequences, quality_scores, md5_compressed, md5_uncompressed = parse_fastq(fastq_file)
-    num_reads = count_reads(sequences)
-    total_bases = count_total_bases(sequences)
-    avg_read_length_val = average_read_length(num_reads, total_bases)
-    avg_quality_values = average_per_base_quality(quality_scores)
-    nucleotide_freq = average_nucleotide_frequencies(sequences)
-    overall_content = overall_nucleotide_content(sequences)
-    avg_qv_reads = average_qv_per_read(quality_scores)
+    parser = argparse.ArgumentParser(description='Calculate metrics for Illumina FASTQ files (R1 and R2).')
+    parser.add_argument('-R1', type=str, required=True, help='Path to the R1 fastq.gz file.')
+    parser.add_argument('-R2', type=str, required=True, help='Path to the R2 fastq.gz file.')
+    parser.add_argument('-o', '--output', type=str, default="statistics.csv", help='Path to the output CSV file.')
+    args = parser.parse_args()
 
-    # Format nucleotide frequencies for CSV
-    nucleotide_freq_str = [":".join(f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
-    overall_content_str = ":".join(f"{freq:.2f}" for freq in overall_content)
+    metrics = []
 
-    # Save to CSV
+    for fastq_file in [args.R1, args.R2]:
+        sequences, quality_scores, md5_compressed, md5_uncompressed = parse_fastq(fastq_file)
+        num_reads = count_reads(sequences)
+        total_bases = count_total_bases(sequences)
+        avg_read_length_val = average_read_length(num_reads, total_bases)
+        avg_quality_values = average_per_base_quality(quality_scores)
+        nucleotide_freq = average_nucleotide_frequencies(sequences)
+        overall_content = overall_nucleotide_content(sequences)
+        avg_qv_reads = average_qv_per_read(quality_scores)
+
+        # Format nucleotide frequencies
+        nucleotide_freq_str = [":".join(f"{freq:.2f}" for freq in freq_list) for freq_list in nucleotide_freq]
+        overall_content_str = ":".join(f"{freq:.2f}" for freq in overall_content)
+
+        metrics.append({
+            'num_reads': num_reads,
+            'total_bases': total_bases,
+            'avg_read_length': avg_read_length_val,
+            'avg_quality_values': avg_quality_values,
+            'nucleotide_freq': nucleotide_freq_str,
+            'overall_content': overall_content_str,
+            'avg_qv_reads': avg_qv_reads,
+            'md5_compressed': md5_compressed,
+            'md5_uncompressed': md5_uncompressed
+        })
+
+    output_csv = args.output
     with open(output_csv, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         headers = ['Number of reads', 'Total number of bases', 'Average read length', 
@@ -117,11 +136,20 @@ def main():
                    'Overall nucleotide content (A,C,G,T)', 'Average QV per read',
                    'MD5 (.fastq.gz)', 'MD5 (.fastq)']
         csvwriter.writerow(headers)
-        csvwriter.writerow([num_reads, total_bases, avg_read_length_val, 
-                            ",".join(map(str, avg_quality_values)), 
-                            ",".join(nucleotide_freq_str), overall_content_str, 
-                            ",".join(map(str, avg_qv_reads)),
-                            md5_compressed, md5_uncompressed])
+
+        combined_metrics = []
+        keys = ['num_reads', 'total_bases', 'avg_read_length', 'avg_quality_values',
+                'nucleotide_freq', 'overall_content', 'avg_qv_reads', 'md5_compressed', 
+                'md5_uncompressed']
+
+        for key in keys:
+            if isinstance(metrics[0][key], list):
+                combined_val = ",".join(str(val) for val in metrics[0][key]) + ";" + ",".join(str(val) for val in metrics[1][key])
+            else:
+                combined_val = f"{metrics[0][key]};{metrics[1][key]}"
+            combined_metrics.append(combined_val)
+        
+        csvwriter.writerow(combined_metrics)
     
     print(f"Statistics saved to {output_csv}")
 
