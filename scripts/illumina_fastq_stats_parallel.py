@@ -14,7 +14,7 @@ def phred_to_quality(phred_string):
 def get_file_size_gb(file_path):
     """Return the file size in gigabytes."""
     size_in_bytes = os.path.getsize(file_path)
-    size_in_gb = size_in_bytes / (1024 ** 3)  # Corrected to return in GB
+    size_in_gb = size_in_bytes / (1024 ** 2)  # Corrected to return in GB
     return round(size_in_gb, 2)
 
 def calculate_md5_compressed(fastq_file):
@@ -42,7 +42,7 @@ def parse_fastq(fastq_file):
     total_gc_count = 0
     nucleotide_freq_data = defaultdict(lambda: defaultdict(int))
     overall_content_data = defaultdict(int)
-
+    bases = set()
     with gzip.open(fastq_file, 'rt') as f:
         for i, line in enumerate(f):
             # Sequence lines are the second line in every set of 4 lines
@@ -55,6 +55,7 @@ def parse_fastq(fastq_file):
                     total_bases_count[idx] += 1
                     nucleotide_freq_data[idx][base] += 1
                     overall_content_data[base] += 1
+                    bases.update(base)
             elif i % 4 == 3:
                 qs = line.strip()
                 scores = phred_to_quality(qs)
@@ -67,7 +68,6 @@ def parse_fastq(fastq_file):
 
     avg_quality_values = [round(quality_scores_sum[i] / quality_scores_count[i]) if quality_scores_count[i] != 0 else 0 for i in range(len(quality_scores_sum))]
     gc_content = round((total_gc_count / total_bases) * 100, 2) if total_bases else 0
-    bases = ['A', 'C', 'G', 'T']
     nucleotide_freq = [":".join(str(nucleotide_freq_data[idx].get(base, 0)) for base in bases) for idx in nucleotide_freq_data]
     overall_content = ":".join(str(overall_content_data.get(base, 0)) for base in bases)
 
@@ -113,10 +113,10 @@ def main():
             metrics.append(result)
 
     headers = [
-        'File path','Number of reads', 'Number of bases', 'Mean read length',
-        'Mean QV at read position', 'Nucleotide count at read position',
-        'Nucleotide content', 'Mean QV per read',
-        'MD5_zipped', 'MD5_text', 'GC', 'File size in GB'
+        'File_path','Number_of_reads', 'Number_of_bases', 'Mean_read_length',
+        'Mean_QV_at_read_position', 'Nucleotide_count_at_read_position',
+        'Nucleotide_content', 'Mean_QV_per_read',
+        'MD5_zipped', 'MD5_text', 'GC', 'File_size_in_MB'
     ]
 
     combined_metrics = []
