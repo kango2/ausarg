@@ -42,6 +42,7 @@ def parse_fastq(fastq_file):
     total_gc_count = 0
     nucleotide_freq_data = defaultdict(lambda: defaultdict(int))
     overall_content_data = defaultdict(int)
+    BASES_ORDER = ['A', 'C', 'G', 'T', 'N']
     bases = set()
     with gzip.open(fastq_file, 'rt') as f:
         for i, line in enumerate(f):
@@ -68,8 +69,8 @@ def parse_fastq(fastq_file):
 
     avg_quality_values = [round(quality_scores_sum[i] / quality_scores_count[i]) if quality_scores_count[i] != 0 else 0 for i in range(len(quality_scores_sum))]
     gc_content = round((total_gc_count / total_bases) * 100, 2) if total_bases else 0
-    nucleotide_freq = [":".join(str(nucleotide_freq_data[idx].get(base, 0)) for base in bases) for idx in nucleotide_freq_data]
-    overall_content = ":".join(str(overall_content_data.get(base, 0)) for base in bases)
+    nucleotide_freq = [":".join(str(nucleotide_freq_data[idx].get(base, 0)) for base in BASES_ORDER) for idx in nucleotide_freq_data]
+    overall_content = ":".join(str(overall_content_data.get(base, 0)) for base in BASES_ORDER)
 
     with ThreadPoolExecutor() as executor:
         future_md5_compressed = executor.submit(calculate_md5_compressed, fastq_file)
