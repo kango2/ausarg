@@ -19,3 +19,5 @@ output_name=${output}/${R1_basename}_${R2_basename}_QC
 
 module load python3
 python3 /g/data/xl04/ka6418/ausarg/scripts/illumina_fastq_stats_parallel.py -R1 $R1_file -R2 $R2_file -o $output_name --format csv --cores ${PBS_NCPUS}
+
+tail -n +2 ${output_name}.csv | sqlite3 /g/data/xl04/ka6418/ausarg/database/ausarg.db ".mode csv" ".import /dev/stdin illumina_metrics"

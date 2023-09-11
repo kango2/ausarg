@@ -7,7 +7,7 @@ def get_illumina_filenames_from_sra(db_path):
     """Retrieve filenames from the SRA table."""
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute("SELECT filename FROM SRA where library_source=='GENOMIC' AND platform=='ILLUMINA'")
+    cursor.execute("SELECT filename FROM SRA where library_strategy== 'WGS' AND library_source=='GENOMIC' AND platform=='ILLUMINA'")
     filenames = cursor.fetchall()
     conn.close()
     
