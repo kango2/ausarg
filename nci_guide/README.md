@@ -18,7 +18,7 @@ When you run the install script, you should get a prompt asking to confirm the d
 
 Once you provide the local folder, it should install conda and automatically activate the base environment. 
 
-#### Creating new environments 
+#### Creating new environments D
 
 ``` conda create --name myenv ```
 

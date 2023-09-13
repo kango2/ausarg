@@ -1,3 +1,7 @@
+import pandas as pd
+import sqlite3
+import os
+
 def import_csv_to_sqlite_v3(db_path, csv_folder):
     # Connect to the SQLite database
     conn = sqlite3.connect(db_path)
@@ -35,3 +39,5 @@ def import_csv_to_sqlite_v3(db_path, csv_folder):
 
 # Note: This function definition is meant for use outside this notebook environment, especially with argparse in use.
 # If you'd like to test the function within this notebook, we'd have to call the function directly with parameters.
+
+import_csv_to_sqlite_v3("/g/data/xl04/ka6418/ausarg/database/ausarg.db","/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/illumina_qc")
