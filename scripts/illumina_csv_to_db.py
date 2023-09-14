@@ -1,6 +1,8 @@
+import argparse
 import pandas as pd
 import sqlite3
 import os
+
 
 def import_csv_to_sqlite_v3(db_path, csv_folder):
     # Connect to the SQLite database
@@ -28,7 +30,7 @@ def import_csv_to_sqlite_v3(db_path, csv_folder):
             df.to_sql('Illumina_Metrics', conn, if_exists='append', index=False)
             
             # Update the status column to "completed" for rows where the status is "Pending"
-            cursor.execute("UPDATE Illumina_Metrics SET status = 'completed' WHERE status = 'Pending'")
+            cursor.execute("UPDATE Illumina_Metrics SET status = 'Completed' WHERE status = 'Running'")
             conn.commit()
 
         # Update the set of existing File_path values for subsequent CSV checks
@@ -40,4 +42,16 @@ def import_csv_to_sqlite_v3(db_path, csv_folder):
 # Note: This function definition is meant for use outside this notebook environment, especially with argparse in use.
 # If you'd like to test the function within this notebook, we'd have to call the function directly with parameters.
 
-import_csv_to_sqlite_v3("/g/data/xl04/ka6418/ausarg/database/ausarg.db","/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/illumina_qc")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Import CSV data into a SQLite database.")
+    
+    # Add command line arguments with flags
+    parser.add_argument("-db", required=True, type=str, help="Path to the SQLite database.")
+    parser.add_argument("-output", required=True, type=str, help="Path to the folder containing CSV files.")
+    
+    # Parse the arguments
+    args = parser.parse_args()
+    
+    # Call the function using the parsed arguments
+    import_csv_to_sqlite_v3(args.db, args.output)
+

@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N Telomere
 #PBS -q normal
-#PBS -l walltime=0:30:00
+#PBS -l walltime=1:00:00
 #PBS -l mem=64GB
 #PBS -l ncpus=48
 #PBS -l wd

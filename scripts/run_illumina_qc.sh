@@ -17,9 +17,11 @@ R2_basename=$(basename ${R2_file} | rev | cut -d. -f2- | rev)
 
 output_name=${output}/${R1_basename}_${R2_basename}_QC
 
+filepair_fix=$(echo ${filepair} | sed 's/:/;/')
+filepair_fix="'$filepair_fix'"
+sqlite3 /g/data/xl04/ka6418/ausarg/database/ausarg.db "UPDATE Illumina_Metrics SET status = 'Running' WHERE status = 'Pending' AND File_path=${filepair_fix}"
+
 module load python3
 python3 /g/data/xl04/ka6418/ausarg/scripts/illumina_fastq_stats_parallel.py -R1 $R1_file -R2 $R2_file -o $output_name --format csv --cores ${PBS_NCPUS}
-
-tail -n +2 ${output_name} | sqlite3 /g/data/xl04/ka6418/ausarg/database/ausarg.db ".mode csv" ".import /dev/stdin illumina_metrics" "INSERT OR IGNORE INTO illumina_metrics VALUES (?);"
 
 #TODO: add update to status, make it 3 keyword system, implement "running"
