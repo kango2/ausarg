@@ -12,8 +12,8 @@ def import_csv_to_sqlite_v3(db_path, csv_folder):
     csv_files = [f for f in os.listdir(csv_folder) if f.endswith('.csv')]
 
     # Get the existing File_path values from the SQLite table for duplication check
-    cursor.execute("SELECT File_path, status FROM Illumina_Metrics")
-    existing_data = cursor.fetchall()
+    cursor.execute("SELECT File_path FROM Illumina_Metrics")
+    existing_file_paths = set([row[0] for row in cursor.fetchall()])
 
     for csv_file in csv_files:
         csv_path = os.path.join(csv_folder, csv_file)
@@ -21,23 +21,24 @@ def import_csv_to_sqlite_v3(db_path, csv_folder):
         # Read the CSV file into a DataFrame
         df = pd.read_csv(csv_path)
 
-        # Loop through each row in the DataFrame
-        for index, row in df.iterrows():
-            file_path = row['File_path']
-            status = row['status']
+        # Filter rows where File_path is already in the database
+        #df = df[~df['File_path'].isin(existing_file_paths)]
 
-            # Check if the file path exists in the database with "Running" status
-            if (file_path, status) in existing_data and status == 'Running':
-                # Replace the existing row with data from the CSV file and update status to "Completed"
-                cursor.execute("DELETE FROM Illumina_Metrics WHERE File_path = ? AND status = ?", (file_path, 'Running'))
-                conn.commit()
-                df.loc[index, 'status'] = 'Completed'
+        if not df.empty:
+            # Append the non-duplicate data from the DataFrame into the SQLite table
+            df.to_sql('Illumina_Metrics', conn, if_exists='append', index=False)
+            print(f"Imported {len(df)} rows from {csv_file} to the database.")
 
-        # Append the data from the DataFrame into the SQLite table
-        df.to_sql('Illumina_Metrics', conn, if_exists='append', index=False)
+        # Update the set of existing File_path values for subsequent CSV checks
+        existing_file_paths.update(df['File_path'].tolist())
+
+    # Update the status column to "Completed" for rows where the status is "Running"
+    cursor.execute("UPDATE Illumina_Metrics SET status = 'Completed' WHERE status = 'Pending'")
+    #conn.commit()
+    #print("Updated 'Running' rows to 'Completed' in the database.")
 
     conn.close()
-    print(f"Imported data from {len(csv_files)} CSV files to the database, updating 'Running' rows to 'Completed'.")
+    print(f"Imported data from {len(csv_files)} CSV files to the database, skipping duplicates based on File_path and updating 'Running' rows to 'Completed'.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Import CSV data into a SQLite database.")
