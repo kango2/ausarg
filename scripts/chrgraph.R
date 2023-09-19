@@ -51,11 +51,18 @@ gcgr <- toGRanges(data.frame(gc %>% mutate(y = `GC Count`*100/10000) %>%
                             end = `Position End`, 
                             y)))
 
-#dev.off()
-kp <- plotKaryotype(genome = mygenomegr)
+dev.off()
+pp <- getDefaultPlotParams(plot.type=1)
+pp$data1inmargin <- 20
+pp$data1outmargin <- 120
+
+
+kp <- plotKaryotype(genome = mygenomegr,plot.params = pp)
+#kpAxis(kp, ymin = 0, ymax = 1, r0=0, r1=0.8, numticks = 5, col="#666666", cex=0.5)
+kpAddBaseNumbers(kp)
 ##plot telomeres
-kpPlotRegions(kp, data=cengr, col="#FF000080", border="#FF0000", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=telomeresgr, col="orange", border="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=cengr, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=telomeresgr, col="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 #plotting read depths
 kpLines(kp, data = ilmnrdgr,
         r0=0, r1=0.25, ymin = 0, ymax = 200,
