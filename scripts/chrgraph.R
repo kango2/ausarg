@@ -51,24 +51,25 @@ gcgr <- toGRanges(data.frame(gc %>% mutate(y = `GC Count`*100/10000) %>%
                             end = `Position End`, 
                             y)))
 
-dev.off()
-kp <- plotKaryotype(genome = mygenomegr, chromosomes='ptg000005l')
+#dev.off()
+kp <- plotKaryotype(genome = mygenomegr)
 ##plot telomeres
-kpPlotRegions(kp, data=cengr, col="#FF000080", border="#FF0000", r0=-0.1, r1=-0.63)
-kpPlotRegions(kp, data=telomeresgr, col="orange", border="orange", r0=-0.1, r1=-0.35)
+kpPlotRegions(kp, data=cengr, col="#FF000080", border="#FF0000", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=telomeresgr, col="orange", border="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 #plotting read depths
 kpLines(kp, data = ilmnrdgr,
-        r0=0, r1=0.15, ymin = 0, ymax = 200,
-        col = "#6495ED", lwd = 0.3) 
+        r0=0, r1=0.25, ymin = 0, ymax = 200,
+        col = "#6495ED", lwd = 0.1) 
 kpLines(kp, data = ontgr,
-        r0=0.15, r1=0.3, ymin = 0, ymax = 100,
-        col = "#FA8072", lwd = 0.3)
+        r0=0.25, r1=0.4, ymin = 0, ymax = 200,
+        col = "#FA8072", lwd = 0.1)
 kpLines(kp, data = hifigr,
-        r0=0.40, r1=0.55, ymin = 0, ymax = 100,
-        col = "#3CB371", lwd = 0.3)
+        r0=0.45, r1=0.65, ymin = 0, ymax = 200,
+        col = "#3CB371", lwd = 0.1)
 kpLines(kp, data = gcgr,
-        r0=0.65, r1=0.80, ymin = 0, ymax = 100,
-        col = "#6A4DA8", lwd = 0.6)
+        r0=0.65, r1=0.90, ymin = 40, ymax = 60,
+        col = "#6A4DA8", lwd = 0.3)
+
 
 
 
