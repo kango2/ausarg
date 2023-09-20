@@ -57,7 +57,7 @@ pp$data1inmargin <- 20
 pp$data1outmargin <- 120
 
 
-kp <- plotKaryotype(genome = mygenomegr,plot.params = pp)
+kp <- plotKaryotype(genome = mygenomegr,plot.params = pp, chromosomes="ptg000010l")
 #kpAxis(kp, ymin = 0, ymax = 1, r0=0, r1=0.8, numticks = 5, col="#666666", cex=0.5)
 kpAddBaseNumbers(kp)
 ##plot telomeres
@@ -66,16 +66,16 @@ kpPlotRegions(kp, data=telomeresgr, col="orange", r0=-0.1, r1=-0.35,clipping = T
 #plotting read depths
 kpLines(kp, data = ilmnrdgr,
         r0=0, r1=0.25, ymin = 0, ymax = 200,
-        col = "#6495ED", lwd = 0.1) 
+        col = "#6495ED", lwd = 0.3) 
 kpLines(kp, data = ontgr,
         r0=0.25, r1=0.4, ymin = 0, ymax = 200,
-        col = "#FA8072", lwd = 0.1)
+        col = "#FA8072", lwd = 0.3)
 kpLines(kp, data = hifigr,
         r0=0.45, r1=0.65, ymin = 0, ymax = 200,
-        col = "#3CB371", lwd = 0.1)
+        col = "#3CB371", lwd = 0.3)
 kpLines(kp, data = gcgr,
         r0=0.65, r1=0.90, ymin = 40, ymax = 60,
-        col = "#6A4DA8", lwd = 0.3)
+        col = "#6A4DA8", lwd = 0.6)
 
 
 
