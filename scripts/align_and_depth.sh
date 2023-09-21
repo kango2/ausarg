@@ -1,25 +1,20 @@
 #!/bin/bash
 #PBS -N alignment
 #PBS -P xl04
+#PBS -j oe
 #PBS -q normal
 #PBS -l walltime=10:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
-#PBS -l storage=gdata/xl04+gdata/if89
+#PBS 
 #PBS -l wd
-#PBS -M kirat.alreja@anu.edu.au
 
 module load minimap2 samtools
 
-while getopts p:r:f:o: flag
-do
-    case "${flag}" in
-        p) platform=${OPTARG};;
-        r) rawreads=${OPTARG};;
-        f) reference=${OPTARG};;
-        o) output=${OPTARG};;
-    esac
-done
+platform=$platform
+rawreads=$rawreads
+reference=$reference
+output=$output
 
 # Step 1: Index the reference genome (minimap2 doesn't require explicit indexing)
 
@@ -71,6 +66,6 @@ END {
     }
 }' > "${output}_sorted.bam.binned.intermediate.depth"
 
-awk -F, 'BEGIN {{OFS=FS; prev=""; count=1}} NR==1 {{print $0; next}} $1 != prev {{count=1; prev=$1}} {{print $1, count, count+999, $4; count+=1000}}' "${output}_sorted.bam.binned.intermediate.depth" > "${output}_sorted.bam.binned.depth"
+awk -F, 'BEGIN {OFS=FS; prev=""; count=1} NR==1 {print $0; next} $1 != prev {count=1; prev=$1} {print $1, count, count+999, $4; count+=1000}' "${output}_sorted.bam.binned.intermediate.depth" > "${output}_sorted.bam.binned.depth"
 
 rm "${output}_sorted.bam.binned.intermediate.depth"
