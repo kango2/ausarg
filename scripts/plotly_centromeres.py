@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import math
 
 # Read the CSV file into a Pandas DataFrame
-data = pd.read_csv('/g/data/xl04/ka6418/chromosome_graph/Summary.of.repetitive.regions.rTilRug_HiC_pctg.fasta.csv')
+data = pd.read_csv('/g/data/xl04/ka6418/greenhill/bassiana_greenhill/centromeres/Summary.of.repetitive.regions.out_ConsensusOutput.fa.csv')
 
 # Get the unique chromosomes
 chromosomes = data['name'].unique()
