@@ -10,25 +10,32 @@
 #PBS -l jobfs=400GB
 #PBS -M kirat.alreja@anu.edu.au
 
+
 module load samtools parallel
 source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
 conda activate arima
-cd /g/data/xl04/ka6418/arima/bassiana
-SRA='rBasDup'
-LABEL='rBasDup'
-IN_DIR='/g/data/xl04/ka6418/greenhill/align_bassiana_with_juicer/fastq'
-REF='/g/data/xl04/ka6418/arima/bassiana/rBasDup.fa'
-FAIDX='$REF.fai'
-PREFIX='rBasDup.fa'
-RAW_DIR='/g/data/xl04/ka6418/arima/bassiana/raw'
-FILT_DIR='/g/data/xl04/ka6418/arima/bassiana/filt'
-FILTER='/g/data/xl04/ka6418/arima/mapping_pipeline/filter_five_end.pl'
-COMBINER='/g/data/xl04/ka6418/arima/mapping_pipeline/two_read_bam_combiner.pl'
-STATS='/g/data/xl04/ka6418/arima/mapping_pipeline/get_stats.pl'
-TMP_DIR='/g/data/xl04/ka6418/arima/bassiana/temp'
-PAIR_DIR='/g/data/xl04/ka6418/arima/bassiana/pair'
-REP_DIR='/g/data/xl04/ka6418/arima/bassiana/dedup'
-REP_LABEL=${LABEL}_rep1
+
+
+WORK_DIR=$working_dir
+REF=$fasta
+IN_DIR=$fastq_folder
+
+cp $REF $WORK_DIR
+cd $WORK_DIR
+GENOME_BASENAME=$(basename "$REF")
+SRA=$(basename "$GENOME_BASENAME" .fa)
+LABEL=$(basename "$GENOME_BASENAME" .fa)
+PREFIX=$GENOME_BASENAME
+FAIDX="${GENOME_BASENAME}.fai"
+RAW_DIR="$WORK_DIR/raw"
+FILT_DIR="$WORK_DIR/filt"
+TMP_DIR="$WORK_DIR/temp"
+PAIR_DIR="$WORK_DIR/pair"
+REP_DIR="$WORK_DIR/dedup"
+REP_LABEL="${LABEL}_rep1"
+FILTER="/g/data/xl04/ka6418/arima/mapping_pipeline/filter_five_end.pl"
+COMBINER="/g/data/xl04/ka6418/arima/mapping_pipeline/two_read_bam_combiner.pl"
+STATS="/g/data/xl04/ka6418/arima/mapping_pipeline/get_stats.pl"
 
 MAPQ_FILTER=10
 CPU=${PBS_NCPUS}
@@ -41,8 +48,20 @@ echo "### Step 0: Check output directories' existence & create them as needed"
 [ -d $REP_DIR ] || mkdir -p $REP_DIR
 [ -d $MERGE_DIR ] || mkdir -p $MERGE_DIR
 
-echo "### Step 0: Index reference" # Run only once! Skip this step if you have already generated BWA index files
-#bwa index -a bwtsw -p $PREFIX $REF
+
+if [[ -f "$REF.amb" && -f "$REF.ann" && -f "$REF.bwt" && -f "$REF.pac" && -f "$REF.sa" ]]; then
+    echo "BWA index exists"
+else
+    echo "BWA index does not exist, creating index..."
+    bwa index -a bwtsw -p $PREFIX $REF
+fi
+
+if [[ -f "$REF.fai" ]]; then
+    echo "Samtools index exists"
+else
+    echo "Samtools index does not exist, creating index..."
+    samtools faidx $REF
+fi
 
 HALF_CPU=$((PBS_NCPUS / 2))
 
