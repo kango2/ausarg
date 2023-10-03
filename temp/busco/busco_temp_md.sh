@@ -58,6 +58,6 @@ singularity exec $BUSCO_IMG busco \
   -o $OUTPUT_DIR \
   -l $LINEAGE_DIR \
   -m $MODE \
-  $PBS_NCPUS \
+  -c $PBS_NCPUS \
   --offline
 
