@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#TODO : functionality to launch separate jobs if needed only for one tech
+
 # Read the input file
 input_file="$1"
 
@@ -33,7 +35,9 @@ done < "$input_file"
 # Extract the base name of the reference
 ref_base=$(basename "${paths["reference"]}" .fasta)  # Assuming .fasta extension, modify as needed
 
+mkdir -p ${paths["output"]}/${ref_base}
+
 # Generate qsub commands for each technology
-echo "qsub -o /g/data/xl04/ka6418/alignment -l storage=gdata/xl04+gdata/if89 -v platform=illumina,rawreads=${paths["illumina"]},reference=${paths["reference"]},output=${paths["output"]}/${ref_base}_illumina alignment_script.pbs" >> commands.sh
-echo "qsub -o /g/data/xl04/ka6418/alignment -l storage=gdata/xl04+gdata/if89 -v platform=ont,rawreads=${paths["ont"]},reference=${paths["reference"]},output=${paths["output"]}/${ref_base}_ont alignment_script.pbs" >> commands.sh
-echo "qsub -o /g/data/xl04/ka6418/alignment -l storage=gdata/xl04+gdata/if89 -v platform=pacbio,rawreads=${paths["pacbio"]},reference=${paths["reference"]},output=${paths["output"]}/${ref_base}_pacbio alignment_script.pbs" >> commands.sh
+qsub -o /g/data/xl04/ka6418/oliver/logs -l storage=gdata/xl04+gdata/if89 -v platform=illumina,rawreads=${paths["illumina"]},reference=${paths["reference"]},output=${paths["output"]}/${ref_base}/${ref_base}_illumina /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
+qsub -o /g/data/xl04/ka6418/oliver/logs -l storage=gdata/xl04+gdata/if89 -v platform=ont,rawreads=${paths["ont"]},reference=${paths["reference"]},output=${paths["output"]}/${ref_base}/${ref_base}_ont /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
+qsub -o /g/data/xl04/ka6418/oliver/logs -l storage=gdata/xl04+gdata/if89 -v platform=pacbio,rawreads=${paths["pacbio"]},reference=${paths["reference"]},output=${paths["output"]}/${ref_base}/${ref_base}_pacbio /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
