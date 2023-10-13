@@ -27,5 +27,6 @@ else
     /g/data/xl04/ka6418/TRASH/TRASH_run.sh ${inputfile} --par ${PBS_NCPUS} --o ${output} --N.max.div 5 --seqt "$seqt"
 fi
 
+#TODO : plot the .html
 
 
