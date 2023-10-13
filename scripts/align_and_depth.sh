@@ -1,8 +1,6 @@
 #!/bin/bash
 #PBS -N alignment
 #PBS -P xl04
-#PBS -o /g/data/xl04/ka6418/bassiana/all_assemblies/depth
-#PBS -e /g/data/xl04/ka6418/bassiana/all_assemblies/depth
 #PBS -q normal
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l walltime=10:00:00
