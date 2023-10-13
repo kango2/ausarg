@@ -5,7 +5,7 @@ ont=/g/data/xl04/ka6418/LamDe/raw/ont/lamde_ont.fastq.gz \
 outputdir=/g/data/xl04/ka6418/genejigsaw_testing/lamde_yahs \
 logsdir=/g/data/xl04/ka6418/genejigsaw_testing/lamde_yahs/logs \
 project=xl04 \
-storage=storage=gdata/if89+gdata/xl04 \
+storage=gdata/if89+gdata/xl04 \
 ./qc_and_plot.sh
 
 
