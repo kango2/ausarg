@@ -2,7 +2,7 @@
 #PBS -N gc_calculation
 #PBS -P xl04
 #PBS -q normal
-#PBS -l walltime=02:00:00
+#PBS -l walltime=05:00:00
 #PBS -l mem=32GB
 #PBS -l ncpus=48
 #PBS -l storage=gdata/xl04+gdata/if89

@@ -3,7 +3,7 @@
 #PBS -N TRASH_parallel
 #PBS -P xl04
 #PBS -q normal
-#PBS -l walltime=10:00:00
+#PBS -l walltime=48:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -j oe
@@ -20,14 +20,14 @@ source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
 conda activate trash
 
 ref_base=$(basename "${inputfile}" .fasta)
-mkdir -p ${output}/"${ref_base}_cen"
+#mkdir -p ${output}/"${ref_base}_cen"
 
 if [ -z "$seqt" ]; then
     echo "No sequence template"
-    /g/data/xl04/ka6418/TRASH/TRASH_run.sh ${inputfile} --par ${PBS_NCPUS} --o ${output}/"${ref_base}_cen" --N.max.div 5
+    /g/data/xl04/ka6418/TRASH/TRASH_run.sh ${inputfile} --par ${PBS_NCPUS} --o ${output} --N.max.div 5
 else
     echo "Running with template"
-    /g/data/xl04/ka6418/TRASH/TRASH_run.sh ${inputfile} --par ${PBS_NCPUS} --o ${output}/"${ref_base}_cen" --N.max.div 5 --seqt "$seqt"
+    /g/data/xl04/ka6418/TRASH/TRASH_run.sh ${inputfile} --par ${PBS_NCPUS} --o ${output} --N.max.div 5 --seqt "$seqt"
 fi
 
 #TODO : plot the .html

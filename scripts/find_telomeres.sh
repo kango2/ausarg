@@ -3,7 +3,7 @@
 #PBS -q normal
 #PBS -P xl04
 #PBS -l storage=gdata/if89+gdata/xl04
-#PBS -l walltime=10:00:00
+#PBS -l walltime=22:00:00
 #PBS -l mem=64GB
 #PBS -l ncpus=48
 #PBS -l wd
