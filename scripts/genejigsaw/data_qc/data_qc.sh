@@ -20,14 +20,14 @@ mkdir -p ${outdir}/illumina/aftertrim
 mkdir -p ${illumina_cleaneddir}
 
 for every file in ${pacbio_fastq}:
-        qsub -v outdir=${outdir}/pacbio,fastq=file nanoplot.sh
+        qsub -P ${project} -N ${job_name} -l storage=${storage} -v outdir=${outdir}/pacbio,fastq=file nanoplot.sh
 
 for every file in ${ont_fastq}:
-        qsub -v outdir=${outdir}/ont,fastq=file nanoplot.sh
+        qsub -P ${project} -N ${job_name} -l storage=${storage} -v outdir=${outdir}/ont,fastq=file nanoplot.sh
 
 for every file in ${illumina_fastq}:
-        qsub -v outdir=${outdir}/illumina/beforetrim,fastq=file fastqc.sh
+        qsub -P ${project} -N ${job_name} -l storage=${storage} -v outdir=${outdir}/illumina/beforetrim,fastq=file fastqc.sh
     
 for every file in ${illumina_fastq}:
-        qsub -v outdir_trim=${illumina_cleaneddir},outdir_qc=${outdir}/illumina/aftertrim fastq=file trimgalore.sh
+        qsub -P ${project} -N ${job_name} -l storage=${storage} -v outdir_trim=${illumina_cleaneddir},outdir_qc=${outdir}/illumina/aftertrim fastq=file trimgalore.sh
 

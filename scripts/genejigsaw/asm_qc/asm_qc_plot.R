@@ -50,7 +50,8 @@ telomeresgr <- toGRanges(data.frame(select(telomeresdf, chr=Sequence_ID, start =
 cendf <- read_delim(args$repetitive, delim = ",")
 cengr <- toGRanges(data.frame(select(cendf, chr=name, start = start, end = end)))
 
-ilmnrd <- read_delim(args$ilmnrd, delim = ",")
+column_names <- c("Chromosome", "Start", "End", "AverageDepth")
+ilmnrd <- read_delim(args$ilmnrd, delim = ",", col_names = column_names)
 ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
                                       start = Start, 
@@ -58,7 +59,8 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
                                       y = AverageDepth)
                              ))
 
-ontrd <- read_delim(args$ontrd, delim = ",")
+column_names <- c("Chromosome", "Start", "End", "AverageDepth")
+ontrd <- read_delim(args$ontrd, delim = ",", col_names = column_names)
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
                                       start = Start, 
@@ -66,7 +68,8 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                       y = AverageDepth)
                              ))
 
-hifird <- read_delim(args$pacbio, delim = ",")
+column_names <- c("Chromosome", "Start", "End", "AverageDepth")
+hifird <- read_delim(args$pacbio, delim = ",", col_names = column_names)
 hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
                                       start = Start, 

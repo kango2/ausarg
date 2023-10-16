@@ -25,6 +25,9 @@ usage() {
 
 module load kentutils/0.0 TRF/4.09.1 biopython/1.79 parallel/20191022 
 
+source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
+conda activate autohic
+
 inputfile="$input"
 outputdir="$output"
 percentage_match="$permatch"
