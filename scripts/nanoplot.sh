@@ -13,5 +13,5 @@ conda activate nanoplot_env
 
 base=$(basename "$fastq" .fastq)
 
-NanoPlot -t ${PBS_NCPUS} -o ${outputdir} --tsv_stats --raw --info_in_report --N50 --dpi 300 --prefix ${base} --format pdf --fastq ${fastq}
+NanoPlot -t ${PBS_NCPUS} -o ${outdir} --tsv_stats --raw --info_in_report --N50 --dpi 300 --prefix ${base} --format pdf --fastq ${fastq}
 

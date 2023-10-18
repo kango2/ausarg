@@ -1,0 +1,13 @@
+
+======================================================================================
+                  Resource Usage on 2023-10-17 16:08:33:
+   Job Id:             98315301.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      10.43
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:19:26        
+   Memory Requested:   64.0GB                Memory Used: 14.71GB         
+   Walltime requested: 48:00:00            Walltime Used: 00:19:33        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
