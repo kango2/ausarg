@@ -46,6 +46,7 @@ Most of the output columns are self-explanatory, however I added the ```relative
 ## centromeres.sh 
 
 ![centromere pipeline](images/centromeres.png)
+[Flowchart Link](https://whimsical.com/flowchart-for-centromeres-sh-9j33qnt46GwyWcbSCUA9Jz)
 
 The centromeres.sh script is designed to predict centromeres in a given FASTA file. It is basically the wrapper for the TRASH tandem repeat finder tool and has to be run in two steps for the best results. When you run it for the first time, it will output all kinds of tandem repeats found throughout the genome. After analysis, it should be run for the second time with a sequence template (described in notes section below) for a classification of centromeric repeats. 
 
