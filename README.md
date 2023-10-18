@@ -97,6 +97,8 @@ Here is a set of instructions to follow for this workflow
 - Provide this csv to the centromeres.sh script for the second run, and now your Summary of repeats csv will contain a column called "class" which would have classified your repeats according to the template you supplied. You will notice that repeats having similar motif lengths to the provided template motif lengths will all be assigned to a single family. This step basically uses sequence similarly to classify the repeats. Now, you can use this new repeats csv for downstream analysis and plotting. 
 
 ![Centromeric class](images/centromeres_class.png)
+<img src="images/centromeres_class.png" alt="Description of the Image" width="50%"/>
+
 
 
 
