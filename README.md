@@ -4,7 +4,7 @@
 
 [Flowchart link](https://whimsical.com/detailed-parallelized-flowchart-for-find-telomeres-sh-2G623E2p7ubVTCZ8DGfJ4S@2Ux7TurymNGkJUXCfVvk)
 
-This script is designed to identify telomeres in a given fasta sequence. It uses the Tandem Repeats Finder (TRF) to detect telomeric repeats and then processes the results to generate a CSV file with the identified telomeres. The gist is that the script will find all 6BP repeats in the FASTA and then finally filter out the possible repeats based on the possible variations of TTAGGG in the forward and reverse strand. For example, the combinations are generated like GTTAGG, GGTTAG and so on. More information about how the telomeres are filtered out is in ```clean_telomeres_csv.py ```
+This script is designed to identify telomeres in a given fasta sequence. It uses the Tandem Repeats Finder (TRF) to detect telomeric repeats and then processes the results to generate a CSV file with the identified telomeres. The gist is that the script will find all 6BP repeats in the FASTA and then finally filter out the possible repeats based on the possible variations of TTAGGG in the forward and reverse strand. For example, the combinations are generated like GTTAGG, GGTTAG and so on. More information about how the telomeres are filtered out is in ```clean_telomeres_csv.py ```. The advantage of this script over most telomere detection tools available is that it doesn't just restrict to start/end of the sequences - but attempts to find telomeres located all over the genome. This ability makes it a good assembly evaluation measure.  
 
 ### Usage
 
