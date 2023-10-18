@@ -1,3 +1,5 @@
+# Assembly Quality Evaluation
+
 ## find_telomeres.sh
 
 ![Description of the Image](images/find_telomeres.png)
@@ -44,6 +46,7 @@ The script generates a CSV file with the following columns:
 Most of the output columns are self-explanatory, however I added the ```relative start``` and ```relative end``` columns for understanding where the telomeric sequences are located in each contig. They are just ``` telomeric start or end coordinate \ total length of contig ```. So, if the value is 0 - that means the telomere occurs at the start and similarly 1 indicates the end. In draft assemblies you might observes values like 0.3, 0.5 which indicates the telomeres lie in the 30%/50% positions. 
 
 ## centromeres.sh 
+
 
 ![centromere pipeline](images/centromeres.png)
 [Flowchart Link](https://whimsical.com/flowchart-for-centromeres-sh-9j33qnt46GwyWcbSCUA9Jz)
@@ -98,6 +101,8 @@ Here is a set of instructions to follow for this workflow
 - Provide this csv to the centromeres.sh script for the second run, and now your Summary of repeats csv will contain a column called "class" which would have classified your repeats according to the template you supplied. You will notice that repeats having similar motif lengths to the provided template motif lengths will all be assigned to a single family. This step basically uses sequence similarly to classify the repeats. Now, you can use this new repeats csv for downstream analysis and plotting. 
 
 <img src="images/centromeres_class.png" alt="Centromeric class" width="50%"/>
+
+
 
 
 
