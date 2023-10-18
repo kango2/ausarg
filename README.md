@@ -79,11 +79,11 @@ Given 48 cores and 192GB RAM - for chromosome-level skink assemblies , I have ob
 Here is a set of instructions to follow for this workflow
 - After you run TRASH, you will find a folder called "plots" which has a plot named *_peaks_m.png and a csv called *_peaks.csv. These files tell you the identified centromeric repeats in the genome. For example, I  found that my peaks were found at 187 and 199 bp. 
 
-![Centromeric repeats peak](images/centromeres_peaks.png)
+<img src="images/centromeres_peaks.png" alt="Centromeric peaks" width="50%"/>
 
 - Open the *.centromeres_plotly.html and analyse the individual plot for every contig. The plots are repeat width vs start coordinate, and hovering on the plot will reveal the motif length of any given point. What you should be looking for is an outlier point which stands out from the rest of the repeats, and these will usually be your centromeres, having a similar motif length to those mentioned in the peaks csv file. 
 
-![Centromeric repeats html](images/centromeres_plotly.png)
+<img src="images/centromeres_plotly.png" alt="Centromeric html" width="50%"/>
 
 - After you confirm the centromeric repeat motifs through the peaks file and the plotly visualisation, prepare a sequence template file. 
 
@@ -96,8 +96,7 @@ Here is a set of instructions to follow for this workflow
 
 - Provide this csv to the centromeres.sh script for the second run, and now your Summary of repeats csv will contain a column called "class" which would have classified your repeats according to the template you supplied. You will notice that repeats having similar motif lengths to the provided template motif lengths will all be assigned to a single family. This step basically uses sequence similarly to classify the repeats. Now, you can use this new repeats csv for downstream analysis and plotting. 
 
-![Centromeric class](images/centromeres_class.png)
-<img src="images/centromeres_class.png" alt="Description of the Image" width="50%"/>
+<img src="images/centromeres_class.png" alt="Centromeric class" width="50%"/>
 
 
 
