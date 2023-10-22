@@ -35,7 +35,7 @@ if (is.null(args$output)) {
 
 
 
-minseqlen <- 20e5
+minseqlen <- 5e5
 
 mygenome <- read_delim(args$seqtable, delim = ",")
 mygenomegr <- makeGRangesFromDataFrame(data.frame(mutate(mygenome, start = 1) %>% 
@@ -64,12 +64,11 @@ list2env(list_of_granges, envir = .GlobalEnv)
 
 cengr <- toGRanges(data.frame(select(cendf, chr=name, start = start, end = end)))
 
-column_names <- c("chromosome", "start", "end", "width")
-Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/all_assemblies/Ns/rBasDup_HifiASM_YAHS_Nregions.csv",delim = ",", col_names = column_names)
-Nregions_gr <- toGRanges(data.frame(Nregions) %>% select(chr = chromosome, start = start, end = end) )
+#column_names <- c("chromosome", "start", "end", "width")
+#Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/all_assemblies/Ns/rBasDup_HifiASM_YAHS_Nregions.csv",delim = ",", col_names = column_names)
+#Nregions_gr <- toGRanges(data.frame(Nregions) %>% select(chr = chromosome, start = start, end = end) )
 
-column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ilmnrd <- read_delim(args$ilmnrd, delim = ",", col_names = column_names)
+ilmnrd <- read_delim(args$ilmnrd, delim = ",")
 ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
                                       start = Start, 
@@ -77,8 +76,8 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
                                       y = AverageDepth)
                              ))
 
-column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ontrd <- read_delim(args$ontrd, delim = ",", col_names = column_names)
+#column_names <- c("Chromosome", "Start", "End", "AverageDepth")
+ontrd <- read_delim(args$ontrd, delim = ",")
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
                                       start = Start, 
@@ -86,8 +85,8 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                       y = AverageDepth)
                              ))
 
-column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-hifird <- read_delim(args$pacbio, delim = ",", col_names = column_names)
+#column_names <- c("Chromosome", "Start", "End", "AverageDepth")
+hifird <- read_delim(args$pacbio, delim = ",")
 hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
                                       start = Start, 
@@ -112,11 +111,11 @@ kp <- plotKaryotype(genome = mygenomegr,plot.params = pp)
 
 kpAddBaseNumbers(kp)
 #kpPlotRegions(kp, data=cengr, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_CEN199, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_CEN187, col="#80008080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=cengr_CEN171, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=cengr_CEN82, col="#80008080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 kpPlotRegions(kp, data=telomeresgr, col="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 
-kpPlotRegions(kp, data=Nregions_gr, col="black", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE,lwd = 0.1)
+#kpPlotRegions(kp, data=Nregions_gr, col="black", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE,lwd = 0.1)
 
 kpLines(kp, data = ilmnrdgr,
         r0=0, r1=0.25, ymin = 0, ymax = 200,
