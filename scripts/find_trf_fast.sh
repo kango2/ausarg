@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -N Telomere
+#PBS -N trf_fast
 #PBS -q normal
 #PBS -P xl04
 #PBS -l storage=gdata/if89+gdata/xl04
@@ -11,9 +11,10 @@
 #PBS -l jobfs=100GB
 
 #set -ex breaks the script - probably due to trf2gff conversion 
-
+#same command with find_telomeres.sh but the last python part 
+#trf parameters: trf {} 2 7 7 80 10 50 500 -l 10 -f -d -m -h
 usage() {
-	echo "Usage: qsub -l storage=gdata/if89+gdata/projectcode -o /path/to/stdouterr -P projectcode -v input=/path/to/fasta,output=/path/to/output/csv,permatch=90,copies=100 ./find_telomeres.sh" >&2
+	echo "Usage: qsub -l storage=gdata/if89+gdata/projectcode -o /path/to/stdouterr -P projectcode -v input=/path/to/fasta,output=/path/to/output/csv,permatch=90,copies=100 ./find_trf_fast.sh" >&2
 	echo
 	exit 1
 }
@@ -37,7 +38,7 @@ faSplit sequence $inputfile 10000 ${PBS_JOBFS}/chunk
 
 cd ${PBS_JOBFS}
 filelist=$(ls ${PBS_JOBFS}/chunk*)
-printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${PBS_NCPUS} trf {} 2 7 7 80 10 500 6 -l 10 -d -h 
+printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${PBS_NCPUS} trf {} 2 7 7 80 10 50 500 -l 10 -f -d -m -h
 
 for file in ${PBS_JOBFS}/*.dat;
 do
@@ -55,7 +56,7 @@ awk -F'\t' 'BEGIN {OFS=","}
     }
 ' $(basename "$inputfile" .fasta).gff3 >> $(basename "$inputfile" .fasta).csv
 
-python3 /g/data/xl04/ka6418/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
+#python3 /g/data/xl04/ka6418/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
 
 
 
