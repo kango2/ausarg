@@ -112,10 +112,12 @@ kp <- plotKaryotype(genome = mygenomegr,plot.params = pp)
 
 kpAddBaseNumbers(kp)
 #kpPlotRegions(kp, data=cengr, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+transparent_green <- grDevices::adjustcolor("green", alpha.f = 0.5)
+transparent_gold <- grDevices::adjustcolor("gold", alpha.f = 0.5)
 kpPlotRegions(kp, data=cengr_CEN199, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 kpPlotRegions(kp, data=cengr_CEN187, col="#80008080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_MIC187, col="green", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_MIC199, col="gold", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=cengr_MIC187, col=transparent_green, r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+kpPlotRegions(kp, data=cengr_MIC199, col=transparent_gold, r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 
 kpPlotRegions(kp, data=telomeresgr, col="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 
