@@ -54,7 +54,7 @@ qsub -P ${project} -o ${logsdir} -l "storage=${storage}" -N "GC_${ref_base}" -j 
 
 qsub -P ${project} -o ${logsdir} -l "storage=${storage}" -N "Tel_${ref_base}" -j oe -o ${logsdir} -v input=${fasta},output=${outputdir},permatch=90,copies=100 ${telomere}
 
-qsub -P ${project} -o ${logsdir} -l "storage=${storage}" -N "Cen_${ref_base}" -j oe -o ${logsdir} -v inputfasta=${fasta},outputdir=${outputdir} ${centromere}
+qsub -P ${project} -o ${logsdir} -l "storage=${storage}" -N "Cen_${ref_base}" -j oe -o ${logsdir} -v inputfasta=${fasta},outputdir=${outputdir},template=/g/data/xl04/ka6418/bassiana/all_assemblies/centromere/rBasDup_HifiASM_YAHS_centromere/micro_seqt/seqt.csv ${centromere}
 
 mkdir -p ${outputdir}/"${ref_base}_depth"
 

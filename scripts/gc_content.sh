@@ -21,6 +21,6 @@ faSplit sequence $inputfile 10000 ${PBS_JOBFS}/chunk
 
 cd ${PBS_JOBFS}
 filelist=$(ls ${PBS_JOBFS}/chunk*)
-printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${PBS_NCPUS} python3 /g/data/xl04/ka6418/ausarg/scripts/gc_content_helper.py {} 
+printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${PBS_NCPUS} python3 /g/data/xl04/ka6418/github/ausarg/scripts/gc_content_helper.py {} 
 
 awk 'NR==1{print; next} FNR>1' *.csv > "${outputdir}/$(basename "$inputfile")_GC.csv"

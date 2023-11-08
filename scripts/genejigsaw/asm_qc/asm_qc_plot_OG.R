@@ -48,25 +48,7 @@ telomeresdf <- read_delim(args$telomeres, delim = ",")
 telomeresgr <- toGRanges(data.frame(select(telomeresdf, chr=Sequence_ID, start = Start, end = End)))
 
 cendf <- read_delim(args$repetitive, delim = ",")
-filtered_cendf <- filter(cendf, !is.na(class))
-
-# Split data based on the class values
-list_of_dataframes <- split(filtered_cendf, filtered_cendf$class)
-
-# Convert each dataframe in the list to GRanges and store back in the list
-list_of_granges <- lapply(list_of_dataframes, function(df) {
-  toGRanges(data.frame(select(df, chr = name, start = start, end = end)))
-})
-
-# If you want to store them in separate variables
-names(list_of_granges) <- paste0("cengr_", unique(filtered_cendf$class))
-list2env(list_of_granges, envir = .GlobalEnv)
-
 cengr <- toGRanges(data.frame(select(cendf, chr=name, start = start, end = end)))
-
-column_names <- c("chromosome", "start", "end", "width")
-Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/all_assemblies/Ns/rBasDup_HifiASM_YAHS_Optimised_CurV3_Nregions.csv",delim = ",", col_names = column_names)
-Nregions_gr <- toGRanges(data.frame(Nregions) %>% select(chr = chromosome, start = start, end = end) )
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
 ilmnrd <- read_delim(args$ilmnrd, delim = ",",col_names = column_names)
@@ -77,7 +59,6 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
                                       y = AverageDepth)
                              ))
 
-column_names <- c("Chromosome", "Start", "End", "AverageDepth")
 ontrd <- read_delim(args$ontrd, delim = ",",col_names = column_names)
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
@@ -86,7 +67,6 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                       y = AverageDepth)
                              ))
 
-column_names <- c("Chromosome", "Start", "End", "AverageDepth")
 hifird <- read_delim(args$pacbio, delim = ",",col_names = column_names)
 hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 200 ~ 200, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
@@ -111,31 +91,19 @@ pdf(args$output, width = 11.7, height = 8.3)
 kp <- plotKaryotype(genome = mygenomegr,plot.params = pp)
 
 kpAddBaseNumbers(kp)
-#kpPlotRegions(kp, data=cengr, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-transparent_green <- grDevices::adjustcolor("green", alpha.f = 0.5)
-transparent_gold <- grDevices::adjustcolor("gold", alpha.f = 0.5)
-kpPlotRegions(kp, data=cengr_CEN199, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_CEN187, col="#80008080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_MIC187, col=transparent_green, r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-kpPlotRegions(kp, data=cengr_MIC199, col=transparent_gold, r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-
+kpPlotRegions(kp, data=cengr, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 kpPlotRegions(kp, data=telomeresgr, col="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
-
-kpPlotRegions(kp, data=Nregions_gr, col="black", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE,lwd = 0.1)
-
 kpLines(kp, data = ilmnrdgr,
         r0=0, r1=0.25, ymin = 0, ymax = 200,
-        col = "#6495ED", lwd = 0.1) 
+        col = "#6495ED", lwd = 0.3) 
 kpLines(kp, data = ontgr,
         r0=0.25, r1=0.4, ymin = 0, ymax = 200,
-        col = "#FA8072", lwd = 0.1)
+        col = "#FA8072", lwd = 0.3)
 kpLines(kp, data = hifigr,
         r0=0.45, r1=0.65, ymin = 0, ymax = 200,
-        col = "#3CB371", lwd = 0.1)
+        col = "#3CB371", lwd = 0.3)
 kpLines(kp, data = gcgr,
         r0=0.65, r1=0.90, ymin = 40, ymax = 60,
-        col = "#6A4DA8", lwd = 0.3)
+        col = "#6A4DA8", lwd = 0.6)
 
 dev.off()
-
-

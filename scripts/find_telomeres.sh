@@ -3,7 +3,7 @@
 #PBS -q normal
 #PBS -P xl04
 #PBS -l storage=gdata/if89+gdata/xl04
-#PBS -l walltime=22:00:00
+#PBS -l walltime=8:00:00
 #PBS -l mem=64GB
 #PBS -l ncpus=48
 #PBS -l wd
@@ -41,7 +41,7 @@ printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${PBS_NCPUS} trf {} 2 7 7 
 
 for file in ${PBS_JOBFS}/*.dat;
 do
-    python3 /g/data/xl04/ka6418/ausarg/scripts/trf2gff.py -i ${file} -o ${file}.gff3 
+    python3 /g/data/xl04/ka6418/github/ausarg/scripts/trf2gff.py -i ${file} -o ${file}.gff3 
 done
 
 cat *.gff3 > $(basename "$inputfile" .fasta).gff3
@@ -55,7 +55,7 @@ awk -F'\t' 'BEGIN {OFS=","}
     }
 ' $(basename "$inputfile" .fasta).gff3 >> $(basename "$inputfile" .fasta).csv
 
-python3 /g/data/xl04/ka6418/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
+python3 /g/data/xl04/ka6418/github/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
 
 
 
