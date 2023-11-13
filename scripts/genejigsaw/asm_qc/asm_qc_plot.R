@@ -48,7 +48,7 @@ telomeresdf <- read_delim(args$telomeres, delim = ",")
 telomeresgr <- toGRanges(data.frame(select(telomeresdf, chr=Sequence_ID, start = Start, end = End)))
 
 cendf <- read_delim(args$repetitive, delim = ",")
-filtered_cendf <- filter(cendf, !is.na(class))
+filtered_cendf <- filter(cendf, !is.na(class), width>100000)
 
 # Split data based on the class values
 list_of_dataframes <- split(filtered_cendf, filtered_cendf$class)
