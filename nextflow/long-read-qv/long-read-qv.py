@@ -1,13 +1,13 @@
 import sys
 import os
 from Bio import SeqIO
-import gzip
 import csv
 
 bin_size = 100
 
 def process_fastq(input_fastq, output_path):
     bins = {}
+    length_sums = {}
 
     with open(input_fastq, "rt") as f:
         for record in SeqIO.parse(f, "fastq-sanger"):
@@ -23,20 +23,33 @@ def process_fastq(input_fastq, output_path):
             bins[bin_key]["total_qv"] += avg_qv
             bins[bin_key]["count"] += 1
 
+            # Summing read numbers by length
+            if bin_number not in length_sums:
+                length_sums[bin_number] = 0
+            length_sums[bin_number] += 1
+
     input_basename = os.path.splitext(os.path.basename(input_fastq))[0]
-    output_csv = os.path.join(output_path, f"{input_basename}_quality_freq.csv")
+    quality_output_csv = os.path.join(output_path, f"{input_basename}_quality_freq.csv")
+    length_output_csv = os.path.join(output_path, f"{input_basename}_length_freq.csv")
 
-    with open(output_csv, "w", newline="") as csvfile:
+    # Write quality frequency data
+    with open(quality_output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
-
         csv_writer.writerow(["Read_Length", "QV", "Read_Numbers"])
-
         for bin_key, bin_data in bins.items():
             length_bin, qv_bin = bin_key
             frequency = bin_data["count"]
             csv_writer.writerow([length_bin, qv_bin, frequency])
 
-    print("CSV output written to:", output_csv)
+    # Write length frequency data
+    with open(length_output_csv, "w", newline="") as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow(["Read_Length", "Summed_Read_Numbers"])
+        for length_bin, count in length_sums.items():
+            csv_writer.writerow([length_bin, count])
+
+    print("CSV output written to:", quality_output_csv)
+    print("CSV output written to:", length_output_csv)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
