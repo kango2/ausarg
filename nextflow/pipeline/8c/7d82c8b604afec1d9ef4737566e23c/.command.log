@@ -1,0 +1,16 @@
+Loading biopython/1.79
+  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2 pythonlib/3.9.2
+CSV output and log file written to: pipeline
+
+======================================================================================
+                  Resource Usage on 2023-11-17 16:38:00:
+   Job Id:             101590672.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.10
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:12        
+   Memory Requested:   16.0GB                Memory Used: 243.45MB        
+   Walltime requested: 01:00:00            Walltime Used: 00:00:22        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
