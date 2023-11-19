@@ -3,7 +3,7 @@ include { fromQuery } from 'plugin/nf-sqldb'
 
 
 process fastqmetrics {
-    publishDir "/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline", mode: 'copy', overwrite: false
+    publishDir "${params.topfolder}/fastqmetrics", mode: 'copy', overwrite: false
     executor = 'pbspro'
     queue = 'normal'
     project = 'xl04'
@@ -24,12 +24,10 @@ process fastqmetrics {
     python3 /g/data/xl04/ka6418/github/ausarg/nextflow/long-read-qv/long-read-qv.py --i $fastq_file --o $output --s $sample --p $platform --f $flowcell
 
     """
-
 }
 
 workflow {
     
-
     fastq = channel
         .fromQuery('select title, flowcell, platform, filename from SRA', db: 'inputdb')
         .map { row ->
