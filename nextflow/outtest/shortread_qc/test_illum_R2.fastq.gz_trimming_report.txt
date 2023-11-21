@@ -1,0 +1,68 @@
+
+SUMMARISING RUN PARAMETERS
+==========================
+Input filename: test_illum_R2.fastq.gz
+Trimming mode: paired-end
+Trim Galore version: 0.6.10
+Cutadapt version: 4.5
+Number of cores used for trimming: 1
+Quality Phred score cutoff: 20
+Quality encoding type selected: ASCII+33
+Using Nextera adapter for trimming (count: 4). Second best hit was smallRNA (count: 0)
+Adapter sequence: 'CTGTCTCTTATA' (Nextera Transposase sequence; auto-detected)
+Maximum trimming error rate: 0.1 (default)
+Minimum required adapter overlap (stringency): 1 bp
+Minimum required sequence length for both reads before a sequence pair gets removed: 20 bp
+Output file will be GZIP compressed
+
+
+This is cutadapt 4.5 with Python 3.9.18
+Command line parameters: -j 1 -e 0.1 -q 20 -O 1 -a CTGTCTCTTATA test_illum_R2.fastq.gz
+Processing single-end reads on 1 core ...
+Finished in 0.107 s (107.106 µs/read; 0.56 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:                   1,000
+Reads with adapters:                       290 (29.0%)
+Reads written (passing filters):         1,000 (100.0%)
+
+Total basepairs processed:       239,583 bp
+Quality-trimmed:                     852 bp (0.4%)
+Total written (filtered):        238,134 bp (99.4%)
+
+=== Adapter 1 ===
+
+Sequence: CTGTCTCTTATA; Type: regular 3'; Length: 12; Trimmed: 290 times
+
+Minimum overlap: 1
+No. of allowed errors:
+1-9 bp: 0; 10-12 bp: 1
+
+Bases preceding removed adapters:
+  A: 29.0%
+  C: 24.8%
+  G: 21.0%
+  T: 25.2%
+  none/other: 0.0%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+1	215	250.0	0	215
+2	50	62.5	0	50
+3	15	15.6	0	15
+4	3	3.9	0	3
+5	2	1.0	0	2
+24	1	0.0	1	1
+30	1	0.0	1	1
+33	1	0.0	1	1
+36	1	0.0	1	1
+92	1	0.0	1	0 1
+
+RUN STATISTICS FOR INPUT FILE: test_illum_R2.fastq.gz
+=============================================
+1000 sequences processed in total
+
+Total number of sequences analysed for the sequence pair length validation: 1000
+
+Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 0 (0.00%)

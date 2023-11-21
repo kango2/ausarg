@@ -142,7 +142,7 @@ process shortread_qc {
     clusterOptions = '-l ncpus=2,mem=2GB,storage=gdata/if89+gdata/xl04'
 
     input:
-    tuple path (R1), path (R2),val (sample),val (flowcell),path (output),val (platform)
+    tuple path (R1), path (R2),val (sample),val (flowcell),path (output),val (platform) from shortread_trimming
 
     output:
     path ("$output/*_ILLUMINA.csv")

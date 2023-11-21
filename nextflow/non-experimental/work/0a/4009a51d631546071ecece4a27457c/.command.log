@@ -1,0 +1,14 @@
+/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/0a/4009a51d631546071ecece4a27457c/.command.sh: line 4: unexpected EOF while looking for matching `''
+
+======================================================================================
+                  Resource Usage on 2023-11-21 16:47:16:
+   Job Id:             101976875.gadi-pbs
+   Project:            xl04
+   Exit Status:        2
+   Service Units:      0.01
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:02        
+   Memory Requested:   2.0GB                 Memory Used: 72.56MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:06        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
