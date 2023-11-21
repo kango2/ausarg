@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/work/58/9654eb751d4a736a214e5e22524c2e/.command.sh", line 145, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/work/58/9654eb751d4a736a214e5e22524c2e/.command.sh", line 124, in main
+    if isinstance(metrics[0][key], list):
+KeyError: 'PILRUE'
