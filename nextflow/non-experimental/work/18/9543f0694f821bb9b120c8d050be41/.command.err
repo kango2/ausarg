@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/18/9543f0694f821bb9b120c8d050be41/.command.sh", line 110, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/18/9543f0694f821bb9b120c8d050be41/.command.sh", line 107, in main
+    process_fastq(testhifi.fq.gz, pipeline, PAF987, PACBIO_SMRT, BASDU, log_file)
+NameError: name 'testhifi' is not defined

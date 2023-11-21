@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/85/5ca2cf28ecbfee80004685b4075e46/.command.sh", line 110, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/85/5ca2cf28ecbfee80004685b4075e46/.command.sh", line 107, in main
+    process_fastq('testhifi.fq.gz', fastqmetrics, PAF987, PACBIO_SMRT, BASDU, log_file)
+NameError: name 'fastqmetrics' is not defined

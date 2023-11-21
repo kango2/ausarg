@@ -1,0 +1,4 @@
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/68/7d92c393f85388970260c358dae599/.command.sh", line 34
+    log.write(f"{timestamp} - {message} - Flowcell: {flowcell_id} - File: {input_file}
+              ^
+SyntaxError: unterminated string literal (detected at line 34)

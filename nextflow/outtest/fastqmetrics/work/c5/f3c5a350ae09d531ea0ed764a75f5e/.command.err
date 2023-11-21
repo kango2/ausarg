@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/fastqmetrics/work/c5/f3c5a350ae09d531ea0ed764a75f5e/.command.sh", line 111, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/fastqmetrics/work/c5/f3c5a350ae09d531ea0ed764a75f5e/.command.sh", line 106, in main
+    fastq_file = os.path.join(work_dir, 'testhifi.fq.gz')
+NameError: name 'work_dir' is not defined

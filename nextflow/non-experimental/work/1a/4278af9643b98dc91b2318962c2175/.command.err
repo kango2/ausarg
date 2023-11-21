@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/1a/4278af9643b98dc91b2318962c2175/.command.sh", line 110, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/1a/4278af9643b98dc91b2318962c2175/.command.sh", line 106, in main
+    log_file = os.path.join(pipeline, f"{file_prefix}_processing_log.txt")
+NameError: name 'pipeline' is not defined

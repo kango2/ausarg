@@ -1,0 +1,19 @@
+Loading biopython/1.79
+  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2 pythonlib/3.9.2
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/ec/b22e4974511efba06331dd701c7c9c/.command.sh", line 34
+    log.write(f"{timestamp} - {message} - Flowcell: {flowcell_id} - File: {input_file}
+              ^
+SyntaxError: unterminated string literal (detected at line 34)
+
+======================================================================================
+                  Resource Usage on 2023-11-21 09:54:53:
+   Job Id:             101924668.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.02
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:01        
+   Memory Requested:   16.0GB                Memory Used: 70.96MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:05        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

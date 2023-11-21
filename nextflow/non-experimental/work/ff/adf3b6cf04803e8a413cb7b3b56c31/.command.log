@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/ff/adf3b6cf04803e8a413cb7b3b56c31/.command.sh", line 110, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/ff/adf3b6cf04803e8a413cb7b3b56c31/.command.sh", line 105, in main
+    file_prefix = f"{BASDU}_{PAF987}_{PACBIO_SMRT}"
+NameError: name 'BASDU' is not defined
+
+======================================================================================
+                  Resource Usage on 2023-11-21 10:36:42:
+   Job Id:             101928480.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.02
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:02        
+   Memory Requested:   16.0GB                Memory Used: 100.04MB        
+   Walltime requested: 01:00:00            Walltime Used: 00:00:04        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

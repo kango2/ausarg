@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/4c/49c850368ddd8aa8379b47d3d201f3/.command.sh", line 110, in <module>
+    main()
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/4c/49c850368ddd8aa8379b47d3d201f3/.command.sh", line 107, in main
+    process_fastq('testhifi.fq.gz', 'fastqmetrics', 'PAF987', 'PACBIO_SMRT', 'BASDU', log_file)
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/4c/49c850368ddd8aa8379b47d3d201f3/.command.sh", line 45, in process_fastq
+    log_progress("Starting FASTQ file processing.", log_file,flowcell_id, input_fastq)
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/4c/49c850368ddd8aa8379b47d3d201f3/.command.sh", line 33, in log_progress
+    with open(log_file, "a") as log:
+FileNotFoundError: [Errno 2] No such file or directory: '/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/fastqmetrics/BASDU_PAF987_PACBIO_SMRT_processing_log.txt'

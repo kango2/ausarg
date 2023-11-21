@@ -1,0 +1,186 @@
+Nov-21 10:46:05.928 [main] DEBUG nextflow.cli.Launcher - $> nextflow /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf -config /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config --topfolder /g/data/xl04/ka6418/github/ausarg/nextflow/outtest
+Nov-21 10:46:06.009 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
+Nov-21 10:46:06.024 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/150/ka6418/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
+Nov-21 10:46:06.032 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Nov-21 10:46:06.033 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Nov-21 10:46:06.035 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Nov-21 10:46:06.052 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Nov-21 10:46:06.081 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config
+Nov-21 10:46:06.081 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config
+Nov-21 10:46:06.107 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Nov-21 10:46:06.729 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Nov-21 10:46:06.735 [main] INFO  nextflow.cli.CmdRun - Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf` [modest_rutherford] DSL2 - revision: 4c54ff3890
+Nov-21 10:46:06.736 [main] WARN  nextflow.plugin.PluginsFacade - Nextflow self-contained distribution allows only core plugins -- User config plugins will be ignored: nf-sqldb
+Nov-21 10:46:06.745 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /home/150/ka6418/.nextflow/secrets/store.json
+Nov-21 10:46:06.747 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@217bf99e] - activable => nextflow.secret.LocalSecretsProvider@217bf99e
+Nov-21 10:46:06.793 [main] DEBUG nextflow.Session - Session UUID: 4cb0c4af-953e-4e8b-8da2-cbf9e3a33ace
+Nov-21 10:46:06.793 [main] DEBUG nextflow.Session - Run name: modest_rutherford
+Nov-21 10:46:06.794 [main] DEBUG nextflow.Session - Executor pool size: 48
+Nov-21 10:46:06.801 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=144; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Nov-21 10:46:06.828 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.04.3 build 5876
+  Created: 18-09-2023 03:27 UTC (13:27 GMT+10:00)
+  System: Linux 4.18.0-477.27.1.el8.nci.x86_64
+  Runtime: Groovy 3.0.16 on OpenJDK 64-Bit Server VM 17.0.2+8-86
+  Encoding: UTF-8 (UTF-8)
+  Process: 3586426@gadi-login-06.gadi.nci.org.au [10.6.152.6]
+  CPUs: 48 - Mem: 4 GB (2.2 GB) - Swap: 16 GB (14.1 GB)
+Nov-21 10:46:06.859 [main] DEBUG nextflow.Session - Work-dir: /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/fastqmetrics/work [lustre]
+Nov-21 10:46:06.859 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/bin
+Nov-21 10:46:06.883 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[GoogleLifeSciencesExecutor, AwsBatchExecutor, GoogleBatchExecutor]
+Nov-21 10:46:06.892 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Nov-21 10:46:06.894 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Nov-21 10:46:06.908 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Nov-21 10:46:06.915 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 49; maxThreads: 1000
+Nov-21 10:46:07.021 [main] DEBUG nextflow.Session - Session start
+Nov-21 10:46:07.299 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Nov-21 10:46:07.312 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-sqldb version: latest
+Nov-21 10:46:07.809 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-sqldb@0.5.0' resolved
+Nov-21 10:46:07.810 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-sqldb@0.5.0'
+Nov-21 10:46:07.838 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-sqldb@0.5.0
+Nov-21 10:46:07.839 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [fromQuery:fromQuery]; plugin Id: nf-sqldb
+Nov-21 10:46:07.963 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-21 10:46:07.963 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-21 10:46:07.969 [main] DEBUG nextflow.executor.Executor - [warm up] executor > pbspro
+Nov-21 10:46:07.972 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'pbspro' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Nov-21 10:46:07.975 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'pbspro' > queue-stat-interval: 1m
+Nov-21 10:46:08.035 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: fastqmetrics
+Nov-21 10:46:08.036 [main] DEBUG nextflow.Session - Igniting dataflow network (2)
+Nov-21 10:46:08.036 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
+Nov-21 10:46:08.168 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > fastqmetrics
+Nov-21 10:46:08.169 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Nov-21 10:46:08.170 [main] DEBUG nextflow.Session - Session await
+Nov-21 10:46:08.332 [Task submitter] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=fastqmetrics (1); work-dir=/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/fastqmetrics/work/03/9d74f3e448931d4a7e774dc35e7244
+  error [nextflow.exception.ProcessFailedException]: Error submitting process 'fastqmetrics (1)' for execution
+Nov-21 10:46:08.343 [Task submitter] ERROR nextflow.processor.TaskProcessor - Error executing process > 'fastqmetrics (1)'
+
+Caused by:
+  java.lang.reflect.UndeclaredThrowableException
+
+Source block:
+  """
+  #!/usr/bin/env python
+  from Bio import SeqIO
+  import subprocess
+  import sys
+  import os
+  import csv
+  import gzip
+  import argparse
+  import datetime
+  
+  bin_size = 100
+  
+  def calculate_n50_n90(read_lengths):
+      sorted_lengths = sorted(read_lengths, reverse=True)
+      total_length = sum(sorted_lengths)
+      cumulative_length = 0
+      n50 = n90 = l50 = l90 = 0
+  
+      for i, length in enumerate(sorted_lengths):
+          cumulative_length += length
+          if not n50 and cumulative_length >= total_length * 0.5:
+              n50 = length
+              l50 = i + 1
+          if not n90 and cumulative_length >= total_length * 0.9:
+              n90 = length
+              l90 = i + 1
+              break
+  
+      return n50, n90, l50, l90
+  
+  def log_progress(message, log_file, flowcell_id, input_file):
+      timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+      with open(log_file, "a") as log:
+          log.write(f"{timestamp} - {message} - Flowcell: {flowcell_id} - File: {input_file}")
+  
+  
+  def process_fastq(input_fastq, output_path, flowcell_id, platform,sample, log_file):
+      bins = {}
+      length_sums = {}
+      read_lengths = []
+      total_bases = 0
+      total_reads = 0
+      total_ns = 0
+  
+      log_progress("Starting FASTQ file processing.", log_file,flowcell_id, input_fastq)
+  
+      with gzip.open(input_fastq, "rt") as f:
+          for record in SeqIO.parse(f, "fastq-sanger"):
+              sequence_length = len(record.seq)
+              avg_qv = round(sum(record.letter_annotations["phred_quality"]) / sequence_length)
+              total_bases += sequence_length
+              total_reads += 1
+              total_ns += record.seq.count("N")
+              read_lengths.append(sequence_length)
+  
+              bin_number = (sequence_length) // bin_size * bin_size
+              bin_key = (bin_number, avg_qv)
+  
+              if bin_key not in bins:
+                  bins[bin_key] = {"total_qv": 0, "count": 0}
+              bins[bin_key]["total_qv"] += avg_qv
+              bins[bin_key]["count"] += 1
+  
+              if bin_number not in length_sums:
+                  length_sums[bin_number] = 0
+              length_sums[bin_number] += 1
+  
+      n50, n90, l50, l90 = calculate_n50_n90(read_lengths)
+      average_read_length = total_bases / total_reads if total_reads > 0 else 0
+  
+      log_progress("FASTQ file processing completed. Writing CSV files...", log_file, flowcell_id, input_fastq)
+  
+      file_prefix = f"{sample}_{flowcell_id}_{platform}"
+      quality_output_csv = os.path.join(output_path, f"{file_prefix}_quality_freq.csv")
+      length_output_csv = os.path.join(output_path, f"{file_prefix}_length_freq.csv")
+      stats_output_csv = os.path.join(output_path, f"{file_prefix}_stats.csv")
+  
+      # Write quality frequency data
+      with open(quality_output_csv, "w", newline="") as csvfile:
+          csv_writer = csv.writer(csvfile)
+          csv_writer.writerow(["File_Path","Sample","Flowcell_ID", "Platform", "Read_Length", "QV", "Read_Numbers"])
+          for bin_key, bin_data in bins.items():
+              length_bin, qv_bin = bin_key
+              frequency = bin_data["count"]
+              csv_writer.writerow([input_fastq,sample, flowcell_id, platform, length_bin, qv_bin, frequency])
+  
+      # Write length frequency data
+      with open(length_output_csv, "w", newline="") as csvfile:
+          csv_writer = csv.writer(csvfile)
+          csv_writer.writerow(["File_Path","Sample", "Flowcell_ID", "Platform", "Read_Length", "Summed_Read_Numbers"])
+          for length_bin, count in length_sums.items():
+              csv_writer.writerow([input_fastq,sample, flowcell_id, platform, length_bin, count])
+  
+      # Write stats data
+      with open(stats_output_csv, "w", newline="") as csvfile:
+          csv_writer = csv.writer(csvfile)
+          csv_writer.writerow(["File_Path","Sample", "Flowcell_ID", "Platform", "Total_Bases", "Total_Reads", "Average_Read_Length", "N50", "N90", "L50", "L90", "Total_Ns"])
+          csv_writer.writerow([input_fastq,sample, flowcell_id, platform, total_bases, total_reads, average_read_length, n50, n90, l50, l90, total_ns])
+  
+      log_progress("CSV files successfully written.", log_file, flowcell_id, input_fastq)
+      print(f"CSV output and log file written to: {output_path}")
+  
+  def main():
+      file_prefix = f"${sample}_${flowcell}_${platform}"
+      log_file = os.path.join('$output', f"{file_prefix}_processing_log.txt")
+      process_fastq('$fastq_file', '$output', '$flowcell', '$platform', '$sample', log_file)
+  
+  if __name__ == "__main__":
+      main()
+  
+  """
+
+Work dir:
+  /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/fastqmetrics/work/03/9d74f3e448931d4a7e774dc35e7244
+
+Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
+Nov-21 10:46:08.345 [Task submitter] DEBUG nextflow.Session - Session aborted -- Cause: Error submitting process 'fastqmetrics (1)' for execution
+Nov-21 10:46:08.354 [main] DEBUG nextflow.Session - Session await > all processes finished
+Nov-21 10:46:08.355 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Nov-21 10:46:08.364 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=0; pendingCount=1; submittedCount=0; runningCount=-1; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=-1; loadMemory=0; peakRunning=0; peakCpus=0; peakMemory=0; ]
+Nov-21 10:46:08.564 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Nov-21 10:46:08.564 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-sqldb@0.5.0'
+Nov-21 10:46:08.564 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-sqldb
+Nov-21 10:46:08.584 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

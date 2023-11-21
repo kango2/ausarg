@@ -1,0 +1,9 @@
+Loading biopython/1.79
+  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2 pythonlib/3.9.2
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/g/data/if89/apps/biopython/1.79/lib/python3.9/site-packages/Bio/SeqIO/__init__.py", line 374, in <module>
+    from Bio.Align import MultipleSeqAlignment
+  File "/g/data/if89/apps/biopython/1.79/lib/python3.9/site-packages/Bio/Align/__init__.py", line 18, in <module>
+    from Bio.Align import _aligners
+ImportError: cannot import name '_aligners' from partially initialized module 'Bio.Align' (most likely due to a circular import) (/g/data/if89/apps/biopython/1.79/lib/python3.9/site-packages/Bio/Align/__init__.py)
