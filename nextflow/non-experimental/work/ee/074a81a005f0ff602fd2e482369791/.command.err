@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/ee/074a81a005f0ff602fd2e482369791/.command.sh", line 2, in <module>
-    from Bio import SeqIO
-  File "/g/data/if89/apps/pythonlib/3.9.2/lib/python3.9/site-packages/Bio/SeqIO/__init__.py", line 374, in <module>
-    from Bio.Align import MultipleSeqAlignment
-  File "/g/data/if89/apps/pythonlib/3.9.2/lib/python3.9/site-packages/Bio/Align/__init__.py", line 35, in <module>
-    from Bio.Align import _aligners
-ImportError: cannot import name '_aligners' from partially initialized module 'Bio.Align' (most likely due to a circular import) (/g/data/if89/apps/pythonlib/3.9.2/lib/python3.9/site-packages/Bio/Align/__init__.py)

@@ -1,0 +1,14 @@
+CSV output and log file written to: fastqmetrics
+
+======================================================================================
+                  Resource Usage on 2023-11-21 12:04:23:
+   Job Id:             101937286.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.02
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:10        
+   Memory Requested:   2.0GB                 Memory Used: 229.52MB        
+   Walltime requested: 01:00:00            Walltime Used: 00:00:13        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

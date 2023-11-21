@@ -1,4 +1,0 @@
-  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/e4/46f301f6a229c033c9d4de62080f06/.command.sh", line 105
-    file_prefix = f"BASDU"_"PAF987"_"PACBIO_SMRT"
-                          ^
-SyntaxError: invalid syntax

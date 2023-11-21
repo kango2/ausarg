@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/dc/3ae0efb1dcd3f87277d44fde7f1d8e/.command.sh", line 110, in <module>
-    main()
-  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/dc/3ae0efb1dcd3f87277d44fde7f1d8e/.command.sh", line 104, in main
-    output_path = os.path.abspath(pipeline)
-NameError: name 'pipeline' is not defined
