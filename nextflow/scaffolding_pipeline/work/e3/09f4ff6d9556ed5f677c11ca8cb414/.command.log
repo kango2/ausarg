@@ -1,0 +1,14 @@
+/g/data/xl04/ka6418/miniconda/envs/arima/etc/conda/activate.d/openjdk_activate.sh: line 1: JAVA_HOME: unbound variable
+
+======================================================================================
+                  Resource Usage on 2023-11-22 16:21:15:
+   Job Id:             102117166.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.04
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:02        
+   Memory Requested:   16.0GB                Memory Used: 72.93MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:10        
+   JobFS requested:    10.0GB                 JobFS used: 0B              
+======================================================================================

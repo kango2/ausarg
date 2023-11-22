@@ -1,0 +1,15 @@
+### Step 0: Check output directories' existence & create them as needed
+/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/work/03/6349c341246b89a3b7c6fa0c143b79/.command.sh: line 50: MERGE_DIR: unbound variable
+
+======================================================================================
+                  Resource Usage on 2023-11-22 16:28:43:
+   Job Id:             102117699.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.04
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:02        
+   Memory Requested:   16.0GB                Memory Used: 90.41MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:09        
+   JobFS requested:    10.0GB                 JobFS used: 18.83MB         
+======================================================================================
