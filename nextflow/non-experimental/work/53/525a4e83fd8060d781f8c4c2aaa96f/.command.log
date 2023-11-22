@@ -1,0 +1,14 @@
+/g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t 16 -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU --ul testont.fq.gz --h1 test_illum_R1.fastq.gz test_illumtwo_R1.fastq.gz --h2 test_illum_R2.fastq.gz test_illumtwo_R2.fastq.gz testhifi.fq.gz testhifitwo.fq.gz
+
+======================================================================================
+                  Resource Usage on 2023-11-22 12:17:35:
+   Job Id:             102090171.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.04
+   NCPUs Requested:    16                     NCPUs Used: 16              
+                                           CPU Time Used: 00:00:01        
+   Memory Requested:   32.0GB                Memory Used: 72.03MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:04        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

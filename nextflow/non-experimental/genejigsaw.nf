@@ -1,5 +1,7 @@
 include { fromQuery } from 'plugin/nf-sqldb'
 
+include { hifiasm_assembly } from '/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/assembly_jigsaw.nf'
+
 process longread_qc {
     conda '/g/data/xl04/ka6418/miniconda/envs/genejigsaw'
     executor = 'pbspro'
@@ -329,6 +331,32 @@ process shortread_trimming {
 
 }
 
+process testing_assembly {
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=16,mem=32GB,storage=gdata/if89+gdata/xl04'
+
+    input:
+    tuple val (sample), path (pacbio)
+    tuple val (sample), path (ont)
+    tuple val (sample), path(R1), path(R2)
+    val (output)
+
+
+    script:
+    """
+    /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t \${PBS_NCPUS} -o "$output/$sample" --ul $ont --h1 $R1 --h2 $R2  $pacbio  
+
+ 
+    """
+}
+
+
+
+
+
 workflow {
     
     longread_fastqs = channel
@@ -337,7 +365,7 @@ workflow {
             def (title, flowcell, platform, filename) = row
             def output = "${params.topfolder}/longread_qc" 
             return [filename, title, flowcell, output, platform]
-        }.view()
+        }
 
     longread_qc(longread_fastqs)
 
@@ -353,12 +381,54 @@ workflow {
    
         // Return the split filenames along with other parameters
         return [file1, file2, title, flowcell, output, platform]
-    }.view()
+    }
 
-    trimmed_shortreads = shortread_trimming(illumina_fastqs)
-    shortread_qc(trimmed_shortreads)
+    //trimmed_shortreads = shortread_trimming(illumina_fastqs)
+    //shortread_qc(trimmed_shortreads)
+
     
+    // Query for PacBio files
+    ont = channel
+        .fromQuery('select title, filename from SRA where platform is "OXFORD_NANOPORE"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def pacbio_file = file(filename)
+            return [title, pacbio_file]
+        }
+        .groupTuple()
+        .map { title, files -> 
+            return [title, files.toList()]
+        }
+        .view()
 
+    pacbio = channel
+        .fromQuery('select title, filename from SRA where platform is "PACBIO_SMRT"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def pacbio_file = file(filename)
+            return [title, pacbio_file]
+        }
+        .groupTuple()
+        .map { title, files -> 
+            return [title, files.toList()]
+        }
+        .view()
+
+    hic = channel
+        .fromQuery('select title, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def (file1, file2) = filename.split(':')
+            return [title, file1, file2]
+        }
+        .groupTuple()
+        .map { title, files1, files2 -> 
+            return [title, files1.toList(), files2.toList()]
+        }
+        .view()
+
+    def output = "${params.topfolder}/assembly"
+    testing_assembly(pacbio,ont,hic,output)
 
 }
 

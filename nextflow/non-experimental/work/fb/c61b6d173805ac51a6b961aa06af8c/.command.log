@@ -1,0 +1,14 @@
+[ERROR] Cannot find the input read file: test_illumtwo_R1.fastq.gz
+
+======================================================================================
+                  Resource Usage on 2023-11-22 12:10:41:
+   Job Id:             102089642.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.01
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:01        
+   Memory Requested:   2.0GB                 Memory Used: 25.66MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:03        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

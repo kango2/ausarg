@@ -19,7 +19,7 @@ Output file will be GZIP compressed
 This is cutadapt 4.5 with Python 3.9.18
 Command line parameters: -j 1 -e 0.1 -q 20 -O 1 -a CTGTCTCTTATA test_illum_R1.fastq.gz
 Processing single-end reads on 1 core ...
-Finished in 0.117 s (116.517 µs/read; 0.51 M reads/minute).
+Finished in 0.062 s (62.203 µs/read; 0.96 M reads/minute).
 
 === Summary ===
 
