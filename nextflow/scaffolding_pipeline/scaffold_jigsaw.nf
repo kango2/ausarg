@@ -115,6 +115,48 @@ process arima_mapping {
 
 }
 
+process yahs {
+
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=8,mem=16GB,storage=gdata/if89+gdata/xl04,jobfs=10GB'
+    
+    input:
+    val (params.mappedreads)
+    val (params.fasta)
+
+    script:
+    """
+    module load yahs samtools
+    samtools faidx ${params.fasta}
+    yahs -e GATC,GANTC,CTNAG,TTAA -o /g/data/xl04/ka6418/nextflow_testing/dedup/dedupp ${params.fasta} ${params.mappedreads}
+    # -r 10000,20000,50000,100000,200000,500000,1000000
+
+    """
+
+
+
+}
+
+process generate_hicmap {
+
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=8,mem=16GB,storage=gdata/if89+gdata/xl04,jobfs=10GB'
+
+    input:
+    val (params.fasta)
+    val (params.PE_1)
+    val (params.PE_2)
+    val (params.outputdir)
+
+}
+
 workflow {
-    arima_mapping(params.fasta,params.PE_1,params.PE_2,params.outputdir)
+    //arima_mapping(params.fasta,params.PE_1,params.PE_2,params.outputdir)
+    yahs(params.fasta,params.mappedreads)
 }
