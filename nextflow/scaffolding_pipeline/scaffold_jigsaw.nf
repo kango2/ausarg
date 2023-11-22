@@ -1,48 +1,33 @@
-#!/bin/bash
-#PBS -N arima
-#PBS -P xl04
-#PBS -q normalsr
-#PBS -l walltime=12:00:00
-#PBS -l mem=512GB
-#PBS -l ncpus=104
-#PBS -l storage=gdata/xl04+gdata/if89
-#PBS -l wd
-#PBS -l jobfs=400GB
-#PBS -j oe
-#PBS -M kirat.alreja@anu.edu.au
+process arima_mapping {
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=16,mem=32GB,storage=gdata/if89+gdata/xl04'
+
+    input:
+    path (assembly)
+    path (R1)
+    path (R2)
 
 
-
+    script:
+    """
 module load samtools parallel
 source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
 conda activate arima
 
+
+WORK_DIR=$working_dir
 REF=$fasta
-R1=${PE_1}
-R2=${PE_2}
-output=${outputdir}
-
-
-label=$(basename ${REF} .fasta)
-WORK_DIR=${PBS_JOBFS}
+IN_DIR=$fastq_folder
 
 cp $REF $WORK_DIR
 cd $WORK_DIR
-
-
-firstfile = ${R1}
-secondfile = ${R2}
-mkdir fastq
-ln -s ${R1} fastq/${label}_R1.fastq.gz
-ln -s ${R2} fastq/${label}_R2.fastq.gz
-
-IN_DIR=fastq
-
-
 GENOME_BASENAME=$(basename "$REF")
 REF=$WORK_DIR/$GENOME_BASENAME
-SRA=$label
-LABEL=$label
+SRA=rBasDup
+LABEL=rBasDup
 PREFIX=$GENOME_BASENAME
 FAIDX="${GENOME_BASENAME}.fai"
 RAW_DIR="$WORK_DIR/raw"
@@ -106,13 +91,6 @@ picard AddOrReplaceReadGroups INPUT=$TMP_DIR/$SRA.bam OUTPUT=$PAIR_DIR/$SRA.bam 
 picard -Xmx8g MarkDuplicates INPUT=$PAIR_DIR/$SRA.bam OUTPUT=$REP_DIR/$REP_LABEL.bam METRICS_FILE=$REP_DIR/metrics.$REP_LABEL.txt TMP_DIR=$TMP_DIR ASSUME_SORTED=TRUE VALIDATION_STRINGENCY=LENIENT REMOVE_DUPLICATES=TRUE
 
 samtools index $REP_DIR/$REP_LABEL.bam
-
-cd dedup 
-cp ${label}_rep1.bam ${label}_ArimaHiC.bam 
-cp ${label}_rep1.bam.bai ${label}_ArimaHiC.bam.bai
-cp ${label}_ArimaHiC.bam ${output}
-cp ${label}_ArimaHiC.bam.bai ${output}
-
-
-
-
+ 
+    """
+}
