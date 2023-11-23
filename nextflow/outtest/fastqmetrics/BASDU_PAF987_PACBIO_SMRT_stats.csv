@@ -1,2 +1,0 @@
-File_Path,Sample,Flowcell_ID,Platform,Total_Bases,Total_Reads,Average_Read_Length,N50,N90,L50,L90,Total_Ns
-testhifi.fq.gz,BASDU,PAF987,PACBIO_SMRT,151950739,10000,15195.0739,15473,11907,4140,8595,0

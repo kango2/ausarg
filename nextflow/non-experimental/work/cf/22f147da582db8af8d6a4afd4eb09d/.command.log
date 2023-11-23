@@ -1,0 +1,42 @@
+Reads has been loaded.
+Loading ma_hit_ts from disk... 
+ma_hit_ts has been read.
+Loading ma_hit_ts from disk... 
+ma_hit_ts has been read.
+[M::ha_assemble::0.646*0.99] ==> loaded corrected reads and overlaps from disk
+[M::ha_opt_update_cov_min] updated max_n_chain to 100
+[M::purge_dups] homozygous read coverage threshold: 20
+[M::purge_dups] purge duplication coverage threshold: 25
+Writing raw unitig GFA to disk... 
+Writing processed unitig GFA to disk... 
+[M::purge_dups] homozygous read coverage threshold: 20
+[M::purge_dups] purge duplication coverage threshold: 25
+[M::mc_solve:: # edges: 0]
+[M::mc_solve_core_adv::0.000] ==> Partition
+[M::adjust_utg_by_primary] primary contig coverage range: [17, infinity]
+Writing /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU.bp.p_ctg.gfa to disk... 
+[M::reduce_hamming_error_adv::0.000] # inserted edges: 0, # fixed bubbles: 0
+[M::adjust_utg_by_trio] primary contig coverage range: [17, infinity]
+[M::clean_trio_untig_graph] # adjusted arcs::0
+[M::adjust_utg_by_trio] primary contig coverage range: [17, infinity]
+[M::clean_trio_untig_graph] # adjusted arcs::0
+[M::output_trio_graph_joint] dedup_base::0, miss_base::0
+Writing /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU.bp.hap1.p_ctg.gfa to disk... 
+Writing /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU.bp.hap2.p_ctg.gfa to disk... 
+Inconsistency threshold for low-quality regions in BED files: 70%
+[M::main] Version: 0.19.5-r593
+[M::main] CMD: /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t 16 -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU longread_pb.fq.gz
+[M::main] Real time: 0.842 sec; CPU: 1.510 sec; Peak RSS: 0.032 GB
+
+======================================================================================
+                  Resource Usage on 2023-11-23 16:18:06:
+   Job Id:             102229030.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.04
+   NCPUs Requested:    16                     NCPUs Used: 16              
+                                           CPU Time Used: 00:00:03        
+   Memory Requested:   32.0GB                Memory Used: 104.85MB        
+   Walltime requested: 01:00:00            Walltime Used: 00:00:04        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

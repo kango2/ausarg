@@ -1,6 +1,8 @@
 include { fromQuery } from 'plugin/nf-sqldb'
-
 include { hifiasm_assembly } from '/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/assembly_jigsaw.nf'
+include { arima_mapping } from '/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/scaffold_jigsaw.nf'
+include { yahs } from '/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/scaffold_jigsaw.nf'
+include { generate_hicmap } from '/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/scaffold_jigsaw.nf'
 
 process longread_qc {
     conda '/g/data/xl04/ka6418/miniconda/envs/genejigsaw'
@@ -331,7 +333,7 @@ process shortread_trimming {
 
 }
 
-process testing_assembly {
+process assembly {
     executor = 'pbspro'
     queue = 'normal'
     project = 'xl04'
@@ -344,12 +346,18 @@ process testing_assembly {
     tuple val (sample), path(R1), path(R2)
     val (output)
 
+    output:
+    val ("${output}/${sample}_HifiASM.fasta")
+
+
 
     script:
     """
-    /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t \${PBS_NCPUS} -o "$output/$sample" --ul $ont --h1 $R1 --h2 $R2  $pacbio  
+    /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t \${PBS_NCPUS} -o "$output/$sample"  $pacbio 
+    # --ul $ont --h1 $R1 --h2 $R2 
 
- 
+    awk '/^S/{print ">"\$2;print \$3}' ${output}/${sample}*.p_ctg.gfa > ${output}/${sample}_HifiASM.fasta
+
     """
 }
 
@@ -383,8 +391,8 @@ workflow {
         return [file1, file2, title, flowcell, output, platform]
     }
 
-    //trimmed_shortreads = shortread_trimming(illumina_fastqs)
-    //shortread_qc(trimmed_shortreads)
+    trimmed_shortreads = shortread_trimming(illumina_fastqs)
+    shortread_qc(trimmed_shortreads)
 
     
     // Query for PacBio files
@@ -428,8 +436,34 @@ workflow {
         .view()
 
     def output = "${params.topfolder}/assembly"
-    testing_assembly(pacbio,ont,hic,output)
+    assembly(pacbio,ont,hic,output)
+
+    def fasta = "/g/data/xl04/ka6418/nextflow_testing/testdata/BASDU_HifiASM.fasta"
+
+    R1 = hic.map { title, files1, files2 ->
+    return [files1]}.flatten()
+
+    R2 = hic.map { title, files1, files2 ->
+    return [files2]}.flatten()
+
+    def output1 = "${params.topfolder}/arima"
+
+    hicalignment = arima_mapping(fasta,R1,R2,output1)
+
+    def output2 = "${params.topfolder}/yahs"
+
+    scaffolds = yahs(hicalignment,fasta,output2)
+
+    def output3 = "${params.topfolder}/juicer"
+
+    hicmap = generate_hicmap(scaffolds,R1,R2,output3)
 
 }
+    
+
+
+
+
+
 
 

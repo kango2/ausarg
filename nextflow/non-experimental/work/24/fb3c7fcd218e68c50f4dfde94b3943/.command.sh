@@ -1,2 +1,0 @@
-#!/bin/bash -ue
-echo testhifi.fq.gz testhifitwo.fq.gz > /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/test.txt

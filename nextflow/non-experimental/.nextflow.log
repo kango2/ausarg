@@ -1,148 +1,106 @@
-Nov-22 11:23:08.695 [main] DEBUG nextflow.cli.Launcher - $> nextflow /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf -config /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config --topfolder /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -resume
-Nov-22 11:23:08.779 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
-Nov-22 11:23:08.795 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/150/ka6418/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
-Nov-22 11:23:08.804 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
-Nov-22 11:23:08.805 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
-Nov-22 11:23:08.807 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
-Nov-22 11:23:08.815 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
-Nov-22 11:23:08.834 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config
-Nov-22 11:23:08.835 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config
-Nov-22 11:23:08.854 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
-Nov-22 11:23:09.467 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
-Nov-22 11:23:09.477 [main] INFO  nextflow.cli.CmdRun - Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf` [jolly_picasso] DSL2 - revision: 522cb156a9
-Nov-22 11:23:09.479 [main] WARN  nextflow.plugin.PluginsFacade - Nextflow self-contained distribution allows only core plugins -- User config plugins will be ignored: nf-sqldb
-Nov-22 11:23:09.490 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /home/150/ka6418/.nextflow/secrets/store.json
-Nov-22 11:23:09.493 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@6fff46bf] - activable => nextflow.secret.LocalSecretsProvider@6fff46bf
-Nov-22 11:23:09.539 [main] DEBUG nextflow.Session - Session UUID: 40a2760d-4a0f-49d8-9b07-590d6154cdb6
-Nov-22 11:23:09.539 [main] DEBUG nextflow.Session - Run name: jolly_picasso
-Nov-22 11:23:09.539 [main] DEBUG nextflow.Session - Executor pool size: 48
-Nov-22 11:23:09.547 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=144; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
-Nov-22 11:23:09.568 [main] DEBUG nextflow.cli.CmdRun - 
+Nov-23 15:17:27.293 [main] DEBUG nextflow.cli.Launcher - $> nextflow /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf -config /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config --topfolder /g/data/xl04/ka6418/github/ausarg/nextflow/outtest
+Nov-23 15:17:27.375 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
+Nov-23 15:17:27.392 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/150/ka6418/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
+Nov-23 15:17:27.408 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Nov-23 15:17:27.409 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Nov-23 15:17:27.413 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Nov-23 15:17:27.423 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Nov-23 15:17:27.440 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config
+Nov-23 15:17:27.441 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config
+Nov-23 15:17:27.459 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Nov-23 15:17:27.991 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Nov-23 15:17:27.998 [main] INFO  nextflow.cli.CmdRun - Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf` [elated_bernard] DSL2 - revision: e62dd3b55c
+Nov-23 15:17:27.999 [main] WARN  nextflow.plugin.PluginsFacade - Nextflow self-contained distribution allows only core plugins -- User config plugins will be ignored: nf-sqldb
+Nov-23 15:17:28.008 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /home/150/ka6418/.nextflow/secrets/store.json
+Nov-23 15:17:28.011 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@73aeef7d] - activable => nextflow.secret.LocalSecretsProvider@73aeef7d
+Nov-23 15:17:28.057 [main] DEBUG nextflow.Session - Session UUID: 099ee00c-d0af-4ba7-bbde-47abc8bdecee
+Nov-23 15:17:28.057 [main] DEBUG nextflow.Session - Run name: elated_bernard
+Nov-23 15:17:28.057 [main] DEBUG nextflow.Session - Executor pool size: 48
+Nov-23 15:17:28.086 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=144; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Nov-23 15:17:28.117 [main] DEBUG nextflow.cli.CmdRun - 
   Version: 23.04.3 build 5876
   Created: 18-09-2023 03:27 UTC (13:27 GMT+10:00)
   System: Linux 4.18.0-477.27.1.el8.nci.x86_64
   Runtime: Groovy 3.0.16 on OpenJDK 64-Bit Server VM 17.0.2+8-86
   Encoding: UTF-8 (UTF-8)
-  Process: 3909709@gadi-login-05.gadi.nci.org.au [10.6.152.5]
-  CPUs: 48 - Mem: 4 GB (1.2 GB) - Swap: 16 GB (15.4 GB)
-Nov-22 11:23:09.599 [main] DEBUG nextflow.Session - Work-dir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work [lustre]
-Nov-22 11:23:09.600 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/bin
-Nov-22 11:23:09.628 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[GoogleLifeSciencesExecutor, AwsBatchExecutor, GoogleBatchExecutor]
-Nov-22 11:23:09.637 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
-Nov-22 11:23:09.639 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
-Nov-22 11:23:09.653 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
-Nov-22 11:23:09.660 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 49; maxThreads: 1000
-Nov-22 11:23:10.259 [main] DEBUG nextflow.Session - Session start
-Nov-22 11:23:10.662 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
-Nov-22 11:23:10.676 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-sqldb version: latest
-Nov-22 11:23:11.265 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-sqldb@0.5.0' resolved
-Nov-22 11:23:11.266 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-sqldb@0.5.0'
-Nov-22 11:23:11.303 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-sqldb@0.5.0
-Nov-22 11:23:11.304 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [fromQuery:fromQuery]; plugin Id: nf-sqldb
-Nov-22 11:23:11.474 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
-Nov-22 11:23:11.474 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
-Nov-22 11:23:11.493 [main] DEBUG nextflow.executor.Executor - [warm up] executor > pbspro
-Nov-22 11:23:11.497 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'pbspro' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
-Nov-22 11:23:11.501 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'pbspro' > queue-stat-interval: 1m
-Nov-22 11:23:11.569 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
-Nov-22 11:23:11.569 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
-Nov-22 11:23:11.574 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: longread_qc, shortread_qc, shortread_trimming, testing_assembly, hifiasm_assembly
-Nov-22 11:23:11.574 [main] DEBUG nextflow.Session - Igniting dataflow network (7)
-Nov-22 11:23:11.574 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
-Nov-22 11:23:11.676 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > longread_qc
-Nov-22 11:23:11.676 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
-Nov-22 11:23:11.677 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
-Nov-22 11:23:11.677 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
-Nov-22 11:23:11.678 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
-Nov-22 11:23:11.679 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > testing_assembly
-Nov-22 11:23:11.680 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
-Nov-22 11:23:11.680 [main] DEBUG nextflow.Session - Session await
-Nov-22 11:23:11.828 [Task submitter] WARN  nextflow.executor.PbsProExecutor - cpus and memory directives are ignored when clusterOptions contains -l option
+  Process: 1695265@gadi-login-07.gadi.nci.org.au [10.6.152.7]
+  CPUs: 48 - Mem: 4 GB (1.6 GB) - Swap: 16 GB (12.7 GB)
+Nov-23 15:17:28.151 [main] DEBUG nextflow.Session - Work-dir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work [lustre]
+Nov-23 15:17:28.151 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/bin
+Nov-23 15:17:28.175 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[GoogleLifeSciencesExecutor, AwsBatchExecutor, GoogleBatchExecutor]
+Nov-23 15:17:28.185 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Nov-23 15:17:28.187 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Nov-23 15:17:28.204 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Nov-23 15:17:28.212 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 49; maxThreads: 1000
+Nov-23 15:17:28.286 [main] DEBUG nextflow.Session - Session start
+Nov-23 15:17:28.837 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Nov-23 15:17:28.851 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-sqldb version: latest
+Nov-23 15:17:29.152 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-sqldb@0.5.0' resolved
+Nov-23 15:17:29.153 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-sqldb@0.5.0'
+Nov-23 15:17:29.168 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-sqldb@0.5.0
+Nov-23 15:17:29.169 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [fromQuery:fromQuery]; plugin Id: nf-sqldb
+Nov-23 15:17:29.453 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.453 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.460 [main] DEBUG nextflow.executor.Executor - [warm up] executor > pbspro
+Nov-23 15:17:29.467 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'pbspro' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Nov-23 15:17:29.474 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'pbspro' > queue-stat-interval: 1m
+Nov-23 15:17:29.540 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.540 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.545 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.545 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.571 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.572 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.578 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.578 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.582 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.582 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.584 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Nov-23 15:17:29.585 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Nov-23 15:17:29.589 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: longread_qc, arima_mapping, assembly, shortread_qc, generate_hicmap, yahs, shortread_trimming, hifiasm_assembly
+Nov-23 15:17:29.590 [main] DEBUG nextflow.Session - Igniting dataflow network (12)
+Nov-23 15:17:29.590 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
+Nov-23 15:17:29.757 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > longread_qc
+Nov-23 15:17:29.758 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
+Nov-23 15:17:29.758 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > shortread_trimming
+Nov-23 15:17:29.759 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > shortread_qc
+Nov-23 15:17:29.759 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
+Nov-23 15:17:29.760 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
+Nov-23 15:17:29.760 [main] DEBUG nextflow.sql.QueryHandler - Creating SQL connection: SqlDataSource[url=jdbc:sqlite:/g/data/xl04/ka6418/github/ausarg/nextflow/pipeline/inputdb.db; driver=org.sqlite.JDBC; user=sa; password=null]
+Nov-23 15:17:29.761 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > assembly
+Nov-23 15:17:29.761 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > arima_mapping
+Nov-23 15:17:29.761 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > yahs
+Nov-23 15:17:29.762 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > generate_hicmap
+Nov-23 15:17:29.762 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Nov-23 15:17:29.762 [main] DEBUG nextflow.Session - Session await
+Nov-23 15:17:29.891 [Task submitter] WARN  nextflow.executor.PbsProExecutor - cpus and memory directives are ignored when clusterOptions contains -l option
 tip: clusterOptions = { "-l ncpus=${task.cpus},mem=${task.memory.toGiga()}G..." }
-Nov-22 11:23:11.851 [Actor Thread 29] INFO  nextflow.processor.TaskProcessor - [82/5e8471] Cached process > longread_qc (2)
-Nov-22 11:23:11.855 [Actor Thread 27] INFO  nextflow.processor.TaskProcessor - [b6/2f3b6c] Cached process > longread_qc (1)
-Nov-22 11:23:15.048 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process testing_assembly (1) > jobId: 102090583.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/8a/7abde14995ebf81c4b3cf2a44927d1
-Nov-22 11:23:15.048 [Task submitter] INFO  nextflow.Session - [8a/7abde1] Submitted process > testing_assembly (1)
-Nov-22 11:25:26.538 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 102090583.gadi-pbs; id: 3; name: testing_assembly (1); status: COMPLETED; exit: 139; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/8a/7abde14995ebf81c4b3cf2a44927d1 started: 1700616211513; exited: 2023-11-22T01:25:25Z; ]
-Nov-22 11:25:26.547 [Task monitor] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
-  task: name=testing_assembly (1); work-dir=/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/8a/7abde14995ebf81c4b3cf2a44927d1
-  error [nextflow.exception.ProcessFailedException]: Process `testing_assembly (1)` terminated with an error exit status (139)
-Nov-22 11:25:26.578 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'testing_assembly (1)'
-
-Caused by:
-  Process `testing_assembly (1)` terminated with an error exit status (139)
-
-Command executed:
-
-  /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t ${PBS_NCPUS} -o "/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU" --ul testont.fq.gz --h1 test_illum_R1.fastq.gz test_illumtwo_R1.fastq.gz --h2 test_illum_R2.fastq.gz test_illumtwo_R2.fastq.gz  testhifi.fq.gz testhifitwo.fq.gz
-
-Command exit status:
-  139
-
-Command output:
-  (empty)
-
-Command error:
-  Writing raw unitig GFA to disk... 
-  [M::update_sg_uo::] ==> # gfa reads:48, # covered gfa reads:0
-  [M::ul_realignment::] ==> starting UL
-  [M::ha_opt_update_cov] updated max_n_chain to 100
-  [M::gen_cov_track::] # bases: 494642
-  [M::ha_ct_shrink::112.406*8.89] ==> counted 29 distinct minimizer k-mers
-  [M::ha_ft_ul_gen::113.073*8.84@17.501GB] ==> filtered out 29 k-mers occurring 32 or more times
-  [M::yak_count] collected 64550 minimizers
-  [M::ha_pt_ul_gen::113.087*8.84] ==> counted 51540 distinct minimizer k-mers
-  [M::ha_ct_shrink::113.089*8.84] ==> counted 51540 distinct minimizer k-mers
-  [M::yak_count] collected 64550 minimizers
-  [M::ha_pt_ul_gen::113.106*8.84] ==> indexed 64550 positions
-  [M::uidx_l_build] Index has been built.
-  [M::uidx_write] Index has been written.
-  [M::ha_opt_update_cov] updated max_n_chain to 100
-  [M::cal_graph_ovlp_binning::0.028] ==> Qualification
-  [M::write_emask_t] Index has been written.
-  [M::rescall_ul_pipeline::4.123] ==> Qualification
-  [M::rescall_ul_pipeline::] ==> # reads: 10000, # bases: 0, # fully corrected reads: 67
-  [M::write_all_ul_t] Index has been written.
-  [M::print_integert_ovlp_stat::] # UL reads::0, # UL ovlps::0
-  [M::print_integert_ovlp_stat::] # UL reads::0, # UL ovlps::0
-  +[M::realloc_rdb_adv] rid_n0::22000, rid_n::22000
-  -[M::realloc_rdb_adv] rid_n0::22000, rid_n::22000
-  +[M::update_paf] dn::22000
-  [M::renew_ng] nocc::22000, ng->n_seq::22000, sg->n_seq::22000
-  [M::purge_dups] homozygous read coverage threshold: 8
-  [M::purge_dups] purge duplication coverage threshold: 10
-  Writing processed unitig GFA to disk... 
-  [M::purge_dups] homozygous read coverage threshold: 8
-  [M::purge_dups] purge duplication coverage threshold: 10
-  [M::mc_solve:: # edges: 0]
-  [M::mc_solve_core_adv::0.000] ==> Partition
-  [M::adjust_utg_by_primary] primary contig coverage range: [6, infinity]
-  Writing /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU.hic.p_ctg.gfa to disk... 
-  [M::ha_opt_update_cov] updated max_n_chain to 100
-  [M::gen_trans_base_count_comp::0.017] ==> Qualification
-  [M::build_unitig_index::0.118] ==> Counting
-  [M::build_unitig_index::0.001] ==> Memory allocating
-  [M::build_unitig_index::0.200] ==> Filling pos
-  [M::build_unitig_index::0.001] ==> Sorting pos
-  [M::build_unitig_index::0.320] ==> HiC index has been built
-  [M::write_hc_pt_index] Index has been written.
-  [M::alignment_worker_pipeline::0.019] ==> Qualification
-  [M::dedup_hits::0.000] ==> Dedup
-  [M::adjust_weight_kv_u_trans_advance::0.000] 
-  [M::mc_solve:: # edges: 0]
-  [M::mb_solve_core::0.000] ==> Partition
-  [M::mc_solve_core_adv::0.000] ==> Partition
-  .command.sh: line 2: 1747547 Segmentation fault      /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t ${PBS_NCPUS} -o "/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/assembly/BASDU" --ul testont.fq.gz --h1 test_illum_R1.fastq.gz test_illumtwo_R1.fastq.gz --h2 test_illum_R2.fastq.gz test_illumtwo_R2.fastq.gz testhifi.fq.gz testhifitwo.fq.gz
-
-Work dir:
-  /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/8a/7abde14995ebf81c4b3cf2a44927d1
-
-Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
-Nov-22 11:25:26.580 [main] DEBUG nextflow.Session - Session await > all processes finished
-Nov-22 11:25:26.582 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Process `testing_assembly (1)` terminated with an error exit status (139)
-Nov-22 11:25:26.593 [main] DEBUG nextflow.Session - Session await > all barriers passed
-Nov-22 11:25:26.605 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=2; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=1m 55s; cachedDuration=30s;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
-Nov-22 11:25:26.814 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
-Nov-22 11:25:26.815 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-sqldb@0.5.0'
-Nov-22 11:25:26.815 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-sqldb
-Nov-22 11:25:26.858 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
+Nov-23 15:17:30.257 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process shortread_trimming (1) > jobId: 102229028.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/6c/6a16263bfbcef998e15ec4610f2ca6
+Nov-23 15:17:30.257 [Task submitter] INFO  nextflow.Session - [6c/6a1626] Submitted process > shortread_trimming (1)
+Nov-23 15:17:30.454 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process assembly (1) > jobId: 102229030.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/cf/22f147da582db8af8d6a4afd4eb09d
+Nov-23 15:17:30.455 [Task submitter] INFO  nextflow.Session - [cf/22f147] Submitted process > assembly (1)
+Nov-23 15:17:30.624 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process arima_mapping (1) > jobId: 102229032.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/c3/44c4e177239893fd7abc4e72719b61
+Nov-23 15:17:30.624 [Task submitter] INFO  nextflow.Session - [c3/44c4e1] Submitted process > arima_mapping (1)
+Nov-23 15:17:30.797 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process longread_qc (1) > jobId: 102229034.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/c8/e80f6685542db2a1a75f9098956403
+Nov-23 15:17:30.797 [Task submitter] INFO  nextflow.Session - [c8/e80f66] Submitted process > longread_qc (1)
+Nov-23 15:17:54.488 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 102229034.gadi-pbs; id: 1; name: longread_qc (1); status: COMPLETED; exit: 0; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/c8/e80f6685542db2a1a75f9098956403 started: 1700716664492; exited: 2023-11-23T05:17:50Z; ]
+Nov-23 15:17:59.500 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 102229030.gadi-pbs; id: 3; name: assembly (1); status: COMPLETED; exit: 0; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/cf/22f147da582db8af8d6a4afd4eb09d started: 1700716679483; exited: 2023-11-23T05:17:56Z; ]
+Nov-23 15:19:34.493 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 102229028.gadi-pbs; id: 2; name: shortread_trimming (1); status: COMPLETED; exit: 0; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/6c/6a16263bfbcef998e15ec4610f2ca6 started: 1700716664486; exited: 2023-11-23T05:19:33Z; ]
+Nov-23 15:19:34.522 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 102229032.gadi-pbs; id: 4; name: arima_mapping (1); status: COMPLETED; exit: 0; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/c3/44c4e177239893fd7abc4e72719b61 started: 1700716669485; exited: 2023-11-23T05:19:30Z; ]
+Nov-23 15:19:34.535 [Task submitter] WARN  nextflow.executor.PbsProExecutor - cpus and memory directives are ignored when clusterOptions contains -l option
+tip: clusterOptions = { "-l ncpus=${task.cpus},mem=${task.memory.toGiga()}G..." }
+Nov-23 15:19:34.642 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process yahs (1) > jobId: 102229447.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/f4/4a9f2d0a5a49b4b1e4191ee7e6189a
+Nov-23 15:19:34.642 [Task submitter] INFO  nextflow.Session - [f4/4a9f2d] Submitted process > yahs (1)
+Nov-23 15:19:34.720 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process shortread_qc (1) > jobId: 102229448.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/90/12ee0ff72d89319d8fb7cbae18a3e4
+Nov-23 15:19:34.721 [Task submitter] INFO  nextflow.Session - [90/12ee0f] Submitted process > shortread_qc (1)
+Nov-23 15:20:14.491 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 102229447.gadi-pbs; id: 6; name: yahs (1); status: COMPLETED; exit: 0; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/f4/4a9f2d0a5a49b4b1e4191ee7e6189a started: 1700716799489; exited: 2023-11-23T05:20:09Z; ]
+Nov-23 15:20:14.577 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process generate_hicmap (1) > jobId: 102229600.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/98/014ea7dcecfce00a37d441d5d64a26
+Nov-23 15:20:14.577 [Task submitter] INFO  nextflow.Session - [98/014ea7] Submitted process > generate_hicmap (1)
+Nov-23 15:21:08.553 [SIGINT handler] DEBUG nextflow.Session - Session aborted -- Cause: SIGINT
+Nov-23 15:21:08.579 [main] DEBUG nextflow.Session - Session await > all processes finished
+Nov-23 15:21:08.580 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Nov-23 15:21:08.589 [main] WARN  n.processor.TaskPollingMonitor - Killing running tasks (2)
+Nov-23 15:21:11.377 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=5; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=2; succeedDuration=4m; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=3; peakCpus=3; peakMemory=0; ]
+Nov-23 15:21:11.396 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Nov-23 15:21:11.396 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-sqldb@0.5.0'
+Nov-23 15:21:11.396 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-sqldb
+Nov-23 15:21:11.430 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

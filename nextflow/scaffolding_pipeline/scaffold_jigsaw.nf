@@ -6,10 +6,13 @@ process arima_mapping {
     clusterOptions = '-l ncpus=8,mem=16GB,storage=gdata/if89+gdata/xl04,jobfs=10GB'
 
     input:
-    val (params.fasta)
-    val (params.PE_1)
-    val (params.PE_2)
-    val (params.outputdir)
+    val (fasta)
+    val (R1)
+    val (R2)
+    val (outputdir)
+
+    output:
+    val ("$outputdir/*_ArimaHiC.bam")
 
 
     script:
@@ -17,10 +20,10 @@ process arima_mapping {
     module load samtools parallel picard bwa
     
 
-    REF=${params.fasta}
-    R1=${params.PE_1}
-    R2=${params.PE_2}
-    output=${params.outputdir}
+    REF=${fasta}
+    R1=${R1}
+    R2=${R2}
+    output=${outputdir}
 
     export JAVA_HOME=/apps/java/jdk-17.0.2/bin/java
     label=\$(basename \${REF} .fasta)
@@ -124,20 +127,23 @@ process yahs {
     clusterOptions = '-l ncpus=8,mem=16GB,storage=gdata/if89+gdata/xl04,jobfs=10GB'
     
     input:
-    val (params.mappedreads)
-    val (params.fasta)
+    val (mappedreads)
+    val (REF)
+    val (outputdir)
+
+    output:
+    val "${outputdir}/*_YAHS.fasta"
 
     script:
     """
     module load yahs samtools
-    samtools faidx ${params.fasta}
-    yahs -e GATC,GANTC,CTNAG,TTAA -o /g/data/xl04/ka6418/nextflow_testing/dedup/dedupp ${params.fasta} ${params.mappedreads}
+    samtools faidx ${REF}
+    label=\$(basename ${REF} .fasta)
+    yahs -e GATC,GANTC,CTNAG,TTAA -o ${outputdir}/\${label} ${REF} ${mappedreads}
+    mv ${outputdir}/\${label}_scaffolds_final.fa ${outputdir}/\${label}_YAHS.fasta
     # -r 10000,20000,50000,100000,200000,500000,1000000
 
     """
-
-
-
 }
 
 process generate_hicmap {
@@ -149,25 +155,26 @@ process generate_hicmap {
     clusterOptions = '-l ncpus=16,mem=32GB,storage=gdata/if89+gdata/xl04,jobfs=10GB'
 
     input:
-    val (params.scaffolds)
-    val (params.PE_1)
-    val (params.PE_2)
-    val (params.outputdir)
+    val (scaffolds)
+    val (R1)
+    val (R2)
+    val (outputdir)
+
 
     script:
     """
 
-    REF=${params.scaffolds}
-    R1=${params.PE_1}
-    R2=${params.PE_2}
-    output=${params.outputdir}
+    REF=${scaffolds}
+    R1=${R1}
+    R2=${R2}
+    output=${outputdir}
 
 
     module load seqkit bwa python3 parallel
     source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
     conda activate autohic
 
-    label=\$(basename \${REF} .fasta)
+    label=(basename \${REF} .fasta)
     WORK_DIR=\${PBS_JOBFS}
     mkdir -p \${WORK_DIR}/fastq
     ln -s \${R1} \${WORK_DIR}/fastq/\${label}_R1.fastq.gz
@@ -210,8 +217,4 @@ process generate_hicmap {
 
 }
 
-workflow {
-    //arima_mapping(params.fasta,params.PE_1,params.PE_2,params.outputdir)
-    //yahs(params.fasta,params.mappedreads)
-    generate_hicmap(params.scaffolds,params.PE_1,params.PE_2,params.outputdir)
-}
+
