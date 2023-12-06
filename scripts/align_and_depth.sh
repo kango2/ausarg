@@ -42,7 +42,7 @@ else
 fi
 
 # Step 2: Convert SAM to BAM
-samtools view -bS "${output}.sam" > "${output}.bam"
+samtools view -bS -@ ${PBS_NCPUS} "${output}.sam" > "${output}.bam"
 
 # Step 3: Sort and index BAM file
 samtools sort -@ ${PBS_NCPUS} "${output}.bam" -o "${output}_sorted.bam"

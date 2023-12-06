@@ -1,10 +1,13 @@
 import os
+import pandas as pd 
+import matplotlib.pyplot as plt
+
 def generate_qc_plot(csv_path, output_png_path):
     # Load the CSV file into a DataFrame
     qc_metrics_df = pd.read_csv(csv_path)
     
     # Splitting columns to extract data for the two paired-end files
-    qc_metrics_df['Mean_QV_at_read_position_1'], qc_metrics_df['Mean_QV_at_read_position_2'] = qc_metrics_df['Mean_QV_at_read_position'].str.split(';', 1).str
+    qc_metrics_df[['Mean_QV_at_read_position_1', 'Mean_QV_at_read_position_2']] = qc_metrics_df['Mean_QV_at_read_position'].str.split(';', n=1, expand=True)
     
     # Extracting Mean QV at read position for both paired-end files
     mean_qv_1 = list(map(float, qc_metrics_df['Mean_QV_at_read_position_1'][0].split(',')))
@@ -119,7 +122,8 @@ def generate_qv_histogram(csv_path, output_png_path):
 
 
 # Test the function
-output_path = "/mnt/data/quality_plot.png"
-generate_qc_plot('/mnt/data/Pogona_combined_ILM.1.fastq_Pogona_combined_ILM.2.fastq_QC.csv', output_path)
+output_path = "/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/illumina_qc"
+generate_qc_plot('/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/illumina_qc/350747_AusARG_UNSW_HTYH7DRXX_GTATTCCACC-TTGTCTACAT_S2_L001_R1_001.fastq_350747_AusARG_UNSW_HTYH7DRXX_GTATTCCACC-TTGTCTACAT_S2_L001_R2_001.fastq_QC.csv', output_path)
+generate_qv_histogram('/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/illumina_qc/350747_AusARG_UNSW_HTYH7DRXX_GTATTCCACC-TTGTCTACAT_S2_L001_R1_001.fastq_350747_AusARG_UNSW_HTYH7DRXX_GTATTCCACC-TTGTCTACAT_S2_L001_R2_001.fastq_QC.csv', output_path)
 
 output_path

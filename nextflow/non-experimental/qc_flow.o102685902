@@ -1,0 +1,19 @@
+N E X T F L O W  ~  version 23.04.3
+Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/onlyqc.nf` [voluminous_saha] DSL2 - revision: 04af3d84c0
+WARN: Nextflow self-contained distribution allows only core plugins -- User config plugins will be ignored: nf-sqldb
+ERROR ~ Cannot find latest version of nf-sqldb plugin
+
+ -- Check script 'onlyqc.nf' at line: 1 or see '.nextflow.log' file for more details
+
+======================================================================================
+                  Resource Usage on 2023-11-28 15:22:01:
+   Job Id:             102685902.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.00
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:06        
+   Memory Requested:   4.0GB                 Memory Used: 171.53MB        
+   Walltime requested: 40:00:00            Walltime Used: 00:00:08        
+   JobFS requested:    100.0MB                JobFS used: 140.07KB        
+======================================================================================
