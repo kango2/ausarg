@@ -3,6 +3,7 @@ include { hifiasm_assembly } from '/g/data/xl04/ka6418/github/ausarg/nextflow/no
 include { arima_mapping } from '/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/scaffold_jigsaw.nf'
 include { yahs } from '/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/scaffold_jigsaw.nf'
 include { generate_hicmap } from '/g/data/xl04/ka6418/github/ausarg/nextflow/scaffolding_pipeline/scaffold_jigsaw.nf'
+include { setup_directory } from '/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/setup_folders.nf'
 
 process longread_qc {
     conda '/g/data/xl04/ka6418/miniconda/envs/genejigsaw'
@@ -362,16 +363,15 @@ process assembly {
 }
 
 
-
-
-
 workflow {
+
+    setup_directory(params.topfolder)
     
     longread_fastqs = channel
-        .fromQuery('select title, flowcell, platform, filename from SRA where platform is "PACBIO_SMRT"', db: 'inputdb')
+        .fromQuery('select title, flowcell, platform, filename from SRA where platform is ("PACBIO_SMRT", "OXFORD_NANOPORE")', db: 'inputdb')
         .map { row ->
             def (title, flowcell, platform, filename) = row
-            def output = "${params.topfolder}/longread_qc" 
+            def output = "${params.topfolder}/rawdata/longread/qc" 
             return [filename, title, flowcell, output, platform]
         }
 
@@ -382,7 +382,7 @@ workflow {
     .fromQuery('select title, flowcell, platform, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
     .map { row ->
         def (title, flowcell, platform, filename) = row
-        def output = "${params.topfolder}/shortread_qc"
+        def output = "${params.topfolder}/rawdata/shortread/qc"
         
         // Split the filename into two separate files
         def (file1, file2) = filename.split(':')
@@ -394,8 +394,7 @@ workflow {
     trimmed_shortreads = shortread_trimming(illumina_fastqs)
     shortread_qc(trimmed_shortreads)
 
-    
-    // Query for PacBio files
+   
     ont = channel
         .fromQuery('select title, filename from SRA where platform is "OXFORD_NANOPORE"', db: 'inputdb')
         .map { row ->
@@ -446,15 +445,15 @@ workflow {
     R2 = hic.map { title, files1, files2 ->
     return [files2]}.flatten()
 
-    def output1 = "${params.topfolder}/arima"
+    def output1 = "${params.topfolder}/scaffolding/arima"
 
     hicalignment = arima_mapping(fasta,R1,R2,output1)
 
-    def output2 = "${params.topfolder}/yahs"
+    def output2 = "${params.topfolder}/scaffolding/yahs"
 
     scaffolds = yahs(hicalignment,fasta,output2)
 
-    def output3 = "${params.topfolder}/juicer"
+    def output3 = "${params.topfolder}/scaffolding/yahs_hicmap"
 
     hicmap = generate_hicmap(scaffolds,R1,R2,output3)
 
