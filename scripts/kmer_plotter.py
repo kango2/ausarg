@@ -78,9 +78,9 @@ def automatic_plot_combined(files,save_path=None):
     plt.show()
 
 
-directory_path = "/g/data/xl04/bpadata/Pogona_vitticeps/raw/evaluation/kmer"
+directory_path = "/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/kmer/no_filter"
 
-save_path = "/g/data/xl04/ka6418/gc/PogVit_Kmers_10.png"
+save_path = "/g/data/xl04/ka6418/gc/BasDu_Kmers.png"
 
 # For demonstration purposes using the previously loaded files
-automatic_plot_combined(files,save_path)
+automatic_plot_combined(directory_path,save_path)

@@ -1,0 +1,1 @@
+2023-12-06 15:31:41	-	cranky_tuckerman	-	a3fb42d22f69c6ebf8daa2f559036917	89e2874f-ad10-47d2-a1d1-4b21c1807636	nextflow run /g/data/xl04/ka6418/bassiana_exp/autoplotter/plot_long.nf --filepath /g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/longread_qc --output /g/data/xl04/ka6418/bassiana_exp/autoplotter

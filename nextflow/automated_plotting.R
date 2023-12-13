@@ -1,11 +1,28 @@
 # Load required libraries
 library(tidyverse)
+library(optparse)
 
-# Specify the top folder path for reading files
-top_folder <- "/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/longread_qc"
+# Create an option parser
+option_parser <- OptionParser(usage = "usage: %prog [options]",
+                              description = "Script for processing and saving PDF files.")
 
-# User-provided output folder path for saving the PDF
-output_folder <- "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental" # User should modify this path
+# Define the options
+option_parser <- add_option(option_parser, c("-t", "--top_folder"), 
+                            type = "character", 
+                            default = "/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/longread_qc",
+                            help = "Top folder path for reading files")
+
+option_parser <- add_option(option_parser, c("-o", "--output_folder"), 
+                            type = "character", 
+                            default = "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental",
+                            help = "Output folder path for saving the PDF")
+
+# Parse the options
+options <- parse_args(option_parser)
+
+# Assign parsed options to variables
+top_folder <- options$top_folder
+output_folder <- options$output_folder
 
 
 # Function to process each dataset
@@ -85,11 +102,7 @@ pdf_full_path <- file.path(output_folder, pdf_file_name)
 # Save the plot as a PDF
 ggsave(filename = pdf_full_path, plot = plot, device = "pdf", width = 11, height = 8.5)
 
-dev.off()
 
-# User-supplied top folder
-top_folder <- "/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/longread_qc/"
-output_folder <- "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental"
 
 # List all CSV files in the top folder that contain "pacbio_quality_freq"
 file_paths <- list.files(path = top_folder, pattern = "ont_quality_freq", full.names = TRUE)

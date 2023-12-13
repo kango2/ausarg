@@ -1,0 +1,14 @@
+/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/9b/2d1f22b9c81f02c97f1390790ebc57/.command.sh: line 2: ${longread_pb.fq.gz longread_pb_two.fq.gz.join(':')}: bad substitution
+
+======================================================================================
+                  Resource Usage on 2023-12-11 13:23:14:
+   Job Id:             103769678.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.01
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:01        
+   Memory Requested:   2.0GB                 Memory Used: 70.34MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:13        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================
