@@ -1,0 +1,14 @@
+/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/bf/5d1f01850c5e54dec63ad4bf4ee69a/.command.sh: line 3: [ILLUMINA: command not found
+
+======================================================================================
+                  Resource Usage on 2023-12-13 15:28:48:
+   Job Id:             103952516.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.00
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:01        
+   Memory Requested:   2.0GB                 Memory Used: 70.48MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:03        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

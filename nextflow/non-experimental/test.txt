@@ -1,8 +1,6 @@
-/g/data/xl04/ka6418/nextflow_testing/testdata/longread_pb_two.fq.gz]
-[/g/data/xl04/ka6418/nextflow_testing/testdata/longread_pb.fq.gz,
-/g/data/xl04/ka6418/nextflow_testing/testdata/longread_pb_two.fq.gz]
-longread_pb.fq.gz
-longread_pb_two.fq.gz
-longread_pb.fq.gz:longread_pb_two.fq.gz
-longread_ont.fq.gz
-longread_pb.fq.gz:longread_pb_two.fq.gz
+PE_1.fq.gz
+/g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i PE_1.fq.gz -s BASDU -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l 17 -t ILLUMINA
+PE_1.fq.gz
+/g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i PE_1.fq.gz -s BASDU -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l 17 -t ILLUMINA
+HIC_R1.fastq.gz HIC_R2.fastq.gz PE_1.fq.gz PE_2.fq.gz
+/g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i HIC_R1.fastq.gz:HIC_R2.fastq.gz:PE_1.fq.gz:PE_2.fq.gz -s BASDU -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l 17 -t ILLUMINA

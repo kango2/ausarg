@@ -371,14 +371,21 @@ process printer {
     clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
 
     input:
-    tuple val (sample), path (pacbio)
+    tuple val (sample), path (files)
+    val(klength)
+    val(tech)
+    
 
 
     script:
     """
+    echo $files >> /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/test.txt
+
+
+
     joined_files=""
 
-    for file in $pacbio; do
+    for file in $files; do
         if [ -z "\$joined_files" ]; then
             joined_files="\$file"
         else
@@ -386,7 +393,8 @@ process printer {
         fi
     done
 
-    echo \$joined_files >> /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/test.txt
+    echo /g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i \${joined_files} -s $sample -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l $klength -t $tech >> /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/test.txt
+
 
     """
 
@@ -408,9 +416,39 @@ workflow {
             return [title, files.toList()]
         }
         .view()
+    
+    ont = channel
+        .fromQuery('select title, filename from SRA where platform is "OXFORD_NANOPORE"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def pacbio_file = file(filename)
+            return [title, pacbio_file]
+        }
+        .groupTuple()
+        .map { title, files -> 
+            return [title, files.toList()]
+        }
+        .view()
+
+    illumina = channel
+        .fromQuery('select title, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def pacbio_file = file(filename)
+            return [title, pacbio_file]
+        }
+        .groupTuple()
+        .map { title, filePairs -> 
+            // Convert each file path to string, split at ':', and flatten the list
+            def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
+            // Return the list of all file paths
+            return [title, allFiles]
+        }
+        .view()
+
+    printer(illumina,17,"ILLUMINA")
 
 
-    printer(pacbio)
 
 
 

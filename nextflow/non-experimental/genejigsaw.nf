@@ -362,10 +362,45 @@ process assembly {
     """
 }
 
+process kmers {
+
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
+
+    input:
+    tuple val (sample), path (files)
+    val(klength)
+    val(tech)
+    val(output)
+    
+
+    script:
+    """
+    joined_files=""
+
+    for file in $files; do
+        if [ -z "\$joined_files" ]; then
+            joined_files="\$file"
+        else
+            joined_files="\${joined_files}:\${file}"
+        fi
+    done
+
+    /g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i \${joined_files} -s $sample -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l $klength -t $tech 
+
+    """
+
+
+}
+
 
 workflow {
 
     setup_directory(params.topfolder)
+
     
     longread_fastqs = channel
         .fromQuery('select title, flowcell, platform, filename from SRA where platform is ("PACBIO_SMRT", "OXFORD_NANOPORE")', db: 'inputdb')
