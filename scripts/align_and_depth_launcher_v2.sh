@@ -11,6 +11,6 @@ ref=${ref}
 outputdir=${outputdir}
 ref_base=$(basename ${ref}.fasta)
 mkdir -p ${outputdir}/${ref_base}
-qsub -N "illumina" -o ${logsdir} -l storage=gdata/xl04+gdata/if89 -v platform=illumina,rawreads=${illumina},reference=${ref},output=${outputdir}/${ref_base}/${ref_base}_illumina /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
-qsub -N "ont" -o ${logsdir} -l storage=gdata/xl04+gdata/if89 -v platform=ont,rawreads=${ont},reference=${ref},output=${outputdir}/${ref_base}/${ref_base}_ont /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
-qsub -N "pacbio" -o ${logsdir} -l storage=gdata/xl04+gdata/if89 -v platform=pacbio,rawreads=${pacbio},reference=${ref},output=${outputdir}/${ref_base}/${ref_base}_pacbio /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
+qsub -P xl04 -N "illumina" -o ${logsdir} -l storage=gdata/xl04+gdata/if89 -v platform=illumina,rawreads=${illumina},reference=${ref},output=${outputdir}/${ref_base}/${ref_base}_illumina /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
+qsub -P xl04 -N "ont" -o ${logsdir} -l storage=gdata/xl04+gdata/if89 -v platform=ont,rawreads=${ont},reference=${ref},output=${outputdir}/${ref_base}/${ref_base}_ont /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh
+qsub -P xl04 -N "pacbio" -o ${logsdir} -l storage=gdata/xl04+gdata/if89 -v platform=pacbio,rawreads=${pacbio},reference=${ref},output=${outputdir}/${ref_base}/${ref_base}_pacbio /g/data/xl04/ka6418/github/ausarg/scripts/align_and_depth.sh

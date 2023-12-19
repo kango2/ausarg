@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import math
 
 # Read the CSV file into a Pandas DataFrame
-data = pd.read_csv('/g/data/xl04/ka6418/bassiana/all_assemblies/centromere/rBasDup_HifiASM_YAHS_centromere/seqt/Summary.of.repetitive.regions.rBasDup_HifiASM_YAHS.fasta.csv')
+data = pd.read_csv('/g/data/xl04/ka6418/fish_genome/eval/cenafteryahs/Summary.of.repetitive.regions.OGG88G_YAHS_scaffolds_final.fa.csv')
 
 # Get the unique chromosomes
 chromosomes = data['name'].unique()
@@ -33,4 +33,4 @@ fig.update_layout(height=200 * rows, width=1200, showlegend=False)  # Adjust hei
 
 # Display the plot
 fig.show()
-fig.write_html('chromosome_plot_bassiana_kirat.html')
+fig.write_html('/g/data/xl04/ka6418/fish_genome/eval/cenafteryahs/centromeres_yahs_rich.html')
