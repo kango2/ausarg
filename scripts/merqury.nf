@@ -4,7 +4,7 @@ process meryl {
     queue = 'normal'
     project = 'xl04'
     time = '10h'
-    clusterOptions = '-l ncpus=24,mem=96GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
     input:
 
@@ -16,7 +16,7 @@ process meryl {
 
     output:
     
-    val ("${output}/*.meryl")
+    val "${output}/*.meryl"
     
 
     script:
@@ -35,7 +35,7 @@ process meryl_unionsum {
     queue = 'normal'
     project = 'xl04'
     time = '1h'
-    clusterOptions = '-l ncpus=8,mem=16GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
     input:
     val (tocombine)
@@ -52,7 +52,7 @@ process meryl_unionsum {
 
     script:
     """
-    /g/data/xl04/ka6418/bassiana/basequality/bassiana_illumina_notrim/meryl-1.4.1/bin/meryl union-sum threads=\${PBS_NCPUS} output "${output}/${sample}_${tech}_${kmer}_combined.meryl" ${tocombine}
+    /g/data/xl04/ka6418/bassiana/basequality/bassiana_illumina_notrim/meryl-1.4.1/bin/meryl union-sum threads=\${PBS_NCPUS} output "${output}/${sample}_${tech}_${kmer}_combined.meryl" ${output}/*.meryl
 
     """
 
