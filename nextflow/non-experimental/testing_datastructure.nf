@@ -446,7 +446,8 @@ workflow {
         }
         .view()
 
-    printer(illumina,17,"ILLUMINA")
+    combinedChannel = ont.mix(illumina)
+    printer(combinedChannel,17,"ONT")
 
 
 

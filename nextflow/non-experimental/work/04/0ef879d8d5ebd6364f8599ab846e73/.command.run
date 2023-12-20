@@ -1,0 +1,177 @@
+#!/bin/bash
+#PBS -l ncpus=1,mem=8GB,storage=gdata/if89+gdata/xl04
+#PBS -N nf-longread_qc_
+#PBS -o /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/04/0ef879d8d5ebd6364f8599ab846e73/.command.log
+#PBS -j oe
+#PBS -q normal
+#PBS -P xl04
+#PBS -l walltime=01:00:00
+NXF_CHDIR=/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/04/0ef879d8d5ebd6364f8599ab846e73
+# NEXTFLOW TASK: longread_qc (1)
+set -e
+set -u
+NXF_DEBUG=${NXF_DEBUG:=0}; [[ $NXF_DEBUG > 1 ]] && set -x
+NXF_ENTRY=${1:-nxf_main}
+
+# aws cli retry config
+export AWS_RETRY_MODE=standard 
+export AWS_MAX_ATTEMPTS=5
+# aws helper
+nxf_s3_upload() {
+    local name=$1
+    local s3path=$2
+    if [[ "$name" == - ]]; then
+      aws s3 cp --only-show-errors --storage-class STANDARD - "$s3path"
+    elif [[ -d "$name" ]]; then
+      aws s3 cp --only-show-errors --recursive --storage-class STANDARD "$name" "$s3path/$name"
+    else
+      aws s3 cp --only-show-errors --storage-class STANDARD "$name" "$s3path/$name"
+    fi
+}
+
+nxf_s3_download() {
+    local source=$1
+    local target=$2
+    local file_name=$(basename $1)
+    local is_dir=$(aws s3 ls $source | grep -F "PRE ${file_name}/" -c)
+    if [[ $is_dir == 1 ]]; then
+        aws s3 cp --only-show-errors --recursive "$source" "$target"
+    else 
+        aws s3 cp --only-show-errors "$source" "$target"
+    fi
+}
+
+nxf_sleep() {
+  sleep $1 2>/dev/null || sleep 1;
+}
+
+nxf_date() {
+    local ts=$(date +%s%3N);
+    if [[ ${#ts} == 10 ]]; then echo ${ts}000
+    elif [[ $ts == *%3N ]]; then echo ${ts/\%3N/000}
+    elif [[ $ts == *3N ]]; then echo ${ts/3N/000}
+    elif [[ ${#ts} == 13 ]]; then echo $ts
+    else echo "Unexpected timestamp value: $ts"; exit 1
+    fi
+}
+
+nxf_env() {
+    echo '============= task environment ============='
+    env | sort | sed "s/\(.*\)AWS\(.*\)=\(.\{6\}\).*/\1AWS\2=\3xxxxxxxxxxxxx/"
+    echo '============= task output =================='
+}
+
+nxf_kill() {
+    declare -a children
+    while read P PP;do
+        children[$PP]+=" $P"
+    done < <(ps -e -o pid= -o ppid=)
+
+    kill_all() {
+        [[ $1 != $$ ]] && kill $1 2>/dev/null || true
+        for i in ${children[$1]:=}; do kill_all $i; done
+    }
+
+    kill_all $1
+}
+
+nxf_mktemp() {
+    local base=${1:-/tmp}
+    mkdir -p "$base"
+    if [[ $(uname) = Darwin ]]; then mktemp -d $base/nxf.XXXXXXXXXX
+    else TMPDIR="$base" mktemp -d -t nxf.XXXXXXXXXX
+    fi
+}
+
+nxf_fs_copy() {
+  local source=$1
+  local target=$2
+  local basedir=$(dirname $1)
+  mkdir -p $target/$basedir
+  cp -fRL $source $target/$basedir
+}
+
+nxf_fs_move() {
+  local source=$1
+  local target=$2
+  local basedir=$(dirname $1)
+  mkdir -p $target/$basedir
+  mv -f $source $target/$basedir
+}
+
+nxf_fs_rsync() {
+  rsync -rRl $1 $2
+}
+
+nxf_fs_rclone() {
+  rclone copyto $1 $2/$1
+}
+
+nxf_fs_fcp() {
+  fcp $1 $2/$1
+}
+
+on_exit() {
+    exit_status=${nxf_main_ret:=$?}
+    printf $exit_status > /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/04/0ef879d8d5ebd6364f8599ab846e73/.exitcode
+    set +u
+    [[ "$tee1" ]] && kill $tee1 2>/dev/null
+    [[ "$tee2" ]] && kill $tee2 2>/dev/null
+    [[ "$ctmp" ]] && rm -rf $ctmp || true
+    sync || true
+    exit $exit_status
+}
+
+on_term() {
+    set +e
+    [[ "$pid" ]] && nxf_kill $pid
+}
+
+nxf_launch() {
+    /usr/bin/env python /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/04/0ef879d8d5ebd6364f8599ab846e73/.command.sh
+}
+
+nxf_stage() {
+    true
+    # stage input files
+    rm -f longread_pb.fq.gz
+    rm -f qc
+    ln -s /g/data/xl04/ka6418/nextflow_testing/testdata/longread_pb.fq.gz longread_pb.fq.gz
+    ln -s /g/data/xl04/ka6418/nextflow_testing/pipelinetesting/rawdata/longread/qc qc
+}
+
+nxf_unstage() {
+    true
+    [[ ${nxf_main_ret:=0} != 0 ]] && return
+}
+
+nxf_main() {
+    trap on_exit EXIT
+    trap on_term TERM INT USR2
+    trap '' USR1
+
+    [[ "${NXF_CHDIR:-}" ]] && cd "$NXF_CHDIR"
+    NXF_SCRATCH=''
+    [[ $NXF_DEBUG > 0 ]] && nxf_env
+    touch /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/04/0ef879d8d5ebd6364f8599ab846e73/.command.begin
+    set +u
+    set -u
+    [[ $NXF_SCRATCH ]] && cd $NXF_SCRATCH
+    nxf_stage
+
+    set +e
+    ctmp=$(set +u; nxf_mktemp /dev/shm 2>/dev/null || nxf_mktemp $TMPDIR)
+    local cout=$ctmp/.command.out; mkfifo $cout
+    local cerr=$ctmp/.command.err; mkfifo $cerr
+    tee .command.out < $cout &
+    tee1=$!
+    tee .command.err < $cerr >&2 &
+    tee2=$!
+    ( nxf_launch ) >$cout 2>$cerr &
+    pid=$!
+    wait $pid || nxf_main_ret=$?
+    wait $tee1 $tee2
+    nxf_unstage
+}
+
+$NXF_ENTRY

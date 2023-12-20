@@ -1,0 +1,14 @@
+CSV output and log file written to: qc
+
+======================================================================================
+                  Resource Usage on 2023-12-20 10:11:09:
+   Job Id:             104550185.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.01
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:06        
+   Memory Requested:   8.0GB                 Memory Used: 170.27MB        
+   Walltime requested: 01:00:00            Walltime Used: 00:00:11        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

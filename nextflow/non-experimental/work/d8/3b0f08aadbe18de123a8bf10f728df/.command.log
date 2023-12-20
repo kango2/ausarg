@@ -1,0 +1,27 @@
+
+------------------------------------------------------------------------
+Job 104550052 has exceeded memory allocation on node gadi-cpu-clx-0216.gadi.nci.org.au
+Process "bash", pid 3652954, rss 3440640, vmem 23883776
+Process "104550052.gadi-", pid 3653031, rss 3026944, vmem 10313728
+Process "tee", pid 3653054, rss 970752, vmem 4509696
+Process "tee", pid 3653055, rss 946176, vmem 4509696
+Process "104550052.gadi-", pid 3653056, rss 1982464, vmem 10313728
+Process "bash", pid 3653057, rss 2981888, vmem 10178560
+Process "hifiasm", pid 3653062, rss 17145823232, vmem 17168568320
+------------------------------------------------------------------------
+For more information visit https://opus.nci.org.au/x/SwGRAQ
+------------------------------------------------------------------------
+/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/d8/3b0f08aadbe18de123a8bf10f728df/.command.sh: line 2: 3653062 Killed                  /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t ${PBS_NCPUS} -o "/g/data/xl04/ka6418/nextflow_testing/pipelinetesting/assembly/BASDU" longread_pb.fq.gz longread_pb_two.fq.gz
+
+======================================================================================
+                  Resource Usage on 2023-12-20 10:10:14:
+   Job Id:             104550052.gadi-pbs
+   Project:            xl04
+   Exit Status:        137 (Linux Signal 9 SIGKILL Kill, unblockable)
+   Service Units:      0.05
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:09        
+   Memory Requested:   16.0GB                Memory Used: 16.0GB          
+   Walltime requested: 01:00:00            Walltime Used: 00:00:11        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

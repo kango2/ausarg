@@ -8,10 +8,10 @@ include { setup_directory } from '/g/data/xl04/ka6418/github/ausarg/nextflow/non
 process longread_qc {
     conda '/g/data/xl04/ka6418/miniconda/envs/genejigsaw'
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normal'
     project = 'xl04'
     time = '1h'
-    clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=1,mem=8GB,storage=gdata/if89+gdata/xl04'
 
     input:
     tuple path (fastq_file),val (sample),val (flowcell),path (output),val (platform)
@@ -143,10 +143,10 @@ process shortread_qc {
 
     conda '/g/data/xl04/ka6418/miniconda/envs/genejigsaw'
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normal'
     project = 'xl04'
     time = '1h'
-    clusterOptions = '-l ncpus=2,mem=2GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=1,mem=8GB,storage=gdata/if89+gdata/xl04'
 
     input:
     tuple path (R1), path (R2),val (sample),val (flowcell),path (output),val (platform)
@@ -311,10 +311,10 @@ if __name__ == "__main__":
 
 process shortread_trimming {
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normal'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
+    time = '10h'
+    clusterOptions = '-l ncpus=1,mem=8GB,storage=gdata/if89+gdata/xl04'
 
     input:
     tuple path (R1),path (R2),val (sample),val (flowcell),path (output),val (platform)
@@ -339,7 +339,7 @@ process assembly {
     queue = 'normal'
     project = 'xl04'
     time = '1h'
-    clusterOptions = '-l ncpus=16,mem=32GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=8,mem=64GB,storage=gdata/if89+gdata/xl04'
 
     input:
     tuple val (sample), path (pacbio)
@@ -354,8 +354,7 @@ process assembly {
 
     script:
     """
-    /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t \${PBS_NCPUS} -o "$output/$sample"  $pacbio 
-    # --ul $ont --h1 $R1 --h2 $R2 
+    /g/data/xl04/ka6418/bassiana/hifiasm_bassiana/hifiasm/hifiasm -t \${PBS_NCPUS} -o "$output/$sample" $pacbio --ul $ont --h1 $R1 --h2 $R2 
 
     awk '/^S/{print ">"\$2;print \$3}' ${output}/${sample}*.p_ctg.gfa > ${output}/${sample}_HifiASM.fasta
 
@@ -403,12 +402,12 @@ workflow {
 
     
     longread_fastqs = channel
-        .fromQuery('select title, flowcell, platform, filename from SRA where platform is ("PACBIO_SMRT", "OXFORD_NANOPORE")', db: 'inputdb')
+        .fromQuery('select title, flowcell, platform, filename from SRA where platform IN ("PACBIO_SMRT", "OXFORD_NANOPORE")', db: 'inputdb')
         .map { row ->
             def (title, flowcell, platform, filename) = row
             def output = "${params.topfolder}/rawdata/longread/qc" 
             return [filename, title, flowcell, output, platform]
-        }
+        }.view()
 
     longread_qc(longread_fastqs)
 
@@ -424,7 +423,7 @@ workflow {
    
         // Return the split filenames along with other parameters
         return [file1, file2, title, flowcell, output, platform]
-    }
+    }.view()
 
     trimmed_shortreads = shortread_trimming(illumina_fastqs)
     shortread_qc(trimmed_shortreads)
@@ -470,7 +469,7 @@ workflow {
         .view()
 
     def output = "${params.topfolder}/assembly"
-    assembly(pacbio,ont,hic,output)
+    //assembly(pacbio,ont,hic,output)
 
     def fasta = "/g/data/xl04/ka6418/nextflow_testing/testdata/BASDU_HifiASM.fasta"
 
@@ -491,6 +490,11 @@ workflow {
     def output3 = "${params.topfolder}/scaffolding/yahs_hicmap"
 
     hicmap = generate_hicmap(scaffolds,R1,R2,output3)
+
+
+
+
+    
 
 }
     
