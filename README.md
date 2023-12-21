@@ -1,7 +1,7 @@
 # Automated Assembly Pipeline
-
-<img src="images/pipeline_logo.png" alt="long read qc" width="50%"/>
-
+<div align="center">
+    <img src="images/pipeline_logo.png" alt="long read qc" width="100%"/>
+</div>
 
 ## Overview
 This nextflow workflow is designed for genomic data processing and analysis, focusing on long-read and short-read sequencing technologies. It includes various stages such as data quality control (QC), k-mer analysis, and assembly
