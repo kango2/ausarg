@@ -1,4 +1,4 @@
-# Automated Assembly Pipeline
+# AusARG Assembly Nextflow Pipeline
 <div align="center">
     <img src="images/pipeline_logo.png" alt="long read qc" width="100%"/>
 </div>
@@ -21,13 +21,18 @@ It is currently under construction and testing, but can be run internally by Aus
 -   Queries the SRA database for PacBio and Oxford Nanopore datasets.
 -   Performs comprehensive QC on these datasets and generates plots for the results.
 
+Here are the plots generated on one of our datasets. If the same sample has multiple runs/flowcells, they are stacked for easier visualisation and understanding the distribution between the runs. 
+
 <img src="images/long_read_qc1.png" alt="long read qc" width="50%"/> <img src="images/long_read_qc2.png" alt="long read qc" width="50%"/>
 
 
-### 2. **Data QC for Short Reads**:
+### 2. **Adapter Trimming & Data QC for Short Reads**:
 
--   Queries the SRA database for Illumina datasets.
--   Executes trimming and QC on Illumina datasets.
+-   Queries the SRA database for Illumina DNA-Seq datasets and trims the adapters.
+-   Perform comprehensive QC and generate side-by-side plots for the R1 & R2 files as a single PDF. 
+
+<img src="images/short_read_qc1.png" alt="long read qc" width="50%"/> <img src="images/short_read_qc2.png" alt="long read qc" width="50%"/>
+
 
 ### 3. **K-Mer Analysis**:
 
