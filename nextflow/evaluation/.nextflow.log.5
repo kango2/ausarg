@@ -1,0 +1,183 @@
+Dec-20 13:24:22.876 [main] DEBUG nextflow.cli.Launcher - $> nextflow run /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/evaluation_jigsaw.nf
+Dec-20 13:24:23.110 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
+Dec-20 13:24:23.140 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/150/ka6418/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
+Dec-20 13:24:23.184 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Dec-20 13:24:23.185 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Dec-20 13:24:23.188 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Dec-20 13:24:23.197 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Dec-20 13:24:23.322 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Dec-20 13:24:23.331 [main] INFO  nextflow.cli.CmdRun - Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/evaluation_jigsaw.nf` [nasty_brahmagupta] DSL2 - revision: 8897d72c7b
+Dec-20 13:24:23.332 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Dec-20 13:24:23.332 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Dec-20 13:24:23.358 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /home/150/ka6418/.nextflow/secrets/store.json
+Dec-20 13:24:23.367 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@6f4ade6e] - activable => nextflow.secret.LocalSecretsProvider@6f4ade6e
+Dec-20 13:24:23.574 [main] DEBUG nextflow.Session - Session UUID: 84ae8861-23e7-4b57-bb59-b25bf6653d3e
+Dec-20 13:24:23.575 [main] DEBUG nextflow.Session - Run name: nasty_brahmagupta
+Dec-20 13:24:23.578 [main] DEBUG nextflow.Session - Executor pool size: 48
+Dec-20 13:24:23.592 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=144; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Dec-20 13:24:23.668 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.04.3 build 5876
+  Created: 18-09-2023 03:27 UTC (13:27 GMT+10:00)
+  System: Linux 4.18.0-477.27.1.el8.nci.x86_64
+  Runtime: Groovy 3.0.16 on OpenJDK 64-Bit Server VM 17.0.2+8-86
+  Encoding: UTF-8 (UTF-8)
+  Process: 2825805@gadi-login-02.gadi.nci.org.au [10.6.152.2]
+  CPUs: 48 - Mem: 4 GB (17.3 MB) - Swap: 16 GB (3.7 GB)
+Dec-20 13:24:23.700 [main] DEBUG nextflow.Session - Work-dir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work [lustre]
+Dec-20 13:24:23.700 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/bin
+Dec-20 13:24:23.730 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[GoogleLifeSciencesExecutor, AwsBatchExecutor, GoogleBatchExecutor]
+Dec-20 13:24:23.741 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Dec-20 13:24:23.743 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Dec-20 13:24:23.757 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Dec-20 13:24:23.770 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 49; maxThreads: 1000
+Dec-20 13:24:23.863 [main] DEBUG nextflow.Session - Session start
+Dec-20 13:24:24.567 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Dec-20 13:24:24.725 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Dec-20 13:24:24.726 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Dec-20 13:24:24.749 [main] DEBUG nextflow.executor.Executor - [warm up] executor > pbspro
+Dec-20 13:24:24.754 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'pbspro' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Dec-20 13:24:24.759 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'pbspro' > queue-stat-interval: 1m
+Dec-20 13:24:24.949 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: telomeres
+Dec-20 13:24:24.949 [main] DEBUG nextflow.Session - Igniting dataflow network (1)
+Dec-20 13:24:24.949 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > telomeres
+Dec-20 13:24:24.968 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Dec-20 13:24:24.968 [main] DEBUG nextflow.Session - Session await
+Dec-20 13:24:25.239 [Task submitter] WARN  nextflow.executor.PbsProExecutor - cpus and memory directives are ignored when clusterOptions contains -l option
+tip: clusterOptions = { "-l ncpus=${task.cpus},mem=${task.memory.toGiga()}G..." }
+Dec-20 13:24:25.485 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process telomeres > jobId: 104572087.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/be/762da75190d93c19b5c6ab6e01ebf3
+Dec-20 13:24:25.486 [Task submitter] INFO  nextflow.Session - [be/762da7] Submitted process > telomeres
+Dec-20 13:25:14.778 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 104572087.gadi-pbs; id: 1; name: telomeres; status: COMPLETED; exit: 1; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/be/762da75190d93c19b5c6ab6e01ebf3 started: 1703042679773; exited: 2023-12-20T03:25:09Z; ]
+Dec-20 13:25:14.800 [Task monitor] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=telomeres; work-dir=/g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/be/762da75190d93c19b5c6ab6e01ebf3
+  error [nextflow.exception.ProcessFailedException]: Process `telomeres` terminated with an error exit status (1)
+Dec-20 13:25:14.875 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'telomeres'
+
+Caused by:
+  Process `telomeres` terminated with an error exit status (1)
+
+Command executed:
+
+  export input=/g/data/xl04/ka6418/nextflow_testing/testdata/BASDU_HifiASM.fasta
+  export output=pipelinetest
+  export permatch=90
+  export copies=100
+  
+  bash /g/data/xl04/ka6418/github/ausarg/scripts/find_telomeres.sh
+
+Command exit status:
+  1
+
+Command output:
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  
+  .....................
+  Number of arguments: 6
+  Arguments: ['/g/data/xl04/ka6418/github/ausarg/scripts/clean_telomere_csv.py', 'BASDU_HifiASM.csv', '/g/data/xl04/ka6418/nextflow_testing/testdata/BASDU_HifiASM.fasta', 'pipelinetest/BASDU_HifiASM_Telomeres.csv', '100', '90']
+
+Command error:
+  2023-12-20 14:25:07,318:INFO:root:Done!
+  2023-12-20 14:25:07,389:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00184.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,389:INFO:root:Sequence found: tig00000593
+  2023-12-20 14:25:07,389:INFO:root:Converted 0 features from 1 sequences.
+  2023-12-20 14:25:07,389:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00184.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,389:INFO:root:Done!
+  2023-12-20 14:25:07,460:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00185.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,460:INFO:root:Sequence found: tig00001170
+  2023-12-20 14:25:07,460:INFO:root:Converted 0 features from 1 sequences.
+  2023-12-20 14:25:07,460:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00185.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,460:INFO:root:Done!
+  2023-12-20 14:25:07,532:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00186.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,532:INFO:root:Sequence found: tig00000596
+  2023-12-20 14:25:07,532:INFO:root:Converted 0 features from 1 sequences.
+  2023-12-20 14:25:07,532:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00186.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,532:INFO:root:Done!
+  2023-12-20 14:25:07,603:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00187.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,603:INFO:root:Sequence found: tig00000878
+  2023-12-20 14:25:07,603:INFO:root:Converted 0 features from 1 sequences.
+  2023-12-20 14:25:07,603:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00187.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,603:INFO:root:Done!
+  2023-12-20 14:25:07,674:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00188.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,674:INFO:root:Sequence found: tig00000584
+  2023-12-20 14:25:07,674:INFO:root:Converted 1 features from 1 sequences.
+  2023-12-20 14:25:07,674:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00188.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,674:INFO:root:Done!
+  2023-12-20 14:25:07,745:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00189.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,745:INFO:root:Sequence found: tig00001386
+  2023-12-20 14:25:07,745:INFO:root:Converted 0 features from 1 sequences.
+  2023-12-20 14:25:07,745:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00189.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,745:INFO:root:Done!
+  2023-12-20 14:25:07,816:INFO:root:Reading datfile: /jobfs/104572087.gadi-pbs/chunk00190.fa.2.7.7.80.10.500.6.dat
+  2023-12-20 14:25:07,816:INFO:root:Sequence found: tig00001453
+  2023-12-20 14:25:07,816:INFO:root:Converted 0 features from 1 sequences.
+  2023-12-20 14:25:07,816:INFO:root:Writing gff to file: /jobfs/104572087.gadi-pbs/chunk00190.fa.2.7.7.80.10.500.6.dat.gff3
+  2023-12-20 14:25:07,816:INFO:root:Done!
+  Traceback (most recent call last):
+    File "/g/data/xl04/ka6418/github/ausarg/scripts/clean_telomere_csv.py", line 66, in <module>
+      result_df.to_csv(output_csv, index=False)
+    File "/home/150/ka6418/.local/lib/python3.9/site-packages/pandas/core/generic.py", line 3902, in to_csv
+      return DataFrameRenderer(formatter).to_csv(
+    File "/home/150/ka6418/.local/lib/python3.9/site-packages/pandas/io/formats/format.py", line 1152, in to_csv
+      csv_formatter.save()
+    File "/home/150/ka6418/.local/lib/python3.9/site-packages/pandas/io/formats/csvs.py", line 247, in save
+      with get_handle(
+    File "/home/150/ka6418/.local/lib/python3.9/site-packages/pandas/io/common.py", line 739, in get_handle
+      check_parent_directory(str(handle))
+    File "/home/150/ka6418/.local/lib/python3.9/site-packages/pandas/io/common.py", line 604, in check_parent_directory
+      raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+  OSError: Cannot save file into a non-existent directory: 'pipelinetest'
+
+Work dir:
+  /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/be/762da75190d93c19b5c6ab6e01ebf3
+
+Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
+Dec-20 13:25:14.891 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Process `telomeres` terminated with an error exit status (1)
+Dec-20 13:25:14.894 [main] DEBUG nextflow.Session - Session await > all processes finished
+Dec-20 13:25:14.920 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Dec-20 13:25:14.962 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=35s; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
+Dec-20 13:25:15.163 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Dec-20 13:25:15.192 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

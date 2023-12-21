@@ -53,7 +53,6 @@ def automatic_plot_combined(files,save_path=None):
 
         for col_idx, (file, specie_name, kmer_size) in enumerate(tech_files):
             x_data, y_data = filter_data(*load_data(file), limit=200)  # Set default limit to 200
-
             ax[row_idx][col_idx].bar(x_data, y_data, width=1, align='center', color=sns.color_palette("flare")[col_idx])
             ax[row_idx][col_idx].set_title(f"{specie_name} ({tech}, k={kmer_size})")
             ax[row_idx][col_idx].set_xlabel("Kmer Coverage")
@@ -65,7 +64,7 @@ def automatic_plot_combined(files,save_path=None):
     fig.text(0.00, 0.5, 'Frequency', va='center', rotation='vertical')
     
     # Set the mega title
-    mega_title = "QV = 10"
+    mega_title = "Kmer Analysis"
     plt.suptitle(mega_title, fontsize=16)
 
     # Adjust layout and show plot
@@ -78,9 +77,9 @@ def automatic_plot_combined(files,save_path=None):
     plt.show()
 
 
-directory_path = "/g/data/xl04/bpadata/Bassiana_duperreyi/raw/evaluation/kmer/no_filter"
+directory_path = "/g/data/xl04/ka6418/github/ausarg/nextflow/outtest"
 
-save_path = "/g/data/xl04/ka6418/gc/BasDu_Kmers.png"
+save_path = "/g/data/xl04/ka6418/github/ausarg/nextflow/BasDu_Kmers.png"
 
 # For demonstration purposes using the previously loaded files
 automatic_plot_combined(directory_path,save_path)

@@ -329,7 +329,6 @@ if __name__ == "__main__":
 }
 
 
-
 process shortread_trimming {
     executor = 'pbspro'
     queue = 'normal'

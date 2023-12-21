@@ -1,0 +1,15 @@
+Loading pythonlib/3.9.2
+  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2
+
+======================================================================================
+                  Resource Usage on 2023-12-20 15:37:22:
+   Job Id:             104577056.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.15
+   NCPUs Requested:    8                      NCPUs Used: 8               
+                                           CPU Time Used: 00:00:03        
+   Memory Requested:   16.0GB                Memory Used: 147.7MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:11        
+   JobFS requested:    100.0MB                JobFS used: 0B              
+======================================================================================

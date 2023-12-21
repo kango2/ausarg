@@ -1,3 +1,51 @@
+# Automated Assembly Pipeline
+## Overview
+This nextflow workflow is designed for genomic data processing and analysis, focusing on long-read and short-read sequencing technologies. It includes various stages such as data quality control (QC), k-mer analysis, and assembly
+scaffolding, using a range of bioinformatics tools and pipelines. 
+
+It is currently under construction and testing, but can be run internally by AusARG team. Contact kirat.alreja@anu.edu.au for any queries/questions. 
+
+## Pre-requsites 
+- The pipeline runs off data provided in SRA-submission schema SQL table 
+- A test/example SQL table can be found here, duplicate for preparing your data ```nextflow/pipeline/inputdb.db```
+- Once the data is prepared, the pipeline requires only the database and an output folder to run. 
+
+## Workflow Steps
+
+### 1. **Data QC for Long Reads**:
+
+-   Queries the SRA database for PacBio and Oxford Nanopore datasets.
+-   Performs comprehensive QC on these datasets and generates plots for the results.
+
+![Description of the Image](images/long_read_Qc.png)
+
+
+### 2. **Data QC for Short Reads**:
+
+-   Queries the SRA database for Illumina datasets.
+-   Executes trimming and QC on Illumina datasets.
+
+### 3. **K-Mer Analysis**:
+
+-   Conducts k-mer analysis for a set of predefined k-mer values.
+-   Handles data from PacBio, Oxford Nanopore, and Illumina platforms.
+-   Generates histograms for k-mer distribution.
+
+### 4. **Assembly Preparation**:
+
+-   Prepares data from Oxford Nanopore and PacBio for HiFi assembly.
+-   Aligns Hi-C data to the assembly for scaffolding purposes.
+-   Note: Actual assembly step is deactivated in this workflow.
+
+### 5. **Scaffolding**:
+
+-   Performs scaffolding of the assembly using Hi-C data.
+-   Utilizes the YAHS tool for scaffolding.
+-   Generates a Juicer Hi-C map for visualization in JuiceBox
+
+
+
+
 # Assembly Quality Evaluation
 
 ## find_telomeres.sh

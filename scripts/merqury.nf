@@ -26,7 +26,6 @@ process meryl {
 
     """
 
-
 }
 
 process meryl_unionsum {
@@ -71,9 +70,6 @@ process merqury {
     val (dataset)
     val (output)
     val (sample)
-
-
- 
 
     script:
     """

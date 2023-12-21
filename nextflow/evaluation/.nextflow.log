@@ -1,0 +1,55 @@
+Dec-20 14:35:54.240 [main] DEBUG nextflow.cli.Launcher - $> nextflow run /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/evaluation_jigsaw.nf
+Dec-20 14:35:54.453 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
+Dec-20 14:35:54.488 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/150/ka6418/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
+Dec-20 14:35:54.515 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Dec-20 14:35:54.518 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Dec-20 14:35:54.521 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Dec-20 14:35:54.538 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Dec-20 14:35:54.743 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Dec-20 14:35:54.754 [main] INFO  nextflow.cli.CmdRun - Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/evaluation_jigsaw.nf` [hungry_goldberg] DSL2 - revision: ab494ab81d
+Dec-20 14:35:54.761 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Dec-20 14:35:54.761 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Dec-20 14:35:54.788 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /home/150/ka6418/.nextflow/secrets/store.json
+Dec-20 14:35:54.796 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@11d4dbd6] - activable => nextflow.secret.LocalSecretsProvider@11d4dbd6
+Dec-20 14:35:55.042 [main] DEBUG nextflow.Session - Session UUID: 60467df5-50cc-48ae-9264-d0c6d2ba77d4
+Dec-20 14:35:55.043 [main] DEBUG nextflow.Session - Run name: hungry_goldberg
+Dec-20 14:35:55.044 [main] DEBUG nextflow.Session - Executor pool size: 48
+Dec-20 14:35:55.078 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=144; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Dec-20 14:35:55.185 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.04.3 build 5876
+  Created: 18-09-2023 03:27 UTC (13:27 GMT+10:00)
+  System: Linux 4.18.0-477.27.1.el8.nci.x86_64
+  Runtime: Groovy 3.0.16 on OpenJDK 64-Bit Server VM 17.0.2+8-86
+  Encoding: UTF-8 (UTF-8)
+  Process: 383271@gadi-login-02.gadi.nci.org.au [10.6.152.2]
+  CPUs: 48 - Mem: 4 GB (8.2 MB) - Swap: 16 GB (3.4 GB)
+Dec-20 14:35:55.231 [main] DEBUG nextflow.Session - Work-dir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work [lustre]
+Dec-20 14:35:55.231 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/bin
+Dec-20 14:35:55.291 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[GoogleLifeSciencesExecutor, AwsBatchExecutor, GoogleBatchExecutor]
+Dec-20 14:35:55.301 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Dec-20 14:35:55.303 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Dec-20 14:35:55.334 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Dec-20 14:35:55.354 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 49; maxThreads: 1000
+Dec-20 14:35:55.463 [main] DEBUG nextflow.Session - Session start
+Dec-20 14:35:56.340 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Dec-20 14:35:56.487 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Dec-20 14:35:56.487 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Dec-20 14:35:56.503 [main] DEBUG nextflow.executor.Executor - [warm up] executor > pbspro
+Dec-20 14:35:56.510 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'pbspro' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Dec-20 14:35:56.520 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'pbspro' > queue-stat-interval: 1m
+Dec-20 14:35:56.766 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: telomeres, centromeres, sequence_table, gc, align_and_depth
+Dec-20 14:35:56.766 [main] DEBUG nextflow.Session - Igniting dataflow network (1)
+Dec-20 14:35:56.767 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > sequence_table
+Dec-20 14:35:56.769 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Dec-20 14:35:56.769 [main] DEBUG nextflow.Session - Session await
+Dec-20 14:35:57.181 [Task submitter] WARN  nextflow.executor.PbsProExecutor - cpus and memory directives are ignored when clusterOptions contains -l option
+tip: clusterOptions = { "-l ncpus=${task.cpus},mem=${task.memory.toGiga()}G..." }
+Dec-20 14:35:58.002 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [PBSPRO] submitted process sequence_table > jobId: 104577056.gadi-pbs; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/b2/efd4f60fc2976ea21b4677e50e2f27
+Dec-20 14:35:58.003 [Task submitter] INFO  nextflow.Session - [b2/efd4f6] Submitted process > sequence_table
+Dec-20 14:37:21.587 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 104577056.gadi-pbs; id: 1; name: sequence_table; status: COMPLETED; exit: 0; error: -; workDir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/b2/efd4f60fc2976ea21b4677e50e2f27 started: 1703047026722; exited: 2023-12-20T04:37:18Z; ]
+Dec-20 14:37:21.762 [main] DEBUG nextflow.Session - Session await > all processes finished
+Dec-20 14:37:26.536 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Dec-20 14:37:26.560 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=1; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=14.9s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
+Dec-20 14:37:26.677 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Dec-20 14:37:26.767 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Dec-20 14:37:26.767 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

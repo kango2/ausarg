@@ -1,0 +1,74 @@
+Dec-20 13:21:14.035 [main] DEBUG nextflow.cli.Launcher - $> nextflow run /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/evaluation_jigsaw.nf
+Dec-20 13:21:14.202 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
+Dec-20 13:21:14.232 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/150/ka6418/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
+Dec-20 13:21:14.259 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Dec-20 13:21:14.260 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Dec-20 13:21:14.264 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Dec-20 13:21:14.276 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Dec-20 13:21:14.430 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Dec-20 13:21:14.444 [main] INFO  nextflow.cli.CmdRun - Launching `/g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/evaluation_jigsaw.nf` [elegant_golick] DSL2 - revision: e857b8306f
+Dec-20 13:21:14.444 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Dec-20 13:21:14.445 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Dec-20 13:21:14.481 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /home/150/ka6418/.nextflow/secrets/store.json
+Dec-20 13:21:14.506 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@6f4ade6e] - activable => nextflow.secret.LocalSecretsProvider@6f4ade6e
+Dec-20 13:21:14.687 [main] DEBUG nextflow.Session - Session UUID: 4df04d35-0b74-44a5-b920-c6704441d527
+Dec-20 13:21:14.687 [main] DEBUG nextflow.Session - Run name: elegant_golick
+Dec-20 13:21:14.689 [main] DEBUG nextflow.Session - Executor pool size: 48
+Dec-20 13:21:14.757 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=144; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Dec-20 13:21:14.824 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.04.3 build 5876
+  Created: 18-09-2023 03:27 UTC (13:27 GMT+10:00)
+  System: Linux 4.18.0-477.27.1.el8.nci.x86_64
+  Runtime: Groovy 3.0.16 on OpenJDK 64-Bit Server VM 17.0.2+8-86
+  Encoding: UTF-8 (UTF-8)
+  Process: 2798159@gadi-login-02.gadi.nci.org.au [10.6.152.2]
+  CPUs: 48 - Mem: 4 GB (8.7 MB) - Swap: 16 GB (3.8 GB)
+Dec-20 13:21:14.869 [main] DEBUG nextflow.Session - Work-dir: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work [lustre]
+Dec-20 13:21:14.869 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/bin
+Dec-20 13:21:14.919 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[GoogleLifeSciencesExecutor, AwsBatchExecutor, GoogleBatchExecutor]
+Dec-20 13:21:14.929 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Dec-20 13:21:14.931 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Dec-20 13:21:14.946 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Dec-20 13:21:14.960 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 49; maxThreads: 1000
+Dec-20 13:21:15.080 [main] DEBUG nextflow.Session - Session start
+Dec-20 13:21:15.697 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Dec-20 13:21:15.884 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: pbspro
+Dec-20 13:21:15.885 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'pbspro'
+Dec-20 13:21:15.894 [main] DEBUG nextflow.executor.Executor - [warm up] executor > pbspro
+Dec-20 13:21:15.900 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'pbspro' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Dec-20 13:21:15.919 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'pbspro' > queue-stat-interval: 1m
+Dec-20 13:21:16.073 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: telomeres
+Dec-20 13:21:16.073 [main] DEBUG nextflow.Session - Igniting dataflow network (1)
+Dec-20 13:21:16.074 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > telomeres
+Dec-20 13:21:16.074 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Dec-20 13:21:16.075 [main] DEBUG nextflow.Session - Session await
+Dec-20 13:21:16.305 [Task submitter] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=telomeres; work-dir=/g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/29/065472ac59fab0d8d89360190329f7
+  error [nextflow.exception.ProcessFailedException]: Error submitting process 'telomeres' for execution
+Dec-20 13:21:16.330 [Task submitter] ERROR nextflow.processor.TaskProcessor - Error executing process > 'telomeres'
+
+Caused by:
+  java.lang.reflect.UndeclaredThrowableException
+
+Source block:
+  """
+      
+      export input=$fasta
+      export output=$output
+      export permatch=90
+      export copies=100
+  
+      bash /g/data/xl04/ka6418/github/ausarg/scripts/find_telomeres.sh
+  
+      """
+
+Work dir:
+  /g/data/xl04/ka6418/github/ausarg/nextflow/evaluation/work/29/065472ac59fab0d8d89360190329f7
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+Dec-20 13:21:16.336 [Task submitter] DEBUG nextflow.Session - Session aborted -- Cause: Error submitting process 'telomeres' for execution
+Dec-20 13:21:16.350 [main] DEBUG nextflow.Session - Session await > all processes finished
+Dec-20 13:21:16.351 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Dec-20 13:21:16.367 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=0; pendingCount=1; submittedCount=0; runningCount=-1; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=-1; loadMemory=0; peakRunning=0; peakCpus=0; peakMemory=0; ]
+Dec-20 13:21:16.555 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Dec-20 13:21:16.577 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
