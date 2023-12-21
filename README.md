@@ -14,6 +14,18 @@ It is currently under construction and testing, but can be run internally by Aus
 - A test/example SQL table can be found here, duplicate for preparing your data ```nextflow/pipeline/inputdb.db```
 - Once the data is prepared, the pipeline requires only the database and an output folder to run. 
 
+## Running Test Data on the pipeline 
+If you have access to xl04, you can launch a test run of the pipeline with this command 
+
+```
+
+module load nextflow 
+nextflow run /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf /
+-config /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config /
+--topfolder {your test folder for all the results}
+
+```
+
 ## Workflow Steps
 
 ### 1. **Data QC for Long Reads**:
@@ -25,7 +37,6 @@ Here are the plots generated on one of our datasets. If the same sample has mult
 
 <img src="images/long_read_qc1.png" alt="long read qc" width="50%"/> <img src="images/long_read_qc2.png" alt="long read qc" width="50%"/>
 
-
 ### 2. **Adapter Trimming & Data QC for Short Reads**:
 
 -   Queries the SRA database for Illumina DNA-Seq datasets and trims the adapters.
@@ -33,24 +44,23 @@ Here are the plots generated on one of our datasets. If the same sample has mult
 
 <img src="images/short_read_qc1.png" alt="long read qc" width="50%"/> <img src="images/short_read_qc2.png" alt="long read qc" width="50%"/>
 
-
 ### 3. **K-Mer Analysis**:
 
--   Conducts k-mer analysis for a set of predefined k-mer values.
--   Handles data from PacBio, Oxford Nanopore, and Illumina platforms.
--   Generates histograms for k-mer distribution.
+-   Conducts k-mer counting for a set of user-specified k-mer values.
+-   Data from PacBio, ONT, and Illumina.
+-   Generates histograms for k-mer distributions across all datasets and k-mer values for informed genome size estimation.
 
-### 4. **Assembly Preparation**:
+<img src="kmer_plots.png" alt="long read qc" width="50%"/>
 
--   Prepares data from Oxford Nanopore and PacBio for HiFi assembly.
--   Aligns Hi-C data to the assembly for scaffolding purposes.
--   Note: Actual assembly step is deactivated in this workflow.
+### 4. **Assembly with HifiASM**:
+
+-   Uses PacBio, ONT and HiC data for assembly with HifiASM.
 
 ### 5. **Scaffolding**:
 
--   Performs scaffolding of the assembly using Hi-C data.
--   Utilizes the YAHS tool for scaffolding.
--   Generates a Juicer Hi-C map for visualization in JuiceBox
+-   Maps the HiC data to the HifiASM assembly with error correction and duplicate removal. 
+-   Performs scaffolding of the assembly using HiC alignment data with YAHS. 
+-   Generates a Juicer Hi-C map for visualization in JuiceBox, and manual curation
 
 
 
