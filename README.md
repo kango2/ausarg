@@ -63,8 +63,6 @@ Here are the plots generated on one of our datasets. If the same sample has mult
 -   Generates a Juicer Hi-C map for visualization in JuiceBox, and manual curation
 
 
-
-
 # Assembly Quality Evaluation
 
 ## find_telomeres.sh

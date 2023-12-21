@@ -386,8 +386,8 @@ process kmers {
     executor = 'pbspro'
     queue = 'normal'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
+    time = '3h'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
     input:
     tuple val (sample), path (files), val(klength), val(tech), val (output)
@@ -563,7 +563,7 @@ workflow {
 
     //Prepare channels for K-Mer analysis 
     //Analysis will run for as many kmer values as listed here
-    def kmerValues = [17, 21]
+    def kmerValues = [21]
 
     pacbio_kmer = channel
         .fromQuery('select title, filename from SRA where platform is "PACBIO_SMRT"', db: 'inputdb')
