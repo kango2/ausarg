@@ -1,0 +1,39 @@
+Loading Rlib/4.3.1
+  Loading requirement: R/4.3.1 intel-compiler/2021.10.0
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.3     v readr     2.1.4
+v forcats   1.0.0     v stringr   1.5.0
+v ggplot2   3.4.4     v tibble    3.2.1
+v lubridate 1.9.2     v tidyr     1.3.0
+v purrr     1.0.2     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+`summarise()` has grouped output by 'Legend'. You can override using the
+`.groups` argument.
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.3     v readr     2.1.4
+v forcats   1.0.0     v stringr   1.5.0
+v ggplot2   3.4.4     v tibble    3.2.1
+v lubridate 1.9.2     v tidyr     1.3.0
+v purrr     1.0.2     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+`summarise()` has grouped output by 'Legend'. You can override using the
+`.groups` argument.
+
+======================================================================================
+                  Resource Usage on 2023-12-21 11:14:47:
+   Job Id:             104653510.gadi-pbs
+   Project:            xl04
+   Exit Status:        0
+   Service Units:      0.02
+   NCPUs Requested:    2                      NCPUs Used: 2               
+                                           CPU Time Used: 00:00:07        
+   Memory Requested:   8.0GB                 Memory Used: 507.56MB        
+   Walltime requested: 01:00:00            Walltime Used: 00:00:19        
+   JobFS requested:    100.0GB                JobFS used: 0B              
+======================================================================================

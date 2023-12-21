@@ -1,0 +1,166 @@
++ module load jellyfish/2.3.0 utils/0.0
++ unset _mlshdbg
++ '[' 0 = 1 ']'
++ unset _mlre _mlIFS
++ '[' -n x ']'
++ _mlIFS=' 	
+'
++ IFS=' '
++ '[' -n '' ']'
+++ /usr/bin/tclsh /opt/Modules/v4.3.0/libexec/modulecmd.tcl bash load jellyfish/2.3.0 utils/0.0
++ eval 'LD_RUN_PATH=/apps/jellyfish/2.3.0/lib;' export 'LD_RUN_PATH;
+LD_LIBRARY_PATH=/apps/jellyfish/2.3.0/lib;' export 'LD_LIBRARY_PATH;
+CPLUS_INCLUDE_PATH_modshare=/apps/jellyfish/2.3.0/include:1;' export 'CPLUS_INCLUDE_PATH_modshare;
+CPATH=/apps/jellyfish/2.3.0/include;' export 'CPATH;
+MANPATH=/apps/jellyfish/2.3.0/share/man:/opt/pbs/default/share/man:::/local/pbs/share/man;' export 'MANPATH;
+LIBRARY_PATH=/apps/jellyfish/2.3.0/lib;' export 'LIBRARY_PATH;
+_LMFILES_=/apps/Modules/modulefiles/jellyfish/2.3.0:/g/data/if89/apps/modulefiles/utils/0.0;' export '_LMFILES_;
+LOADEDMODULES=jellyfish/2.3.0:utils/0.0;' export 'LOADEDMODULES;
+MODULES_LMCONFLICT=jellyfish/2.3.0\&jellyfish\&o/ld_library_path\&o/yes-ld_library_path\&o/use-ld_library_path\&o/enable-ld_library_path\&o/with-ld_library_path\&o/no-ld_library_path\&o/not-ld_library_path\&o/disable-ld_library_path\&o/without-ld_library_path\&o/ld_run_path\&o/yes-ld_run_path\&o/use-ld_run_path\&o/enable-ld_run_path\&o/with-ld_run_path\&o/no-ld_run_path\&o/not-ld_run_path\&o/disable-ld_run_path\&o/without-ld_run_path\&o/show-debug\&o/yes-show-debug\&o/use-show-debug\&o/enable-show-debug\&o/with-show-debug\&o/no-show-debug\&o/not-show-debug\&o/disable-show-debug\&o/without-show-debug\&o/append-paths\&o/yes-append-paths\&o/use-append-paths\&o/enable-append-paths\&o/with-append-paths\&o/no-append-paths\&o/not-append-paths\&o/disable-append-paths\&o/without-append-paths\&o/library_path\&o/yes-library_path\&o/use-library_path\&o/enable-library_path\&o/with-library_path\&o/no-library_path\&o/not-library_path\&o/disable-library_path\&o/without-library_path\&o/packaged-envvars\&o/yes-packaged-envvars\&o/use-packaged-envvars\&o/enable-packaged-envvars\&o/with-packaged-envvars\&o/no-packaged-envvars\&o/not-packaged-envvars\&o/disable-packaged-envvars\&o/without-packaged-envvars:utils/0.0\&utils\&o/show-debug\&o/yes-show-debug\&o/use-show-debug\&o/enable-show-debug\&o/with-show-debug\&o/no-show-debug\&o/not-show-debug\&o/disable-show-debug\&o/without-show-debug;' export 'MODULES_LMCONFLICT;
+PKG_CONFIG_PATH=/apps/jellyfish/2.3.0/lib/pkgconfig:/half-root/usr/lib64/pkgconfig;' export 'PKG_CONFIG_PATH;
+MANPATH_modshare=:1:/apps/jellyfish/2.3.0/share/man:1:/opt/pbs/default/share/man:1:/local/pbs/share/man:1;' export 'MANPATH_modshare;
+FPATH=/apps/jellyfish/2.3.0/include:/opt/Modules/v4.3.0/init/ksh-functions;' export 'FPATH;
+LIBRARY_PATH_modshare=/apps/jellyfish/2.3.0/lib:1;' export 'LIBRARY_PATH_modshare;
+UTILS_ROOT=/apps/utils/0.0;' export 'UTILS_ROOT;
+C_INCLUDE_PATH_modshare=/apps/jellyfish/2.3.0/include:1;' export 'C_INCLUDE_PATH_modshare;
+MODULES_LMCONFLICT_modshare=utils/0.0\&utils\&o/show-debug\&o/yes-show-debug\&o/use-show-debug\&o/enable-show-debug\&o/with-show-debug\&o/no-show-debug\&o/not-show-debug\&o/disable-show-debug\&o/without-show-debug:1:jellyfish/2.3.0\&jellyfish\&o/ld_library_path\&o/yes-ld_library_path\&o/use-ld_library_path\&o/enable-ld_library_path\&o/with-ld_library_path\&o/no-ld_library_path\&o/not-ld_library_path\&o/disable-ld_library_path\&o/without-ld_library_path\&o/ld_run_path\&o/yes-ld_run_path\&o/use-ld_run_path\&o/enable-ld_run_path\&o/with-ld_run_path\&o/no-ld_run_path\&o/not-ld_run_path\&o/disable-ld_run_path\&o/without-ld_run_path\&o/show-debug\&o/yes-show-debug\&o/use-show-debug\&o/enable-show-debug\&o/with-show-debug\&o/no-show-debug\&o/not-show-debug\&o/disable-show-debug\&o/without-show-debug\&o/append-paths\&o/yes-append-paths\&o/use-append-paths\&o/enable-append-paths\&o/with-append-paths\&o/no-append-paths\&o/not-append-paths\&o/disable-append-paths\&o/without-append-paths\&o/library_path\&o/yes-library_path\&o/use-library_path\&o/enable-library_path\&o/with-library_path\&o/no-library_path\&o/not-library_path\&o/disable-library_path\&o/without-library_path\&o/packaged-envvars\&o/yes-packaged-envvars\&o/use-packaged-envvars\&o/enable-packaged-envvars\&o/with-packaged-envvars\&o/no-packaged-envvars\&o/not-packaged-envvars\&o/disable-packaged-envvars\&o/without-packaged-envvars:1;' export 'MODULES_LMCONFLICT_modshare;
+JELLYFISH_ROOT=/apps/jellyfish/2.3.0;' export 'JELLYFISH_ROOT;
+PKG_CONFIG_PATH_modshare=/apps/jellyfish/2.3.0/lib/pkgconfig:1:/half-root/usr/lib64/pkgconfig:1;' export 'PKG_CONFIG_PATH_modshare;
+FPATH_modshare=/opt/Modules/v4.3.0/init/ksh-functions:1:/apps/jellyfish/2.3.0/include:1;' export 'FPATH_modshare;
+UTILS_VERSION=0.0;' export 'UTILS_VERSION;
+CPLUS_INCLUDE_PATH=/apps/jellyfish/2.3.0/include;' export 'CPLUS_INCLUDE_PATH;
+LD_RUN_PATH_modshare=/apps/jellyfish/2.3.0/lib:1;' export 'LD_RUN_PATH_modshare;
+LD_LIBRARY_PATH_modshare=/apps/jellyfish/2.3.0/lib:1;' export 'LD_LIBRARY_PATH_modshare;
+C_INCLUDE_PATH=/apps/jellyfish/2.3.0/include;' export 'C_INCLUDE_PATH;
+CPATH_modshare=/apps/jellyfish/2.3.0/include:1;' export 'CPATH_modshare;
+UTILS_BASE=/apps/utils/0.0;' export 'UTILS_BASE;
+_LMFILES__modshare=/apps/Modules/modulefiles/jellyfish/2.3.0:1:/g/data/if89/apps/modulefiles/utils/0.0:1;' export '_LMFILES__modshare;
+LOADEDMODULES_modshare=utils/0.0:1:jellyfish/2.3.0:1;' export 'LOADEDMODULES_modshare;
+JELLYFISH_BASE=/apps/jellyfish/2.3.0;' export 'JELLYFISH_BASE;
+PATH=/g/data/if89/apps/utils/0.0/bin:/apps/jellyfish/2.3.0/bin:/home/150/ka6418/perl5/bin:/g/data/xl04/ka6418/miniconda/bin:/g/data/xl04/ka6418/miniconda/condabin:/opt/pbs/default/bin:/opt/nci/bin:/opt/bin:/opt/Modules/v4.3.0/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/local/pbs/bin;' export 'PATH;
+JELLYFISH_VERSION=2.3.0;' export 'JELLYFISH_VERSION;
+PATH_modshare=/usr/bin:1:/g/data/xl04/ka6418/miniconda/condabin:1:/opt/bin:1:/opt/Modules/v4.3.0/bin:1:/g/data/if89/apps/utils/0.0/bin:1:/local/pbs/bin:1:/bin:1:/home/150/ka6418/perl5/bin:1:/opt/pbs/default/bin:1:/opt/nci/bin:1:/apps/jellyfish/2.3.0/bin:1:/usr/sbin:1:/g/data/xl04/ka6418/miniconda/bin:1:/usr/local/sbin:1;' export 'PATH_modshare;
+test' '0;'
+++ LD_RUN_PATH=/apps/jellyfish/2.3.0/lib
+++ export LD_RUN_PATH
+++ LD_LIBRARY_PATH=/apps/jellyfish/2.3.0/lib
+++ export LD_LIBRARY_PATH
+++ CPLUS_INCLUDE_PATH_modshare=/apps/jellyfish/2.3.0/include:1
+++ export CPLUS_INCLUDE_PATH_modshare
+++ CPATH=/apps/jellyfish/2.3.0/include
+++ export CPATH
+++ MANPATH=/apps/jellyfish/2.3.0/share/man:/opt/pbs/default/share/man:::/local/pbs/share/man
+++ export MANPATH
+++ LIBRARY_PATH=/apps/jellyfish/2.3.0/lib
+++ export LIBRARY_PATH
+++ _LMFILES_=/apps/Modules/modulefiles/jellyfish/2.3.0:/g/data/if89/apps/modulefiles/utils/0.0
+++ export _LMFILES_
+++ LOADEDMODULES=jellyfish/2.3.0:utils/0.0
+++ export LOADEDMODULES
+++ MODULES_LMCONFLICT='jellyfish/2.3.0&jellyfish&o/ld_library_path&o/yes-ld_library_path&o/use-ld_library_path&o/enable-ld_library_path&o/with-ld_library_path&o/no-ld_library_path&o/not-ld_library_path&o/disable-ld_library_path&o/without-ld_library_path&o/ld_run_path&o/yes-ld_run_path&o/use-ld_run_path&o/enable-ld_run_path&o/with-ld_run_path&o/no-ld_run_path&o/not-ld_run_path&o/disable-ld_run_path&o/without-ld_run_path&o/show-debug&o/yes-show-debug&o/use-show-debug&o/enable-show-debug&o/with-show-debug&o/no-show-debug&o/not-show-debug&o/disable-show-debug&o/without-show-debug&o/append-paths&o/yes-append-paths&o/use-append-paths&o/enable-append-paths&o/with-append-paths&o/no-append-paths&o/not-append-paths&o/disable-append-paths&o/without-append-paths&o/library_path&o/yes-library_path&o/use-library_path&o/enable-library_path&o/with-library_path&o/no-library_path&o/not-library_path&o/disable-library_path&o/without-library_path&o/packaged-envvars&o/yes-packaged-envvars&o/use-packaged-envvars&o/enable-packaged-envvars&o/with-packaged-envvars&o/no-packaged-envvars&o/not-packaged-envvars&o/disable-packaged-envvars&o/without-packaged-envvars:utils/0.0&utils&o/show-debug&o/yes-show-debug&o/use-show-debug&o/enable-show-debug&o/with-show-debug&o/no-show-debug&o/not-show-debug&o/disable-show-debug&o/without-show-debug'
+++ export MODULES_LMCONFLICT
+++ PKG_CONFIG_PATH=/apps/jellyfish/2.3.0/lib/pkgconfig:/half-root/usr/lib64/pkgconfig
+++ export PKG_CONFIG_PATH
+++ MANPATH_modshare=:1:/apps/jellyfish/2.3.0/share/man:1:/opt/pbs/default/share/man:1:/local/pbs/share/man:1
+++ export MANPATH_modshare
+++ FPATH=/apps/jellyfish/2.3.0/include:/opt/Modules/v4.3.0/init/ksh-functions
+++ export FPATH
+++ LIBRARY_PATH_modshare=/apps/jellyfish/2.3.0/lib:1
+++ export LIBRARY_PATH_modshare
+++ UTILS_ROOT=/apps/utils/0.0
+++ export UTILS_ROOT
+++ C_INCLUDE_PATH_modshare=/apps/jellyfish/2.3.0/include:1
+++ export C_INCLUDE_PATH_modshare
+++ MODULES_LMCONFLICT_modshare='utils/0.0&utils&o/show-debug&o/yes-show-debug&o/use-show-debug&o/enable-show-debug&o/with-show-debug&o/no-show-debug&o/not-show-debug&o/disable-show-debug&o/without-show-debug:1:jellyfish/2.3.0&jellyfish&o/ld_library_path&o/yes-ld_library_path&o/use-ld_library_path&o/enable-ld_library_path&o/with-ld_library_path&o/no-ld_library_path&o/not-ld_library_path&o/disable-ld_library_path&o/without-ld_library_path&o/ld_run_path&o/yes-ld_run_path&o/use-ld_run_path&o/enable-ld_run_path&o/with-ld_run_path&o/no-ld_run_path&o/not-ld_run_path&o/disable-ld_run_path&o/without-ld_run_path&o/show-debug&o/yes-show-debug&o/use-show-debug&o/enable-show-debug&o/with-show-debug&o/no-show-debug&o/not-show-debug&o/disable-show-debug&o/without-show-debug&o/append-paths&o/yes-append-paths&o/use-append-paths&o/enable-append-paths&o/with-append-paths&o/no-append-paths&o/not-append-paths&o/disable-append-paths&o/without-append-paths&o/library_path&o/yes-library_path&o/use-library_path&o/enable-library_path&o/with-library_path&o/no-library_path&o/not-library_path&o/disable-library_path&o/without-library_path&o/packaged-envvars&o/yes-packaged-envvars&o/use-packaged-envvars&o/enable-packaged-envvars&o/with-packaged-envvars&o/no-packaged-envvars&o/not-packaged-envvars&o/disable-packaged-envvars&o/without-packaged-envvars:1'
+++ export MODULES_LMCONFLICT_modshare
+++ JELLYFISH_ROOT=/apps/jellyfish/2.3.0
+++ export JELLYFISH_ROOT
+++ PKG_CONFIG_PATH_modshare=/apps/jellyfish/2.3.0/lib/pkgconfig:1:/half-root/usr/lib64/pkgconfig:1
+++ export PKG_CONFIG_PATH_modshare
+++ FPATH_modshare=/opt/Modules/v4.3.0/init/ksh-functions:1:/apps/jellyfish/2.3.0/include:1
+++ export FPATH_modshare
+++ UTILS_VERSION=0.0
+++ export UTILS_VERSION
+++ CPLUS_INCLUDE_PATH=/apps/jellyfish/2.3.0/include
+++ export CPLUS_INCLUDE_PATH
+++ LD_RUN_PATH_modshare=/apps/jellyfish/2.3.0/lib:1
+++ export LD_RUN_PATH_modshare
+++ LD_LIBRARY_PATH_modshare=/apps/jellyfish/2.3.0/lib:1
+++ export LD_LIBRARY_PATH_modshare
+++ C_INCLUDE_PATH=/apps/jellyfish/2.3.0/include
+++ export C_INCLUDE_PATH
+++ CPATH_modshare=/apps/jellyfish/2.3.0/include:1
+++ export CPATH_modshare
+++ UTILS_BASE=/apps/utils/0.0
+++ export UTILS_BASE
+++ _LMFILES__modshare=/apps/Modules/modulefiles/jellyfish/2.3.0:1:/g/data/if89/apps/modulefiles/utils/0.0:1
+++ export _LMFILES__modshare
+++ LOADEDMODULES_modshare=utils/0.0:1:jellyfish/2.3.0:1
+++ export LOADEDMODULES_modshare
+++ JELLYFISH_BASE=/apps/jellyfish/2.3.0
+++ export JELLYFISH_BASE
+++ PATH=/g/data/if89/apps/utils/0.0/bin:/apps/jellyfish/2.3.0/bin:/home/150/ka6418/perl5/bin:/g/data/xl04/ka6418/miniconda/bin:/g/data/xl04/ka6418/miniconda/condabin:/opt/pbs/default/bin:/opt/nci/bin:/opt/bin:/opt/Modules/v4.3.0/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/local/pbs/bin
+++ export PATH
+++ JELLYFISH_VERSION=2.3.0
+++ export JELLYFISH_VERSION
+++ PATH_modshare=/usr/bin:1:/g/data/xl04/ka6418/miniconda/condabin:1:/opt/bin:1:/opt/Modules/v4.3.0/bin:1:/g/data/if89/apps/utils/0.0/bin:1:/local/pbs/bin:1:/bin:1:/home/150/ka6418/perl5/bin:1:/opt/pbs/default/bin:1:/opt/nci/bin:1:/apps/jellyfish/2.3.0/bin:1:/usr/sbin:1:/g/data/xl04/ka6418/miniconda/bin:1:/usr/local/sbin:1
+++ export PATH_modshare
+++ test 0
++ _mlstatus=0
++ '[' -n x ']'
++ IFS=' 	
+'
++ unset _mlre _mlv _mlrv _mlIFS
++ '[' -n '' ']'
++ unset _mlshdbg
++ return 0
++ inputfiles=
++ sampleID=
++ OUTDIR=
++ klength=
++ technology=
++ getopts i:s:o:l:t: opt
++ case $opt in
++ inputfiles=longread_pb.fq.gz:longread_pb_two.fq.gz
++ getopts i:s:o:l:t: opt
++ case $opt in
++ sampleID=BASDU
++ getopts i:s:o:l:t: opt
++ case $opt in
++ OUTDIR=/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/rawdata/kmers
++ getopts i:s:o:l:t: opt
++ case $opt in
++ klength=17
++ getopts i:s:o:l:t: opt
++ case $opt in
++ technology=PacBio
++ getopts i:s:o:l:t: opt
++ '[' -z longread_pb.fq.gz:longread_pb_two.fq.gz ']'
++ '[' -z BASDU ']'
++ '[' -z /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/rawdata/kmers ']'
++ '[' -z 17 ']'
++ sampleID=BASDU_PacBio_17
++ IFS=:
++ read -ra filelist
++ filecount=2
++ for file in "${filelist[@]}"
++ echo 'pigz -c -d -p 2 longread_pb.fq.gz'
++ for file in "${filelist[@]}"
++ echo 'pigz -c -d -p 2 longread_pb_two.fq.gz'
++ runcmd.sh -c 'jellyfish count --text -g /jobfs/104651557.gadi-pbs/filegenerator.cmds -G 2 --threads=-3 -m 17 -o /jobfs/104651557.gadi-pbs/BASDU_PacBio_17.dump -C -s 32G' -t BASDU_PacBio_17.kmercount -d /g/data/xl04/ka6418/github/ausarg/nextflow/outtest/rawdata/kmers/BASDU_PacBio_17.kmercount.done -f false
+Invalid uint32_t '-3' for [-t, --threads=uint32]: Negative value
+ERROR_command: jellyfish count --text -g /jobfs/104651557.gadi-pbs/filegenerator.cmds -G 2 --threads=-3 -m 17 -o /jobfs/104651557.gadi-pbs/BASDU_PacBio_17.dump -C -s 32G
+ERROR_exitcode: BASDU_PacBio_17.kmercount failed with 1 exit code.
+
+======================================================================================
+                  Resource Usage on 2023-12-21 10:38:52:
+   Job Id:             104651557.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.00
+   NCPUs Requested:    1                      NCPUs Used: 1               
+                                           CPU Time Used: 00:00:01        
+   Memory Requested:   2.0GB                 Memory Used: 35.75MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:03        
+   JobFS requested:    100.0MB                JobFS used: 72.0B           
+======================================================================================

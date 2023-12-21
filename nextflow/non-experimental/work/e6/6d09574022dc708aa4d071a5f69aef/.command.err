@@ -1,3 +1,0 @@
-[bwa_index] Pack FASTA... 0.13 sec
-[bwa_index] Construct BWT for the packed sequence...
-[BWTIncCreate] textLength=39096856, availableWord=14750552

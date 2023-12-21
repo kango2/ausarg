@@ -1,0 +1,19 @@
+Loading pythonlib/3.9.2
+  Loading requirement: intel-mkl/2020.3.304 python3/3.9.2
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/20/3effc9634ea72cb54566b83f4bb44e/.command.sh", line 79
+    directory_path = /g/data/xl04/ka6418/github/ausarg/nextflow/outtest
+                     ^
+SyntaxError: invalid syntax
+
+======================================================================================
+                  Resource Usage on 2023-12-21 10:51:39:
+   Job Id:             104652359.gadi-pbs
+   Project:            xl04
+   Exit Status:        1
+   Service Units:      0.01
+   NCPUs Requested:    2                      NCPUs Used: 2               
+                                           CPU Time Used: 00:00:02        
+   Memory Requested:   8.0GB                 Memory Used: 70.61MB         
+   Walltime requested: 01:00:00            Walltime Used: 00:00:08        
+   JobFS requested:    100.0GB                JobFS used: 0B              
+======================================================================================

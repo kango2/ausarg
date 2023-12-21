@@ -16,6 +16,7 @@ process setup_directory {
         mkdir -p ${topfolder}/rawdata/longread
         mkdir -p ${topfolder}/rawdata/longread/qc
         mkdir -p ${topfolder}/rawdata/longread/plots
+        mkdir -p ${topfolder}/rawdata/kmers
         mkdir -p ${topfolder}/evaluation
         mkdir -p ${topfolder}/misc
         mkdir -p ${topfolder}/logs

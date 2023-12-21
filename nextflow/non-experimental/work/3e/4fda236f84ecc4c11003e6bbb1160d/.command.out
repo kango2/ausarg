@@ -1,0 +1,2 @@
+ERROR_command: jellyfish count --text -g /jobfs/104651553.gadi-pbs/filegenerator.cmds -G 1 --threads=-1 -m 17 -o /jobfs/104651553.gadi-pbs/BASDU_ONT_17.dump -C -s 32G
+ERROR_exitcode: BASDU_ONT_17.kmercount failed with 1 exit code.

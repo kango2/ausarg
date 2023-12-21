@@ -1,0 +1,4 @@
+  File "/g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/work/20/3effc9634ea72cb54566b83f4bb44e/.command.sh", line 79
+    directory_path = /g/data/xl04/ka6418/github/ausarg/nextflow/outtest
+                     ^
+SyntaxError: invalid syntax

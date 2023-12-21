@@ -368,12 +368,11 @@ process printer {
     queue = 'normal'
     project = 'xl04'
     time = '1h'
-    clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04,jobfs=100GB'
 
     input:
-    tuple val (sample), path (files)
-    val(klength)
-    val(tech)
+    tuple val (sample), path (files), val(klength), val(tech)
+    
     
 
 
@@ -393,7 +392,7 @@ process printer {
         fi
     done
 
-    echo /g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i \${joined_files} -s $sample -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l $klength -t $tech >> /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/test.txt
+    /g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i \${joined_files} -s $sample -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l $klength -t $tech 
 
 
     """
@@ -401,8 +400,146 @@ process printer {
 
 }
 
+process kmer_plotting {
+    
+    module 'pythonlib'
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=2,mem=8GB,storage=gdata/if89+gdata/xl04,jobfs=100GB'
+
+    input:
+    val (kmer_results)
+    val (output)
+
+    output:
+    val ("$output/kmer_plots.png")
+
+
+    script:
+    """
+    #!/usr/bin/env python
+    import os
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    from collections import defaultdict
+
+    # Load data from file
+    def load_data(file_path):
+        x_values, y_values = [], []
+        with open(file_path, 'r') as f:
+            for line in f:
+                x, y = line.strip().split()
+                x_values.append(int(x))
+                y_values.append(int(y))
+        return x_values, y_values
+
+    # Extract info from filename
+    def extract_info_from_filename(filename):
+        base_name = os.path.basename(filename).replace('.histo', '')
+        specie_name, sequencing_tech, kmer_size = base_name.split("_")[:3]
+        kmer_size = int(kmer_size)  # Convert kmer size to integer
+        return specie_name, sequencing_tech, kmer_size
+
+    # Filter data based on x-axis limit
+    def filter_data(x_data, y_data, limit=500):
+        filtered_x = [x for x in x_data if x <= limit]
+        filtered_y = y_data[:len(filtered_x)]
+        return filtered_x, filtered_y
+    def automatic_plot_combined(files,save_path=None):
+        
+        files = [os.path.join(directory_path, filename) for filename in os.listdir(directory_path) if filename.endswith('.histo')]
+        file_info = [extract_info_from_filename(file) for file in files]
+
+        # Group files by sequencing tech
+        grouped_files = defaultdict(list)
+        for file, (specie_name, tech, kmer_size) in zip(files, file_info):
+            grouped_files[tech].append((file, specie_name, kmer_size))
+
+        total_rows = len(grouped_files)
+        max_subplots_per_row = max(len(tech_files) for tech_files in grouped_files.values())
+
+        # Create a single figure with multiple subplots arranged in rows by sequencing tech
+        fig, ax = plt.subplots(total_rows, max_subplots_per_row, figsize=(5 * max_subplots_per_row, 5 * total_rows))
+
+        # To handle cases where there's only one sequencing tech
+        if total_rows == 1:
+            ax = [ax]
+
+        row_idx = 0
+        for tech, tech_files in grouped_files.items():
+            tech_files = sorted(tech_files, key=lambda x: x[2])  # Sort by k-mer size
+
+            for col_idx, (file, specie_name, kmer_size) in enumerate(tech_files):
+                x_data, y_data = filter_data(*load_data(file), limit=200)  # Set default limit to 200
+                ax[row_idx][col_idx].bar(x_data, y_data, width=1, align='center', color=sns.color_palette("flare")[col_idx])
+                ax[row_idx][col_idx].set_title(f"{specie_name} ({tech}, k={kmer_size})")
+                ax[row_idx][col_idx].set_xlabel("Kmer Coverage")
+                ax[row_idx][col_idx].set_yscale('log')
+
+            row_idx += 1
+
+        # Common y-axis label
+        fig.text(0.00, 0.5, 'Frequency', va='center', rotation='vertical')
+        
+        # Set the mega title
+        mega_title = "Kmer Analysis"
+        plt.suptitle(mega_title, fontsize=16)
+
+        # Adjust layout and show plot
+        plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust top spacing for mega title
+        
+        fig.set_facecolor("white")
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            
+        plt.show()
+
+
+    directory_path = "$kmer_results"
+
+    save_path = "$output/kmer_plots.png"
+
+    # For demonstration purposes using the previously loaded files
+    automatic_plot_combined(directory_path,save_path)
+
+    """
+
+
+}
+
+process longread_plots {
+    
+    module 'Rlib'
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=2,mem=8GB,storage=gdata/if89+gdata/xl04'
+
+    input:
+    val (qc_results)
+    val (output)
+
+    script:
+    """
+    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -p
+    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -u
+
+    """
+
+
+}
+
+
+
+
+
 
 workflow {
+
+    def kmerValues = [17, 21]
 
     pacbio = channel
         .fromQuery('select title, filename from SRA where platform is "PACBIO_SMRT"', db: 'inputdb')
@@ -412,8 +549,10 @@ workflow {
             return [title, pacbio_file]
         }
         .groupTuple()
-        .map { title, files -> 
-            return [title, files.toList()]
+        .flatMap { title, filePairs ->
+            def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
+            // Create a new entry for each kmerval
+            kmerValues.collect { kmerval -> [title, allFiles, kmerval, "PacBio"] }
         }
         .view()
     
@@ -425,29 +564,37 @@ workflow {
             return [title, pacbio_file]
         }
         .groupTuple()
-        .map { title, files -> 
-            return [title, files.toList()]
-        }
-        .view()
-
-    illumina = channel
-        .fromQuery('select title, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
-        .map { row ->
-            def (title, filename) = row
-            def pacbio_file = file(filename)
-            return [title, pacbio_file]
-        }
-        .groupTuple()
-        .map { title, filePairs -> 
-            // Convert each file path to string, split at ':', and flatten the list
+        .flatMap { title, filePairs ->
             def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
-            // Return the list of all file paths
-            return [title, allFiles]
+            // Create a new entry for each kmerval
+            kmerValues.collect { kmerval -> [title, allFiles, kmerval, "ONT"] }
         }
         .view()
 
-    combinedChannel = ont.mix(illumina)
-    printer(combinedChannel,17,"ONT")
+    
+    illumina = channel
+    .fromQuery('select title, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
+    .map { row ->
+        def (title, filename) = row
+        def pacbio_file = file(filename)
+        return [title, pacbio_file]
+    }
+    .groupTuple()
+    .flatMap { title, filePairs ->
+        def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
+        // Create a new entry for each kmerval
+        kmerValues.collect { kmerval -> [title, allFiles, kmerval, "Illumina"] }
+    }
+    .view()
+
+    //kmer_channel = pacbio.mix(illumina,ont)
+
+    //combinedChannel = ont.mix(illumina)
+    //printer(kmer_channel)
+
+    //kmer_plotting("/g/data/xl04/ka6418/github/ausarg/nextflow/outtest","/g/data/xl04/ka6418/github/ausarg/nextflow/outtest")
+
+    longread_plots("/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/rawdata/longread/qc","/g/data/xl04/ka6418/github/ausarg/nextflow/outtest/rawdata/longread/qc")
 
 
 

@@ -17,10 +17,7 @@ process longread_qc {
     tuple path (fastq_file),val (sample),val (flowcell),path (output),val (platform)
 
     output:
-    path ("$output/*_stats.csv")
-    path ("$output/*_quality_freq.csv")
-    path ("$output/*_length_freq.csv")
-    path ("$output/*_log.txt")
+    tuple path ("$output/*_stats.csv"), path ("$output/*_quality_freq.csv") , path ("$output/*_length_freq.csv"), path ("$output/*_log.txt")
 
 
     script:
@@ -137,6 +134,30 @@ if __name__ == "__main__":
     main()
 
 """
+}
+
+process longread_plots {
+    
+    module 'Rlib'
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=2,mem=8GB,storage=gdata/if89+gdata/xl04'
+
+    input:
+    val (qc_results)
+    val (output)
+    val (qc_files)
+
+    script:
+    """
+    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -p
+    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -u
+
+    """
+
+
 }
 
 process shortread_qc {
@@ -370,10 +391,10 @@ process kmers {
     clusterOptions = '-l ncpus=1,mem=2GB,storage=gdata/if89+gdata/xl04'
 
     input:
-    tuple val (sample), path (files)
-    val(klength)
-    val(tech)
-    val(output)
+    tuple val (sample), path (files), val(klength), val(tech), val (output)
+
+    output:
+    val ("${output}/${sample}_${tech}_${klength}.histo")
     
 
     script:
@@ -388,7 +409,117 @@ process kmers {
         fi
     done
 
-    /g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i \${joined_files} -s $sample -o /g/data/xl04/ka6418/github/ausarg/nextflow/outtest -l $klength -t $tech 
+    /g/data/xl04/ka6418/github/ausarg/nextflow/kmer_nf.sh -i \${joined_files} -s $sample -o $output -l $klength -t $tech 
+
+    """
+
+
+}
+
+process kmer_plotting {
+    
+    module 'pythonlib'
+    executor = 'pbspro'
+    queue = 'normal'
+    project = 'xl04'
+    time = '1h'
+    clusterOptions = '-l ncpus=2,mem=8GB,storage=gdata/if89+gdata/xl04,jobfs=100GB'
+
+    input:
+    val (kmer_results)
+    val (output)
+    val (histo)
+
+    output:
+    val ("$output/kmer_plots.png")
+
+
+    script:
+    """
+    #!/usr/bin/env python
+    import os
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    from collections import defaultdict
+
+    # Load data from file
+    def load_data(file_path):
+        x_values, y_values = [], []
+        with open(file_path, 'r') as f:
+            for line in f:
+                x, y = line.strip().split()
+                x_values.append(int(x))
+                y_values.append(int(y))
+        return x_values, y_values
+
+    # Extract info from filename
+    def extract_info_from_filename(filename):
+        base_name = os.path.basename(filename).replace('.histo', '')
+        specie_name, sequencing_tech, kmer_size = base_name.split("_")[:3]
+        kmer_size = int(kmer_size)  # Convert kmer size to integer
+        return specie_name, sequencing_tech, kmer_size
+
+    # Filter data based on x-axis limit
+    def filter_data(x_data, y_data, limit=500):
+        filtered_x = [x for x in x_data if x <= limit]
+        filtered_y = y_data[:len(filtered_x)]
+        return filtered_x, filtered_y
+    def automatic_plot_combined(files,save_path=None):
+        
+        files = [os.path.join(directory_path, filename) for filename in os.listdir(directory_path) if filename.endswith('.histo')]
+        file_info = [extract_info_from_filename(file) for file in files]
+
+        # Group files by sequencing tech
+        grouped_files = defaultdict(list)
+        for file, (specie_name, tech, kmer_size) in zip(files, file_info):
+            grouped_files[tech].append((file, specie_name, kmer_size))
+
+        total_rows = len(grouped_files)
+        max_subplots_per_row = max(len(tech_files) for tech_files in grouped_files.values())
+
+        # Create a single figure with multiple subplots arranged in rows by sequencing tech
+        fig, ax = plt.subplots(total_rows, max_subplots_per_row, figsize=(5 * max_subplots_per_row, 5 * total_rows))
+
+        # To handle cases where there's only one sequencing tech
+        if total_rows == 1:
+            ax = [ax]
+
+        row_idx = 0
+        for tech, tech_files in grouped_files.items():
+            tech_files = sorted(tech_files, key=lambda x: x[2])  # Sort by k-mer size
+
+            for col_idx, (file, specie_name, kmer_size) in enumerate(tech_files):
+                x_data, y_data = filter_data(*load_data(file), limit=200)  # Set default limit to 200
+                ax[row_idx][col_idx].bar(x_data, y_data, width=1, align='center', color=sns.color_palette("flare")[col_idx])
+                ax[row_idx][col_idx].set_title(f"{specie_name} ({tech}, k={kmer_size})")
+                ax[row_idx][col_idx].set_xlabel("Kmer Coverage")
+                ax[row_idx][col_idx].set_yscale('log')
+
+            row_idx += 1
+
+        # Common y-axis label
+        fig.text(0.00, 0.5, 'Frequency', va='center', rotation='vertical')
+        
+        # Set the mega title
+        mega_title = "Kmer Analysis"
+        plt.suptitle(mega_title, fontsize=16)
+
+        # Adjust layout and show plot
+        plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust top spacing for mega title
+        
+        fig.set_facecolor("white")
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            
+        plt.show()
+
+
+    directory_path = "$kmer_results"
+
+    save_path = "$output/kmer_plots.png"
+
+    # For demonstration purposes using the previously loaded files
+    automatic_plot_combined(directory_path,save_path)
 
     """
 
@@ -398,38 +529,98 @@ process kmers {
 
 workflow {
 
+
+    //Set up the directories in the given output folder
     setup_directory(params.topfolder)
 
-    
-    longread_fastqs = channel
+    //Prepare long read files for data QC
+    longread_fastqs_qc = channel
         .fromQuery('select title, flowcell, platform, filename from SRA where platform IN ("PACBIO_SMRT", "OXFORD_NANOPORE")', db: 'inputdb')
         .map { row ->
             def (title, flowcell, platform, filename) = row
             def output = "${params.topfolder}/rawdata/longread/qc" 
             return [filename, title, flowcell, output, platform]
         }.view()
+    
+    //Run long read QC
+    longread_qcfiles = longread_qc(longread_fastqs_qc)
 
-    longread_qc(longread_fastqs)
+    //Plot the long read QC results
+    longread_plots("${params.topfolder}/rawdata/longread/qc","${params.topfolder}/rawdata/longread/qc",longread_qcfiles)
 
-
-    illumina_fastqs = channel
+    //Prepare short read files for data QC
+    illumina_fastqs_qc = channel
     .fromQuery('select title, flowcell, platform, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
     .map { row ->
         def (title, flowcell, platform, filename) = row
         def output = "${params.topfolder}/rawdata/shortread/qc"
-        
-        // Split the filename into two separate files
         def (file1, file2) = filename.split(':')
-   
-        // Return the split filenames along with other parameters
         return [file1, file2, title, flowcell, output, platform]
     }.view()
+    
+    //Trim short reads and run QC
+    trimmed_shortreads_qc = shortread_trimming(illumina_fastqs_qc)
+    shortread_qc(trimmed_shortreads_qc)
 
-    trimmed_shortreads = shortread_trimming(illumina_fastqs)
-    shortread_qc(trimmed_shortreads)
+    //Prepare channels for K-Mer analysis 
+    //Analysis will run for as many kmer values as listed here
+    def kmerValues = [17, 21]
 
-   
-    ont = channel
+    pacbio_kmer = channel
+        .fromQuery('select title, filename from SRA where platform is "PACBIO_SMRT"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def pacbio_file = file(filename)
+            return [title, pacbio_file]
+        }
+        .groupTuple()
+        .flatMap { title, filePairs ->
+            def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
+            // Create a new entry for each kmerval
+            kmerValues.collect { kmerval -> [title, allFiles, kmerval, "PacBio","${params.topfolder}/rawdata/kmers"] }
+        }
+        .view()
+    
+    ont_kmer = channel
+        .fromQuery('select title, filename from SRA where platform is "OXFORD_NANOPORE"', db: 'inputdb')
+        .map { row ->
+            def (title, filename) = row
+            def pacbio_file = file(filename)
+            return [title, pacbio_file]
+        }
+        .groupTuple()
+        .flatMap { title, filePairs ->
+            def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
+            // Create a new entry for each kmerval
+            kmerValues.collect { kmerval -> [title, allFiles, kmerval, "ONT", "${params.topfolder}/rawdata/kmers"] }
+        }
+        .view()
+
+    
+    illumina_kmer = channel
+    .fromQuery('select title, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
+    .map { row ->
+        def (title, filename) = row
+        def pacbio_file = file(filename)
+        return [title, pacbio_file]
+    }
+    .groupTuple()
+    .flatMap { title, filePairs ->
+        def allFiles = filePairs.collect { it.toString().split(':') }.flatten()
+        // Create a new entry for each kmerval
+        kmerValues.collect { kmerval -> [title, allFiles, kmerval, "Illumina","${params.topfolder}/rawdata/kmers"] }
+    }
+    .view()
+
+    //Run K_mer analysis
+    kmer_channel = pacbio_kmer.mix(illumina_kmer,ont_kmer)
+    kmer_histos = kmers(kmer_channel)
+    
+    //Plot the K-mer files
+    kmer_plotting("${params.topfolder}/rawdata/kmers","${params.topfolder}/rawdata/kmers",kmer_histos)
+
+    //Prepare ONT files for HifiASM
+    ont_asm = channel
         .fromQuery('select title, filename from SRA where platform is "OXFORD_NANOPORE"', db: 'inputdb')
         .map { row ->
             def (title, filename) = row
@@ -441,8 +632,9 @@ workflow {
             return [title, files.toList()]
         }
         .view()
-
-    pacbio = channel
+    
+    //Prepare HiFi files for HifiASM
+    pacbio_asm = channel
         .fromQuery('select title, filename from SRA where platform is "PACBIO_SMRT"', db: 'inputdb')
         .map { row ->
             def (title, filename) = row
@@ -454,8 +646,9 @@ workflow {
             return [title, files.toList()]
         }
         .view()
-
-    hic = channel
+    
+    //Prepare HiC files for HifiASM
+    hic_asm = channel
         .fromQuery('select title, filename from SRA where platform is "ILLUMINA"', db: 'inputdb')
         .map { row ->
             def (title, filename) = row
@@ -468,33 +661,27 @@ workflow {
         }
         .view()
 
-    def output = "${params.topfolder}/assembly"
-    //assembly(pacbio,ont,hic,output)
+    //Currently ASM is deactivated since it fails on small test data (nothing to assemble)
+    //and a corresponding test FASTA is provided for dev purpose
+    //assembly(pacbio_asm,ont_asm,hic_asm,"${params.topfolder}/assembly")
 
     def fasta = "/g/data/xl04/ka6418/nextflow_testing/testdata/BASDU_HifiASM.fasta"
 
-    R1 = hic.map { title, files1, files2 ->
+    //Prepare HiC files for scaffolding
+    r1_scaff = hic_asm.map { title, files1, files2 ->
     return [files1]}.flatten()
-
-    R2 = hic.map { title, files1, files2 ->
+    r2_scaff = hic_asm.map { title, files1, files2 ->
     return [files2]}.flatten()
 
-    def output1 = "${params.topfolder}/scaffolding/arima"
+    //Align HiC to assembly 
+    hicalignment = arima_mapping(fasta,r1_scaff,r2_scaff,"${params.topfolder}/scaffolding/arima")
 
-    hicalignment = arima_mapping(fasta,R1,R2,output1)
+    //Scaffold with YAHS
+    scaffolds = yahs(hicalignment,fasta,"${params.topfolder}/scaffolding/yahs")
 
-    def output2 = "${params.topfolder}/scaffolding/yahs"
+    //Generate Juicer HiC map for JuiceBox visualisation
+    hicmap = generate_hicmap(scaffolds,r1_scaff,r2_scaff,"${params.topfolder}/scaffolding/yahs_hicmap")
 
-    scaffolds = yahs(hicalignment,fasta,output2)
-
-    def output3 = "${params.topfolder}/scaffolding/yahs_hicmap"
-
-    hicmap = generate_hicmap(scaffolds,R1,R2,output3)
-
-
-
-
-    
 
 }
     
