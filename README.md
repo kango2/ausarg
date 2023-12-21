@@ -50,7 +50,7 @@ Here are the plots generated on one of our datasets. If the same sample has mult
 -   Data from PacBio, ONT, and Illumina.
 -   Generates histograms for k-mer distributions across all datasets and k-mer values for informed genome size estimation.
 
-<img src="kmer_plots.png" alt="long read qc" width="50%"/>
+<img src="images/kmer_plots.png" alt="long read qc" width="50%"/>
 
 ### 4. **Assembly with HifiASM**:
 
