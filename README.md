@@ -1,4 +1,8 @@
 # Automated Assembly Pipeline
+
+<img src="images/pipeline_logo.png" alt="long read qc" width="50%"/>
+
+
 ## Overview
 This nextflow workflow is designed for genomic data processing and analysis, focusing on long-read and short-read sequencing technologies. It includes various stages such as data quality control (QC), k-mer analysis, and assembly
 scaffolding, using a range of bioinformatics tools and pipelines. 
@@ -17,8 +21,7 @@ It is currently under construction and testing, but can be run internally by Aus
 -   Queries the SRA database for PacBio and Oxford Nanopore datasets.
 -   Performs comprehensive QC on these datasets and generates plots for the results.
 
-<img src="images/long_read_qc1.png" alt="long read qc" width="50%"/>
-<img src="images/long_read_qc2.png" alt="long read qc" width="50%"/>
+<img src="images/long_read_qc1.png" alt="long read qc" width="50%"/> <img src="images/long_read_qc2.png" alt="long read qc" width="50%"/>
 
 
 ### 2. **Data QC for Short Reads**:
