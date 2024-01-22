@@ -152,8 +152,8 @@ process longread_plots {
 
     script:
     """
-    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -p
-    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -u
+    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -p || true
+    Rscript /g/data/xl04/ka6418/github/ausarg/nextflow/long_read_plots_jigsaw.R -t "$qc_results" -o "$output" -u || true
 
     """
 
@@ -387,7 +387,7 @@ process kmers {
     queue = 'normal'
     project = 'xl04'
     time = '3h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04,jobfs=400GB'
 
     input:
     tuple val (sample), path (files), val(klength), val(tech), val (output)
@@ -543,9 +543,11 @@ workflow {
     
     //Run long read QC
     longread_qcfiles = longread_qc(longread_fastqs_qc)
+    
+    //Error : the longread_qcfiles need to be flattneded and passed for qc, this automatic file path detection approach will not work, and keeps failing.
 
     //Plot the long read QC results
-    longread_plots("${params.topfolder}/rawdata/longread/qc","${params.topfolder}/rawdata/longread/qc",longread_qcfiles)
+    //longread_plots("${params.topfolder}/rawdata/longread/qc","${params.topfolder}/rawdata/longread/qc",[longread_qcfiles[0]])
 
     //Prepare short read files for data QC
     illumina_fastqs_qc = channel
@@ -616,7 +618,7 @@ workflow {
     kmer_histos = kmers(kmer_channel)
     
     //Plot the K-mer files
-    kmer_plotting("${params.topfolder}/rawdata/kmers","${params.topfolder}/rawdata/kmers",kmer_histos)
+    //kmer_plotting("${params.topfolder}/rawdata/kmers","${params.topfolder}/rawdata/kmers",kmer_histos)
 
     //Prepare ONT files for HifiASM
     ont_asm = channel
