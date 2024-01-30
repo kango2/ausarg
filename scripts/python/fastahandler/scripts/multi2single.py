@@ -1,4 +1,4 @@
-# FASTAhandler multiline to singleline created by Hyungtaek Jung
+# FastaHandler multiline to single-line created by Hyungtaek Jung
 # A multi-fasta (multiline) file to a single-line fasta
 # Example command: python3 multi2single.py --input-seq test.fa --out test_out.fa (w/ optional for --t cpu and --mem memory)
 
