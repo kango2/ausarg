@@ -1,4 +1,4 @@
-# FASTAhandler header count and remove duplication created by Hyungtaek Jung
+# FastaHandler header count and remove duplication created by Hyungtaek Jung
 # Remove the duplicate ID and sequence from a multi-fasta (multiline) file to be written in a single-line fasta
 # Include duplicated headers and their occurrence counts
 # Example command: python3 removedupl.py --input-seq test.fa --out . (w/ optional for --t cpu and --mem memory)
