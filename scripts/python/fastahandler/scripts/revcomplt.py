@@ -1,4 +1,4 @@
-# FASTAhandler reverse complement created by Hyungtaek Jung
+# FastaHandler reverse complement created by Hyungtaek Jung
 # Make reverse complement sequences from a multi-fasta (multiline) file to be written in a single-line fasta
 # Example command: python3 revcomplt.py --input-seq test.fa --out test_out.fa (w/ optional for --t cpu and --mem memory)
 
