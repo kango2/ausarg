@@ -1,4 +1,4 @@
-# FASTAhandler rename ID created by Hyungtaek Jung
+# FastaHandler rename ID created by Hyungtaek Jung
 # A multi-fasta (multiline) file to a single-line fasta with changing ID/Prefix names
 # Example command: python3 renameid.py --input-seq test.fa --out test_out.fa --new-name Changed (w/ optional for --t cpu and --mem memory)
 
