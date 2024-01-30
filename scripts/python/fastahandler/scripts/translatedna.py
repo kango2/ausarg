@@ -17,7 +17,7 @@ from Bio.Seq import Seq
 from multiprocessing import Pool
 from functools import partial
 
-# Function to extract and read sequences from compressed files
+# Extract and read sequences from compressed files
 def extract_and_read_sequences(file_path):
     if file_path.endswith(".gz"):
         opener = gzip.open
@@ -37,7 +37,7 @@ def extract_and_read_sequences(file_path):
     else:
         raise ValueError("Not a proper sequence file format. Please provide a readable file and sequence format.")
 
-# Function to find ORFs in a sequence
+# Find ORFs in a sequence
 def find_orfs(sequence):
     start_codon = "ATG"
     stop_codons = ["TAA", "TAG", "TGA"]
@@ -56,7 +56,7 @@ def find_orfs(sequence):
 
     return list(set(orfs))
 
-# Function to process a single record
+# Process a single record
 def process_record(record, output_dir):
     header = record.id
     sequence = record.seq
@@ -90,7 +90,7 @@ def process_record(record, output_dir):
     except Exception as e:
         print(f"Error processing record with header: {header}. Error: {e}")
 
-# Function to process files
+# Process files
 def process_files(input_files, output_dir, threads):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -105,7 +105,7 @@ def process_files(input_files, output_dir, threads):
         except Exception as e:
             raise ValueError(f"Error reading {input_file}. Ensure it's a proper FASTA file. Error: {e}")
 
-# Main function to handle input and output
+# Main handle input and output
 def main(input_seq, output_dir, threads):
     input_files = glob.glob(input_seq)
     if not input_files:
