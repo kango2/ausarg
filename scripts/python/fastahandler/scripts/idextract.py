@@ -1,4 +1,4 @@
-# FASTAhandler extract IDs created by Hyungtaek Jung
+# FastaHandler extract IDs created by Hyungtaek Jung
 # Extract matched ID/header sequences from a multi-fasta (multiline) file to be written in a single-line fasta
 # Must create the input header file after removing ">"
 # Example command: python3 idextract.py --input-seq test.fa --input-hdr test_id.txt --out test_out.fa (w/ optional for --t cpu and --mem memory)
