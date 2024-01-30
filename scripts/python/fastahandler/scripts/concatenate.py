@@ -1,4 +1,4 @@
-# FastaHandler concatenate ID and sequecne created by Hyungtaek Jung
+# FastaHandler concatenate ID and sequence created by Hyungtaek Jung
 # Concatenate sequences with the same ID from multiple fasta files (unlimited)
 # Example command: python3 concatenate.py --input-seq test1.fa test2.fa test3.fa test4.fa test5.fa --out concat_seq_out.fa (w/ optional for --t cpu and --mem memory)
 
