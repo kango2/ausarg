@@ -1,8 +1,7 @@
 # FastaHandler Open Reading Frames / Transcription created by Hyungtaek Jung
 # 6 Possible reading frames including forward & reverse complement sequences
-# Need to install Biopython
 # A total of four outputs 
-# Example usage: python translatedna.py --input-seq test_files.fasta.gz --num-processes 4
+# Example usage: python translatedna.py --input-seq test_files.fasta --out test_out (w/ optional for --t cpu and --mem memory)
 
 #!/usr/bin/env python3
 
