@@ -1,4 +1,4 @@
-# FASTAhandler extract multiple IDs and locations created by Hyungtaek Jung
+# FastaHandler extract multiple IDs and locations created by Hyungtaek Jung
 # Extract multiple matched ID/header sequences and their locations from a multi-fasta (multiline) file to be written in a single-line fasta
 # Must create the input header file after removing ">"
 # Must provide with a tap-separated ID/header and their locations (start/end)
