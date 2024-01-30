@@ -1,4 +1,4 @@
-# FASTAhandler subset and filter length created by Hyungtaek Jung
+# FastaHandler subset and filter length created by Hyungtaek Jung
 # Subset based on sequence length from a multi-fasta (multiline) file
 # Example usage: python subsetfa.py --input-seq test_mRNA1.fasta --filter 50 --out output_subset.fasta --t 1 --mem 2
 
