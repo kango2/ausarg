@@ -1,4 +1,4 @@
-# FASTAhandler PyFastaConversion created by Hyungtaek Jung
+# FastaHandler rename only selected IDs created by Hyungtaek Jung
 # A multi-fasta (multiline) file to a single-line fasta with changing ID/Prefix name files only in the input id file (No space after the last IDs)
 
 #!/usr/bin/env python3
