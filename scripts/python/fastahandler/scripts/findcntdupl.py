@@ -1,4 +1,4 @@
-# FASTAhandler find only duplicated ID created by Hyungtaek Jung
+# FastaHandler find only duplicated ID created by Hyungtaek Jung
 # Find and count the duplicate ID and sequence from a multi-fasta (multiline) file
 # Example command: python3 findcntdupl.py --input-seq test.fa --out test_out.txt (w/ optional for --t cpu and --mem memory)
 
