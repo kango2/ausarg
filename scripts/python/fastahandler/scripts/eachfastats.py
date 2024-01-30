@@ -1,4 +1,4 @@
-# FASTAhandler each ID and length created by Hyungtaek Jung
+# FastaHandler each ID and length created by Hyungtaek Jung
 # A multi-fasta (multiline) file to calculate each fasta sequence stats
 # Example command: python3 eachfastats.py --input-seq test1.fa --out test_stats_out.txt (w/ optional for --t cpu and --mem memory)
 
