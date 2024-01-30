@@ -1,4 +1,4 @@
-# FASTAhandler a multi-line fasta created by Hyungtaek Jung
+# FastaHandler a multi-line fasta created by Hyungtaek Jung
 # A multi-fasta (multiline) file to calculate assembly stats
 # Example command: python3 allfastats.py --input-seq test1.fa --out all_stats_out.txt (w/ optional for --t cpu and --mem memory)
 
