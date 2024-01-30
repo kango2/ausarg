@@ -1,4 +1,4 @@
-# FASTAhandler extract single ID and location created by Hyungtaek Jung
+# FastaHandler extract a single ID and location created by Hyungtaek Jung
 # Extract matched ID/header sequences and their locations from a multi-fasta (multiline) file to be written in a single-line fasta
 # Must create the input header file after removing ">"
 # Note, users must provide -1 less numbers for start and end location. 
