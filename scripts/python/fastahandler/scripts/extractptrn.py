@@ -1,4 +1,4 @@
-# FastaHandler extra pattern match sequence created by Hyungtaek Jung
+# FastaHandler extract pattern match sequence created by Hyungtaek Jung
 # A multi-fasta (multiline) file to find, filter and extract based on different criteria (filter length and sequence patterns).
 # Example command: python3 extractptrn.py --input-seq test.fa --input-ptrn find_ptrn.txt --len-over 100 --out test_out.fa (w/ optional for --t cpu and --mem memory) 
 
