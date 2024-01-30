@@ -1,5 +1,6 @@
 # FastaHandler rename selected and unselected IDs created by Hyungtaek Jung
 # A multi-fasta (multiline) file to a single-line fasta with changing ID/Prefix name files (No space after the last IDs)
+# Example command: python3 prexrename.py --input-seq test.fa --out test_out.fa --input-id new_id.txt (w/ optional for --t cpu and --mem memory)
 
 #!/usr/bin/env python3
 import argparse
