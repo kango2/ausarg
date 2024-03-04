@@ -77,9 +77,9 @@ def automatic_plot_combined(files,save_path=None):
     plt.show()
 
 
-directory_path = "/g/data/xl04/ka6418/github/ausarg/nextflow/outtest"
+directory_path = "/g/data/xl04/ka6418/bassiana/publication/eval/kmer/histo"
 
-save_path = "/g/data/xl04/ka6418/github/ausarg/nextflow/BasDu_Kmers.png"
+save_path = "/g/data/xl04/ka6418/bassiana/publication/eval/kmer/histo/BasDu_Kmers.png"
 
 # For demonstration purposes using the previously loaded files
 automatic_plot_combined(directory_path,save_path)

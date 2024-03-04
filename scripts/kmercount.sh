@@ -1,8 +1,9 @@
 #!/bin/bash
 
-#PBS -l ncpus=48
+#PBS -q normalsr
+#PBS -l ncpus=102
 #PBS -l walltime=48:00:00
-#PBS -l mem=190GB
+#PBS -l mem=512GB
 #PBS -N kmercount
 #PBS -j oe
 #PBS -l jobfs=400GB
@@ -36,6 +37,7 @@ for file in "${filelist[@]}"; do
 	#tried the following to increase efficiency but monitoring suggests that pigz uses <100% cpus indicating one thread only
 	#TODO: use 3 or 4 threads and see if the CPU usage increases
   echo "pigz -c -d -p 2 ${file}"  >> ${PBS_JOBFS}/filegenerator.cmds
+  #echo "${file}"  >> ${PBS_JOBFS}/filegenerator.cmds
 done
 
 ##jellyfish --text option will output text strings directly. So no need to create counts database and then dump

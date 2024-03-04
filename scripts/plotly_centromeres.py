@@ -2,9 +2,22 @@ import pandas as pd
 import plotly.subplots as sp
 import plotly.graph_objects as go
 import math
+import argparse
+import os
+
+# Parse command line arguments
+parser = argparse.ArgumentParser(description='Generate plots for chromosome data.')
+parser.add_argument('-i', '--input_file', required=True, help='Input file path')
+parser.add_argument('-o', '--output_folder', required=True, help='Output folder path')
+args = parser.parse_args()
+
+# Get the base name of the input file and construct the output file name
+input_file_base = os.path.basename(args.input_file)
+output_file_name = os.path.splitext(input_file_base)[0] + '.html'
+output_file = os.path.join(args.output_folder, output_file_name)
 
 # Read the CSV file into a Pandas DataFrame
-data = pd.read_csv('/g/data/xl04/ka6418/fish_genome/eval/cenafteryahs/Summary.of.repetitive.regions.OGG88G_YAHS_scaffolds_final.fa.csv')
+data = pd.read_csv(args.input_file)
 
 # Get the unique chromosomes
 chromosomes = data['name'].unique()
@@ -33,4 +46,4 @@ fig.update_layout(height=200 * rows, width=1200, showlegend=False)  # Adjust hei
 
 # Display the plot
 fig.show()
-fig.write_html('/g/data/xl04/ka6418/fish_genome/eval/cenafteryahs/centromeres_yahs_rich.html')
+fig.write_html(output_file)

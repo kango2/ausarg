@@ -1,5 +1,8 @@
 #!/usr/bin/env Rscript
-
+.libPaths(c("/g/data/te53/software/Rpackages/are-4.2.2g/", .libPaths()))
+.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
+myLibPath <- "/g/data/xl04/ka6418/temp/Rlibraries"
+.libPaths(c(myLibPath, .libPaths()))
 library(tidyverse)
 library(karyoploteR)
 library(optparse)
@@ -65,7 +68,7 @@ list2env(list_of_granges, envir = .GlobalEnv)
 cengr <- toGRanges(data.frame(select(cendf, chr=name, start = start, end = end)))
 
 column_names <- c("chromosome", "start", "end", "width")
-Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/all_assemblies/Ns/rBasDup_HifiASM_YAHS_Optimised_CurV3_Nregions.csv",delim = ",", col_names = column_names)
+Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/Ns/BASDU_HifiASM_GreenHill_SUP_Nregions.csv",delim = ",", col_names = column_names)
 Nregions_gr <- toGRanges(data.frame(Nregions) %>% select(chr = chromosome, start = start, end = end) )
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
@@ -108,7 +111,7 @@ pp$data1inmargin <- 20
 pp$data1outmargin <- 120
 
 pdf(args$output, width = 11.7, height = 8.3)
-kp <- plotKaryotype(genome = mygenomegr,plot.params = pp)
+kp <- plotKaryotype(genome = mygenomegr,plot.params = pp, chromosome="seq9")
 
 kpAddBaseNumbers(kp)
 #kpPlotRegions(kp, data=cengr, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)

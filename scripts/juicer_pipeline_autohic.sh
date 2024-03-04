@@ -1,21 +1,25 @@
 #!/bin/bash
 #PBS -N juicer
 #PBS -P xl04
-#PBS -q express
-#PBS -l walltime=1:00:00
-#PBS -l mem=32GB
-#PBS -l ncpus=8
+#PBS -q normal
+#PBS -l walltime=48:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l iointensive=1
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
-#PBS -l jobfs=50GB
+#PBS -l jobfs=400GB
 #PBS -j oe
 #PBS -M kirat.alreja@anu.edu.au
 
+
+#Sourced from GreenHill
 
 module load seqkit bwa python3 parallel
 source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
 conda activate autohic
 
+PBS_JOBFS=${outputdir}
 label=$(basename ${REF} .fasta)
 WORK_DIR=${PBS_JOBFS}
 mkdir -p ${WORK_DIR}/fastq
@@ -43,7 +47,7 @@ $path_3d/visualize/run-assembly-visualizer.sh base.assembly aligned/merged_nodup
 wait
 python $path_greenhill/utils/fasta_to_juicebox_assembly.py base.fa >base.ctg_info.assembly
 
-mv base.hic ${label}_HifiASM_YAHS.hic
-mv base.ctg_info.assembly ${label}_HifiASM_YAHS.ctg_info.assembly
-mv base.hic ${output}
-mv base.ctg_info.assembly ${output}
+#mv base.hic ${label}_Juicer.hic
+#mv base.ctg_info.assembly ${label}_Juicer.ctg_info.assembly
+#mv base.hic ${output}
+#mv base.ctg_info.assembly ${output}

@@ -30,8 +30,8 @@ cp $REF $WORK_DIR
 cd $WORK_DIR
 
 
-firstfile = ${R1}
-secondfile = ${R2}
+firstfile=${R1}
+secondfile=${R2}
 mkdir fastq
 ln -s ${R1} fastq/${label}_R1.fastq.gz
 ln -s ${R2} fastq/${label}_R2.fastq.gz
