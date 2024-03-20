@@ -14,6 +14,6 @@ module load minimap2
 # Assuming outputdir, ref, and target are passed as environment variables or defined elsewhere in the script
 output_file="${outputdir}/$(basename ${ref})_$(basename ${target}).paf"
 
-minimap2 -t 48 -o ${output_file} -x asm20 ${ref} ${target}
+minimap2 -t 48 -o ${output_file} -x asm20 ${target} ${ref}
 
 #sort -k1,1 -k4,4n
