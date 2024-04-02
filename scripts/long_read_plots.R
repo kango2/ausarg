@@ -148,7 +148,8 @@ if (ont_only || (!pacbio_only && !ont_only)) {
     geom_bar(stat = "identity", position = "stack") +
     labs(title = "ONT Number of Bases vs Read Length",
         x = "Read Length", y = "Number of Bases") +
-    scale_fill_viridis_d()
+    scale_fill_viridis_d() +
+    xlim(0, 150000)
 
     # Concatenate all dataset names to form the PDF file name
     sample_name <- str_extract(dataset_names[1], "^[^_]+")
@@ -198,7 +199,8 @@ if (ont_only || (!pacbio_only && !ont_only)) {
         x = "Quality Value (QV)",
         y = "Read Numbers"
     ) +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    xlim(0,40)
 
     pdf_file_name <- paste(sample_name, collapse = "_")
     pdf_file_name <- paste0(pdf_file_name, "_ont_quality_freq.pdf")

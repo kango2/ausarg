@@ -5,7 +5,6 @@
 #PBS -l walltime=48:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
-#PBS -l iointensive=1
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
 #PBS -l jobfs=400GB

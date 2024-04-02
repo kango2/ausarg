@@ -2,10 +2,10 @@
 
 #PBS -N TRASH_parallel
 #PBS -P xl04
-#PBS -q normal
+#PBS -q normalsr
 #PBS -l walltime=48:00:00
-#PBS -l mem=192GB
-#PBS -l ncpus=48
+#PBS -l mem=512GB
+#PBS -l ncpus=100
 #PBS -j oe
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
