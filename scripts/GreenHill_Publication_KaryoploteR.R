@@ -1,14 +1,13 @@
-.libPaths(c("/g/data/te53/software/Rpackages/are-4.2.2g/", .libPaths()))
-.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
 myLibPath <- "/g/data/xl04/ka6418/temp/Rlibraries"
 .libPaths(c(myLibPath, .libPaths()))
-
-library(tidyverse)
+.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
+.libPaths(c("/g/data/te53/software/Rpackages/are-4.2.2g/", .libPaths()))
 library(karyoploteR)
+library(tidyverse)
 library(optparse)
 
 
-mygenome <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/seqtable/BASDU_HifiASM_YAHS_SUP_CurV1_seqtable.csv", delim = ",") 
+mygenome <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/seqtable/BASDU_HifiASM_GreenHill_SUP_CurV1.2_seqtable.csv", delim = ",") 
 
 minseqlen <- 10e6
 
@@ -19,13 +18,13 @@ mygenomegr <- makeGRangesFromDataFrame(data.frame(mutate(mygenome, start = 1) %>
                                                     select(chr = `Sequence ID`, start, end = Length)
 ))
 
-telomeresdf <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/Telomeres/BASDU_HifiASM_YAHS_SUP_CurV1_Telomeres.csv", delim = ",") 
+telomeresdf <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/CurV1.2.fixed.sorted.renamed_Telomeres.csv", delim = ",") 
 
 #telomeresdf$Sequence_ID <- sub("_.*", "", telomeresdf$Sequence_ID)
 padtlen <- 1e5
 telomeresgr <- toGRanges(data.frame(select(telomeresdf, chr=Sequence_ID, start = Start, end = End))) 
 
-cendf <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/TRASH/YAHS_Curated/karyoploteR_manual_repeats.csv", delim = ",") 
+cendf <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/TRASH/Summary.of.repetitive.regions.BASDU_HifiASM_GreenHill_SUP_CurV1.2.fasta.csv", delim = ",") 
 #cendf$name <- sub("_.*", "", cendf$name)
 padtlen <- 1e5
 filtered_cendf <- filter(cendf, !is.na(class), width > 1e5)
@@ -46,7 +45,7 @@ list2env(list_of_granges, envir = .GlobalEnv)
 
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1/BASDU_HifiASM_YAHS_SUP_CurV1_illumina_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/depth/BASDU_HifiASM_GreenHill_SUP_CurV1.2/BASDU_HifiASM_GreenHill_SUP_CurV1.2_illumina_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
 #ilmnrd$Chromosome <- sub("_.*", "", ilmnrd$Chromosome)
 ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                    select(chr = Chromosome, 
@@ -56,7 +55,7 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
 ))
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1/BASDU_HifiASM_YAHS_SUP_CurV1_ont_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/depth/BASDU_HifiASM_GreenHill_SUP_CurV1.2/BASDU_HifiASM_GreenHill_SUP_CurV1.2_ont_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
 #ontrd$Chromosome <- sub("_.*", "", ontrd$Chromosome)
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
@@ -65,16 +64,16 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                        y = AverageDepth)
 ))
 
-hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1/BASDU_HifiASM_YAHS_SUP_CurV1_pacbio_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/depth/BASDU_HifiASM_GreenHill_SUP_CurV1.2/BASDU_HifiASM_GreenHill_SUP_CurV1.2_pacbio_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
 #hifird$Chromosome <- sub("_.*", "", hifird$Chromosome)
-hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 50 ~ 50, TRUE ~ AverageDepth)) %>%
+hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 60 ~ 60, TRUE ~ AverageDepth)) %>%
                                  select(chr = Chromosome, 
                                         start = Start, 
                                         end = End, 
                                         y = AverageDepth)
 ))
 
-gc <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/GC/BASDU_HifiASM_YAHS_SUP_CurV1.fasta_GC.csv", delim = ",") 
+gc <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/GC/BASDU_HifiASM_GreenHill_SUP_CurV1.2.fasta_GC.csv", delim = ",") 
 #gc$`Sequence Header` <- sub("_.*", "", gc$`Sequence Header`)
 gcgr <- toGRanges(data.frame(gc %>% mutate(y = `GC Count`*100/10000, y = case_when(y > 60 ~ 60, TRUE ~ y), y = case_when(y < 30 ~ 30, TRUE ~ y))  %>%
                                select(chr = `Sequence Header`, 
@@ -108,7 +107,7 @@ kpAxis(kp, r0=0.25, r1=0.40,cex=0.2,numticks = 2,ymin=0,ymax=100,data.panel = 1)
 kpAddLabels(kp, labels="ONT", r0=0.25, r1=0.40, data.panel = 1,cex=0.2,label.margin=0.003,side="right")
 
 kpDataBackground(kp, data.panel = 1,r0=0.50, r1=0.65)
-kpAxis(kp, r0=0.50, r1=0.65,cex=0.2,numticks = 2,ymin=0,ymax=50,data.panel = 1)
+kpAxis(kp, r0=0.50, r1=0.65,cex=0.2,numticks = 2,ymin=0,ymax=60,data.panel = 1)
 kpAddLabels(kp, labels="HiFi", r0=0.50, r1=0.65, data.panel = 1,cex=0.2,label.margin=0.003,side="right")
 
 kpDataBackground(kp, data.panel = 1,r0=0.75, r1=0.90)
@@ -124,7 +123,7 @@ kpLines(kp, data = ontgr,
         r0=0.25, r1=0.40, ymin = 0, ymax = 100,
         col = "#FA8072", lwd = 0.1,data.panel = 1)
 kpLines(kp, data = hifigr,
-        r0=0.50, r1=0.65, ymin = 0, ymax = 50,
+        r0=0.50, r1=0.65, ymin = 0, ymax = 60,
         col = "#3CB371", lwd = 0.1,data.panel = 1)
 kpLines(kp, data = gcgr,
         r0=0.75, r1=0.90, ymin = 30, ymax = 60,

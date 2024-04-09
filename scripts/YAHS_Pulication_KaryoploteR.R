@@ -46,7 +46,7 @@ list2env(list_of_granges, envir = .GlobalEnv)
 
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1/BASDU_HifiASM_YAHS_SUP_CurV1_illumina_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1.1_fixed/BASDU_HifiASM_YAHS_SUP_CurV1.1.merged.illum.bam.depth.csv", delim = ",",col_names = column_names)
 #ilmnrd$Chromosome <- sub("_.*", "", ilmnrd$Chromosome)
 ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                    select(chr = Chromosome, 
@@ -56,7 +56,7 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
 ))
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1/BASDU_HifiASM_YAHS_SUP_CurV1_ont_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1.1_fixed/BASDU_HifiASM_YAHS_SUP_CurV1.1.merged.ont.bam.depth.csv", delim = ",",col_names = column_names)
 #ontrd$Chromosome <- sub("_.*", "", ontrd$Chromosome)
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
@@ -65,9 +65,9 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                        y = AverageDepth)
 ))
 
-hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1/BASDU_HifiASM_YAHS_SUP_CurV1_pacbio_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1.1_fixed/BASDU_HifiASM_YAHS_SUP_CurV1.1.merged.pb.bam.depth.csv", delim = ",",col_names = column_names)
 #hifird$Chromosome <- sub("_.*", "", hifird$Chromosome)
-hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 50 ~ 50, TRUE ~ AverageDepth)) %>%
+hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 60 ~ 60, TRUE ~ AverageDepth)) %>%
                                  select(chr = Chromosome, 
                                         start = Start, 
                                         end = End, 
@@ -108,7 +108,7 @@ kpAxis(kp, r0=0.25, r1=0.40,cex=0.2,numticks = 2,ymin=0,ymax=100,data.panel = 1)
 kpAddLabels(kp, labels="ONT", r0=0.25, r1=0.40, data.panel = 1,cex=0.2,label.margin=0.003,side="right")
 
 kpDataBackground(kp, data.panel = 1,r0=0.50, r1=0.65)
-kpAxis(kp, r0=0.50, r1=0.65,cex=0.2,numticks = 2,ymin=0,ymax=50,data.panel = 1)
+kpAxis(kp, r0=0.50, r1=0.65,cex=0.2,numticks = 2,ymin=0,ymax=60,data.panel = 1)
 kpAddLabels(kp, labels="HiFi", r0=0.50, r1=0.65, data.panel = 1,cex=0.2,label.margin=0.003,side="right")
 
 kpDataBackground(kp, data.panel = 1,r0=0.75, r1=0.90)
@@ -124,7 +124,7 @@ kpLines(kp, data = ontgr,
         r0=0.25, r1=0.40, ymin = 0, ymax = 100,
         col = "#FA8072", lwd = 0.1,data.panel = 1)
 kpLines(kp, data = hifigr,
-        r0=0.50, r1=0.65, ymin = 0, ymax = 50,
+        r0=0.50, r1=0.65, ymin = 0, ymax = 60,
         col = "#3CB371", lwd = 0.1,data.panel = 1)
 kpLines(kp, data = gcgr,
         r0=0.75, r1=0.90, ymin = 30, ymax = 60,
