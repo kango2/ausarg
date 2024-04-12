@@ -9,7 +9,7 @@ library(optparse)
 
 mygenome <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/seqtable/BASDU_HifiASM_GreenHill_SUP_CurV1.2_seqtable.csv", delim = ",") 
 
-minseqlen <- 10e6
+minseqlen <- 4e6
 
 #mygenome$`Sequence ID` <- sub("_.*", "", mygenome$`Sequence ID`)
 mygenomegr <- makeGRangesFromDataFrame(data.frame(mutate(mygenome, start = 1) %>% 
@@ -45,7 +45,7 @@ list2env(list_of_granges, envir = .GlobalEnv)
 
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/depth/BASDU_HifiASM_GreenHill_SUP_CurV1.2/BASDU_HifiASM_GreenHill_SUP_CurV1.2_illumina_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_GH_SUP_CurV1.2_fixed/BASDU_HifiASM_GH_SUP_CurV1.2.merged.illum.depth.bed", delim = " ",col_names = column_names)
 #ilmnrd$Chromosome <- sub("_.*", "", ilmnrd$Chromosome)
 ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                    select(chr = Chromosome, 
@@ -55,7 +55,7 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
 ))
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/depth/BASDU_HifiASM_GreenHill_SUP_CurV1.2/BASDU_HifiASM_GreenHill_SUP_CurV1.2_ont_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_GH_SUP_CurV1.2_fixed/BASDU_HifiASM_GH_SUP_CurV1.2.merged.ont.depth.bed", delim = " ",col_names = column_names)
 #ontrd$Chromosome <- sub("_.*", "", ontrd$Chromosome)
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
@@ -64,7 +64,7 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                        y = AverageDepth)
 ))
 
-hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/curation_greenhill/fixing_curated/eval/depth/BASDU_HifiASM_GreenHill_SUP_CurV1.2/BASDU_HifiASM_GreenHill_SUP_CurV1.2_pacbio_sorted.bam.binned.depth.csv", delim = ",",col_names = column_names)
+hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_GH_SUP_CurV1.2_fixed/BASDU_HifiASM_GH_SUP_CurV1.2.merged.pb.depth.bed", delim = " ",col_names = column_names)
 #hifird$Chromosome <- sub("_.*", "", hifird$Chromosome)
 hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 60 ~ 60, TRUE ~ AverageDepth)) %>%
                                  select(chr = Chromosome, 
@@ -81,6 +81,11 @@ gcgr <- toGRanges(data.frame(gc %>% mutate(y = `GC Count`*100/10000, y = case_wh
                                       end = `Position End`, 
                                       y)))
 
+column_names <- c("chromosome", "start", "end", "gaplen")
+Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/Ns/BASDU_HifiASM_GreenHill_SUP_CurV1.2_Nregions.csv",delim = ",", col_names = column_names)
+Nregions_gr <- toGRanges(data.frame(Nregions) %>% select(chr = chromosome, start = start, end = end) )
+
+
 #dev.off()
 pp <- getDefaultPlotParams(plot.type=1)
 pp$data1inmargin <- 20
@@ -95,6 +100,9 @@ kpAddBaseNumbers(kp)
 kpPlotRegions(kp, data=cengr_CEN187, col="#FF000080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 kpPlotRegions(kp, data=cengr_CEN199, col="#80008080", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
 kpPlotRegions(kp, data=telomeresgr, col="orange", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE)
+
+kpPlotRegions(kp, data=Nregions_gr, col="black", r0=-0.1, r1=-0.35,clipping = TRUE,avoid.overlapping=FALSE,lwd = 0.1)
+
 #plotting read depths
 
 

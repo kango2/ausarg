@@ -8,9 +8,13 @@ import datetime
 
 bin_size = 100
 
-def calculate_n50_n90(read_lengths):
+def calculate_n50_n90(read_lengths, total_length=None):
     sorted_lengths = sorted(read_lengths, reverse=True)
-    total_length = sum(sorted_lengths)
+
+    # Calculate total_length if not provided
+    if total_length is None:
+        total_length = sum(sorted_lengths)
+
     cumulative_length = 0
     n50 = n90 = l50 = l90 = 0
 
@@ -32,7 +36,7 @@ def log_progress(message, log_file, flowcell_id, input_file):
         log.write(f"{timestamp} - {message} - Flowcell: {flowcell_id} - File: {input_file}\n")
 
 
-def process_fastq(input_fastq, output_path, flowcell_id, platform,sample, log_file):
+def process_fastq(input_fastq, output_path, flowcell_id, platform, sample, log_file):
     bins = {}
     length_sums = {}
     read_lengths = []
@@ -63,8 +67,8 @@ def process_fastq(input_fastq, output_path, flowcell_id, platform,sample, log_fi
                 length_sums[bin_number] = 0
             length_sums[bin_number] += 1
 
-    n50, n90, l50, l90 = calculate_n50_n90(read_lengths)
-    average_read_length = total_bases / total_reads if total_reads > 0 else 0
+    n50, n90, l50, l90 = calculate_n50_n90(read_lengths, total_length=total_bases)
+    average_read_length = round(total_bases / total_reads) if total_reads > 0 else 0
 
     log_progress("FASTQ file processing completed. Writing CSV files...", log_file, flowcell_id, input_fastq)
 
@@ -76,23 +80,24 @@ def process_fastq(input_fastq, output_path, flowcell_id, platform,sample, log_fi
     # Write quality frequency data
     with open(quality_output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["File_Path","Sample","Flowcell_ID", "Platform", "Read_Length", "QV", "Read_Numbers"])
+        csv_writer.writerow(["filepath","sample","flowcellid", "platform", "readlength", "qv", "readnumbers"])
         for bin_key, bin_data in bins.items():
             length_bin, qv_bin = bin_key
             frequency = bin_data["count"]
-            csv_writer.writerow([input_fastq,sample, flowcell_id, platform, length_bin, qv_bin, frequency])
+            # TODO: add input_fastq, sample, flowcell_id and platform in comment lines to save space
+            csv_writer.writerow([input_fastq, sample, flowcell_id, platform, length_bin, qv_bin, frequency])
 
     # Write length frequency data
     with open(length_output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["File_Path","Sample", "Flowcell_ID", "Platform", "Read_Length", "Summed_Read_Numbers"])
+        csv_writer.writerow(["filepath", "sample", "flowcellid", "platform", "readlength", "summedreadnumbers"])
         for length_bin, count in length_sums.items():
             csv_writer.writerow([input_fastq,sample, flowcell_id, platform, length_bin, count])
 
     # Write stats data
     with open(stats_output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["File_Path","Sample", "Flowcell_ID", "Platform", "Total_Bases", "Total_Reads", "Average_Read_Length", "N50", "N90", "L50", "L90", "Total_Ns"])
+        csv_writer.writerow(["filepath","sample", "flowcellid", "platform", "totalbases", "totalreads", "averagereadlen", "N50", "N90", "L50", "L90", "ncounts"])
         csv_writer.writerow([input_fastq,sample, flowcell_id, platform, total_bases, total_reads, average_read_length, n50, n90, l50, l90, total_ns])
 
     log_progress("CSV files successfully written.", log_file, flowcell_id, input_fastq)

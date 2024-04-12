@@ -1,48 +1,42 @@
-import csv
 import argparse
 from collections import defaultdict
 import os
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Calculate read depth frequencies binned by range.')
-    parser.add_argument('-input', type=str, required=True, help='Path to the input CSV file.')
+    parser = argparse.ArgumentParser(description='Calculate read depth frequencies for each value up to 200.')
+    parser.add_argument('-input', type=str, required=True, help='Path to the input BED file.')
     parser.add_argument('-output', type=str, required=False, help='Path to the output file. Optional.')
     return parser.parse_args()
-
-def find_bin(read_depth, bins):
-    """Determine the appropriate bin for a given read depth, capping at 200."""
-    if read_depth > 200:
-        return "190-200"
-    for i in bins[:-1]:
-        if i <= read_depth < i + 10:
-            return f"{i}-{i+10}"
-    return "190-200"
 
 def main():
     args = parse_arguments()
     input_file = args.input
-    output_file = args.output if args.output else os.path.splitext(input_file)[0] + "_depth_bins.txt"
+    output_file = args.output if args.output else os.path.splitext(input_file)[0] + "_depth_frequencies.txt"
 
-    bins = range(0, 201, 10)
-    bin_labels = [f"{i}-{i+10}" for i in bins[:-1]]
     read_depth_frequency = defaultdict(int)
 
-    with open(input_file, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            read_depth = float(row[3])
-            appropriate_bin = find_bin(read_depth, bins)
-            read_depth_frequency[appropriate_bin] += 1
+    with open(input_file, 'r') as bedfile:
+        for line in bedfile:
+            columns = line.strip().split()
+            try:
+                read_depth = round(float(columns[3]))  # Assuming the fourth column is the read depth
+                if read_depth <= 200:
+                    read_depth_frequency[read_depth] += 1
+            except ValueError:
+                # Handle the case where conversion to float fails
+                print(f"Warning: Skipping invalid read depth value '{columns[3]}'")
 
-    for label in bin_labels:
-        if label not in read_depth_frequency:
-            read_depth_frequency[label] = 0
+    # Ensure all values up to 200 are accounted for in the output
+    for depth in range(201):  # Include 0 through 200
+        if depth not in read_depth_frequency:
+            read_depth_frequency[depth] = 0
 
-    sorted_frequencies = sorted(read_depth_frequency.items(), key=lambda x: int(x[0].split("-")[0]))
+    # Sort the frequencies by read depth
+    sorted_frequencies = sorted(read_depth_frequency.items())
 
     with open(output_file, 'w') as f:
-        for bin_range, frequency in sorted_frequencies:
-            f.write(f"{bin_range}\t{frequency}\n")
+        for read_depth, frequency in sorted_frequencies:
+            f.write(f"{read_depth}\t{frequency}\n")
 
     print(f"Output saved to {output_file}")
 
