@@ -1,14 +1,13 @@
-params.workdir = "/g/data/xl04/ka6418/temp/deepconsensus/testdata"
-params.output = "/g/data/xl04/ka6418/temp/deepconsensus/nf"
-params.subreads = "/g/data/xl04/ka6418/temp/deepconsensus/testdata/n1000.subreads.bam"
+params.image = "/g/data/xl04/ka6418/docker_images/deepconsensus_1.2.0-gpu.sif"
+params.chunks = 10 
 
 process pbindex {
 
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normalsr'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=1,mem=4GB,storage=gdata/if89+gdata/xl04'
+    time = '24h'
+    clusterOptions = '-l ncpus=104,mem=512GB,storage=gdata/if89+gdata/xl04'
 
     publishDir "${params.workdir}", mode:'copy'
 
@@ -24,7 +23,7 @@ process pbindex {
 
     """
     module load singularity 
-    singularity exec /g/data/xl04/ka6418/docker_images/deepconsensus_1.2.0-gpu.sif pbindex ${subreads} -j \${PBS_NCPUS}
+    singularity exec ${params.image} pbindex ${subreads} -j \${PBS_NCPUS}
 
     """
 
@@ -34,10 +33,10 @@ process pbindex {
 process ccs {
 
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normalsr'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    time = '24h'
+    clusterOptions = '-l ncpus=104,mem=512GB,jobfs=400GB,storage=gdata/if89+gdata/xl04'
 
     publishDir "${params.output}", mode:'copy'
 
@@ -54,7 +53,7 @@ process ccs {
 
     """
     module load singularity 
-    singularity exec /g/data/xl04/ka6418/docker_images/deepconsensus_1.2.0-gpu.sif ccs --min-rq=0.88 -j \${PBS_NCPUS} --chunk="${id}"/"${params.chunks}" n1000.subreads.bam "${id}.ccs.bam"
+    singularity exec ${params.image} ccs --min-rq=0.88 -j \${PBS_NCPUS} --chunk="${id}"/"${params.chunks}" ${params.subreads} "${id}.ccs.bam"
 
     """
 
@@ -64,11 +63,12 @@ process ccs {
 
 process actc 
 {
+
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normalsr'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    time = '24h'
+    clusterOptions = '-l ncpus=104,mem=512GB,jobfs=400GB,storage=gdata/if89+gdata/xl04'
 
     publishDir "${params.output}", mode:'copy'
 
@@ -84,18 +84,19 @@ process actc
     script:
     """
     module load singularity 
-    singularity exec /g/data/xl04/ka6418/docker_images/deepconsensus_1.2.0-gpu.sif actc -j \${PBS_NCPUS} ${params.subreads} ${ccs} "${id}.subreads_to_ccs.bam"
+    singularity exec ${params.image} actc -j \${PBS_NCPUS} ${params.subreads} ${ccs} "${id}.subreads_to_ccs.bam"
     """
 
 }
 
 process deepconsensus
 {
+
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'gpuvolta'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    time = '24h'
+    clusterOptions = '-l ncpus=12,mem=96GB,ngpus=1,jobfs=100GB,storage=gdata/if89+gdata/xl04'
 
     publishDir "${params.output}", mode:'copy'
 
@@ -110,7 +111,7 @@ process deepconsensus
     script:
     """
     module load singularity 
-    singularity exec /g/data/xl04/ka6418/docker_images/deepconsensus_1.2.0-gpu.sif deepconsensus run --subreads_to_ccs=${subreads_to_ccs}  --ccs_bam=${ccs} --checkpoint=/g/data/xl04/ka6418/temp/deepconsensus/testdata/model/checkpoint --output=${id}.output.fastq
+    singularity exec ${params.image} deepconsensus run --subreads_to_ccs=${subreads_to_ccs}  --ccs_bam=${ccs} --checkpoint=/g/data/xl04/ka6418/temp/deepconsensus/testdata/model/checkpoint --cpus \${PBS_NCPUS} --output=${id}.output.fastq
     """
 
 }
@@ -119,10 +120,10 @@ process deepconsensus
 process concatFastq {
 
     executor = 'pbspro'
-    queue = 'express'
+    queue = 'normal'
     project = 'xl04'
-    time = '1h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    time = '10h'
+    clusterOptions = '-l ncpus=1,mem=4GB,storage=gdata/if89+gdata/xl04'
 
     publishDir "${params.output}", mode: 'copy'
 
@@ -140,27 +141,13 @@ process concatFastq {
     """
 }
 
-
-
-
-
-
 workflow {
-    
     index = pbindex(params.subreads)
-
-    params.chunks = 10 
     idChannel = Channel.from(1..(params.chunks as Integer))
     combinedccs = index.combine(idChannel)
-
     ccs_bam = ccs(combinedccs.map { index, id -> [index, params.subreads, id] })
     subreads_to_ccs = actc(ccs_bam)
-
     fastq = deepconsensus(subreads_to_ccs)
-
     allfastq = fastq.collect()
-    concatFastq(allfastq,"BASDU")
-
- 
-
+    concatFastq(allfastq,params.sample)
 }
