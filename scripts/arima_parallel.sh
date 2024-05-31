@@ -17,14 +17,14 @@ module load samtools parallel
 source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
 conda activate arima
 
-REF=$fasta
+
 R1=${PE_1}
 R2=${PE_2}
 output=${outputdir}
 
 
 label=$(basename ${REF} .fasta)
-WORK_DIR=${PBS_JOBFS}
+WORK_DIR=${outputdir}
 
 cp $REF $WORK_DIR
 cd $WORK_DIR

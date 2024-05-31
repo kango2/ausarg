@@ -2,7 +2,7 @@
 #PBS -N deepconsensus
 #PBS -P xl04
 #PBS -q normal
-#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l storage=gdata/xl04+gdata/if89+gdata/te53
 #PBS -l walltime=48:00:00
 #PBS -l mem=2GB
 #PBS -l ncpus=1

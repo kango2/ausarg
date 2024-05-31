@@ -1,6 +1,8 @@
-.libPaths(c("/g/data/te53/software/Rpackages/are-4.2.2g/", .libPaths()))
-.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
+.libPaths(c("/g/data/xl04/ka6418/temp/Rlibraries", .libPaths()))
+
 myLibPath <- "/g/data/xl04/ka6418/temp/Rlibraries"
+
+.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
 .libPaths(c(myLibPath, .libPaths()))
 
 library(tidyverse)
@@ -8,7 +10,7 @@ library(karyoploteR)
 library(optparse)
 
 
-mygenome <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/seqtable/BASDU_HifiASM_YAHS_SUP_CurV1_seqtable.csv", delim = ",") 
+mygenome <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/seqtable/BASDU_SUP_DEEP_hifiasm_yahs_seqtable.csv", delim = ",") 
 
 minseqlen <- 10e6
 
@@ -19,13 +21,13 @@ mygenomegr <- makeGRangesFromDataFrame(data.frame(mutate(mygenome, start = 1) %>
                                                     select(chr = `Sequence ID`, start, end = Length)
 ))
 
-telomeresdf <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/Telomeres/BASDU_HifiASM_YAHS_SUP_CurV1_Telomeres.csv", delim = ",") 
+telomeresdf <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/telomeres/BASDU_SUP_DEEP_hifiasm_yahs_Telomeres.csv", delim = ",") 
 
 #telomeresdf$Sequence_ID <- sub("_.*", "", telomeresdf$Sequence_ID)
 padtlen <- 1e5
 telomeresgr <- toGRanges(data.frame(select(telomeresdf, chr=Sequence_ID, start = Start, end = End))) 
 
-cendf <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/TRASH/YAHS_Curated/karyoploteR_manual_repeats.csv", delim = ",") 
+cendf <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/centromere/pseudo/seqt/Summary.of.repetitive.regions.BASDU_SUP_DEEP_hifiasm_yahs.fasta.csv", delim = ",") 
 #cendf$name <- sub("_.*", "", cendf$name)
 padtlen <- 1e5
 filtered_cendf <- filter(cendf, !is.na(class), width > 1e5)
@@ -46,7 +48,7 @@ list2env(list_of_granges, envir = .GlobalEnv)
 
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1.1_fixed/BASDU_HifiASM_YAHS_SUP_CurV1.1.merged.illum.depth.bed", delim = " ",col_names = column_names)
+ilmnrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/depth/pseudo/BASDU_SUP_DEEP_hifiasm_yahs.fasta.merged.illum.bam.depth.csv", delim = ",",col_names = column_names)
 #ilmnrd$Chromosome <- sub("_.*", "", ilmnrd$Chromosome)
 ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                    select(chr = Chromosome, 
@@ -56,7 +58,7 @@ ilmnrdgr <- toGRanges(data.frame(mutate(ilmnrd, AverageDepth = case_when(Average
 ))
 
 column_names <- c("Chromosome", "Start", "End", "AverageDepth")
-ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1.1_fixed/BASDU_HifiASM_YAHS_SUP_CurV1.1.merged.ont.depth.bed", delim = " ",col_names = column_names)
+ontrd <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/depth/pseudo/BASDU_SUP_DEEP_hifiasm_yahs.fasta.merged.ont.bam.depth.csv", delim = ",",col_names = column_names)
 #ontrd$Chromosome <- sub("_.*", "", ontrd$Chromosome)
 ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDepth > 100 ~ 100, TRUE ~ AverageDepth)) %>%
                                 select(chr = Chromosome, 
@@ -65,7 +67,7 @@ ontgr <- toGRanges(data.frame(mutate(ontrd, AverageDepth = case_when(AverageDept
                                        y = AverageDepth)
 ))
 
-hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/depth/BASDU_HifiASM_YAHS_SUP_CurV1.1_fixed/BASDU_HifiASM_YAHS_SUP_CurV1.1.merged.pb.depth.bed", delim = " ",col_names = column_names)
+hifird <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/depth/pseudo/BASDU_SUP_DEEP_hifiasm_yahs.fasta.merged.pb.bam.depth.csv", delim = ",",col_names = column_names)
 #hifird$Chromosome <- sub("_.*", "", hifird$Chromosome)
 hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDepth > 60 ~ 60, TRUE ~ AverageDepth)) %>%
                                  select(chr = Chromosome, 
@@ -74,7 +76,7 @@ hifigr <- toGRanges(data.frame(mutate(hifird, AverageDepth = case_when(AverageDe
                                         y = AverageDepth)
 ))
 
-gc <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/GC/BASDU_HifiASM_YAHS_SUP_CurV1.fasta_GC.csv", delim = ",") 
+gc <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/gc/BASDU_SUP_DEEP_hifiasm_yahs.fasta_GC.csv", delim = ",") 
 #gc$`Sequence Header` <- sub("_.*", "", gc$`Sequence Header`)
 gcgr <- toGRanges(data.frame(gc %>% mutate(y = `GC Count`*100/10000, y = case_when(y > 60 ~ 60, TRUE ~ y), y = case_when(y < 30 ~ 30, TRUE ~ y))  %>%
                                select(chr = `Sequence Header`, 
@@ -83,7 +85,7 @@ gcgr <- toGRanges(data.frame(gc %>% mutate(y = `GC Count`*100/10000, y = case_wh
                                       y)))
 
 column_names <- c("chromosome", "start", "end", "gaplen")
-Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/publication/eval/Ns/BASDU_HifiASM_YAHS_SUP_CurV1.1_Nregions.csv",delim = ",", col_names = column_names)
+Nregions <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/gaps/BASDU_SUP_DEEP_hifiasm_yahs_Nregions.csv",delim = ",", col_names = column_names)
 Nregions_gr <- toGRanges(data.frame(Nregions) %>% select(chr = chromosome, start = start, end = end) )
 
 

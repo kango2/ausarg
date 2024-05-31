@@ -5,7 +5,7 @@
 #PBS -l walltime=10:00:00
 #PBS -l mem=96GB
 #PBS -l ncpus=1
-#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l storage=gdata/xl04+gdata/if89+gdata/te53
 #PBS -l wd
 #PBS -j oe
 

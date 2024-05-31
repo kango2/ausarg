@@ -1,11 +1,11 @@
 #!/bin/bash
 #PBS -N Telomere
-#PBS -q normal
+#PBS -q normalsr
 #PBS -P xl04
-#PBS -l storage=gdata/if89+gdata/xl04
+#PBS -l storage=gdata/if89+gdata/xl04+gdata/te53
 #PBS -l walltime=8:00:00
-#PBS -l mem=64GB
-#PBS -l ncpus=48
+#PBS -l mem=512GB
+#PBS -l ncpus=104
 #PBS -l wd
 #PBS -j oe
 #PBS -l jobfs=100GB
@@ -36,8 +36,10 @@ number_copies="$copies"
 faSplit sequence $inputfile 10000 ${PBS_JOBFS}/chunk
 
 cd ${PBS_JOBFS}
+
+num_jobs=$(($PBS_NCPUS / 4))
 filelist=$(ls ${PBS_JOBFS}/chunk*)
-printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${PBS_NCPUS} trf {} 2 7 7 80 10 500 6 -l 10 -d -h 
+printf "%s\n" "${filelist[@]}" | parallel -I{} --jobs ${num_jobs} trf {} 2 7 7 80 10 500 6 -l 10 -d -h 
 
 for file in ${PBS_JOBFS}/*.dat;
 do

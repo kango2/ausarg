@@ -5,7 +5,7 @@
 #PBS -l walltime=1:00:00
 #PBS -l mem=4GB
 #PBS -l ncpus=1
-#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l storage=gdata/xl04+gdata/if89+gdata/te53
 #PBS -l wd
 #PBS -M kirat.alreja@anu.edu.au
 
@@ -27,7 +27,7 @@ module load samtools Rlib
 
 cd ${outdir}
 
-/g/data/xl04/ka6418/temp/buttonpaf/pafconvert.sh ${paf} ${refname} ${targetname} "${outdir}/regdata.tsv"
+/g/data/xl04/ka6418/temp/buttonpaf/pafconvert.sh ${paf} ${targetname} ${refname} "${outdir}/regdata.tsv"
 
 samtools faidx ${ref}
 samtools faidx ${target}
@@ -69,7 +69,7 @@ done < "$FAIDX_FILE"
 
 echo "${targetname} $OUTPUT_FILE" >> "${outdir}/sequences.fofn"
 
-Rscript /g/data/xl04/ka6418/temp/chromsyn_testrun/github/chromsyn/chromsyn.R sequences="${outdir}/sequences.fofn" regdata="${outdir}/regdata.tsv" minlen=${minlen} regmirror=True
+Rscript /g/data/xl04/ka6418/temp/chromsyn_testrun/github/chromsyn/chromsyn.R sequences="${outdir}/sequences.fofn" regdata="${outdir}/regdata.tsv" minlen=${minlen} regmirror=True focus=${ref} seqsort=focus orphans=F restrict=seq12,seq18 pdfwidth=60
 
 
 

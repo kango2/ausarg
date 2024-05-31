@@ -7,7 +7,7 @@ process pbindex {
     queue = 'normalsr'
     project = 'xl04'
     time = '24h'
-    clusterOptions = '-l ncpus=104,mem=512GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=104,mem=512GB,storage=gdata/xl04+gdata/if89+gdata/te53'
 
     publishDir "${params.workdir}", mode:'copy'
 
@@ -36,7 +36,7 @@ process ccs {
     queue = 'normalsr'
     project = 'xl04'
     time = '24h'
-    clusterOptions = '-l ncpus=104,mem=512GB,jobfs=400GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=104,mem=512GB,jobfs=400GB,storage=gdata/xl04+gdata/if89+gdata/te53'
 
     publishDir "${params.output}", mode:'copy'
 
@@ -68,7 +68,7 @@ process actc
     queue = 'normalsr'
     project = 'xl04'
     time = '24h'
-    clusterOptions = '-l ncpus=104,mem=512GB,jobfs=400GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=104,mem=512GB,jobfs=400GB,storage=gdata/xl04+gdata/if89+gdata/te53'
 
     publishDir "${params.output}", mode:'copy'
 
@@ -94,9 +94,9 @@ process deepconsensus
 
     executor = 'pbspro'
     queue = 'gpuvolta'
-    project = 'xl04'
-    time = '24h'
-    clusterOptions = '-l ncpus=12,mem=96GB,ngpus=1,jobfs=100GB,storage=gdata/if89+gdata/xl04'
+    project = 'te53'
+    time = '48h'
+    clusterOptions = '-l ncpus=12,mem=96GB,ngpus=1,jobfs=100GB,storage=gdata/xl04+gdata/if89+gdata/te53'
 
     publishDir "${params.output}", mode:'copy'
 
@@ -123,7 +123,7 @@ process concatFastq {
     queue = 'normal'
     project = 'xl04'
     time = '10h'
-    clusterOptions = '-l ncpus=1,mem=4GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=1,mem=4GB,storage=gdata/xl04+gdata/if89+gdata/te53'
 
     publishDir "${params.output}", mode: 'copy'
 

@@ -3,6 +3,7 @@
 #PBS -q normalsr
 #PBS -l ncpus=102
 #PBS -l walltime=48:00:00
+#PBS -l storage=gdata/if89+gdata/xl04
 #PBS -l mem=512GB
 #PBS -N kmercount
 #PBS -j oe
