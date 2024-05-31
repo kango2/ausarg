@@ -1,30 +1,7 @@
-# AusARG Assembly Nextflow Pipeline
+# AusARG Assembly
 <div align="center">
     <img src="images/pipeline_logo.png" alt="long read qc" width="100%"/>
 </div>
-
-## Overview
-This nextflow workflow is designed for genomic data processing and analysis, focusing on long-read and short-read sequencing technologies. It includes various stages such as data quality control (QC), k-mer analysis, and assembly
-scaffolding, using a range of bioinformatics tools and pipelines. 
-
-It is currently under construction and testing, but can be run internally by AusARG team. Contact kirat.alreja@anu.edu.au for any queries/questions. 
-
-## Pre-requsites 
-- The pipeline runs off data provided in SRA-submission schema SQL table 
-- A test/example SQL table can be found here, duplicate for preparing your data ```nextflow/pipeline/inputdb.db```
-- Once the data is prepared, the pipeline requires only the database and an output folder to run. 
-
-## Running Test Data on the pipeline 
-If you have access to xl04, you can launch a test run of the pipeline with this command 
-
-```
-
-module load nextflow 
-nextflow run /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.nf /
--config /g/data/xl04/ka6418/github/ausarg/nextflow/non-experimental/genejigsaw.config /
---topfolder {your test folder for all the results}
-
-```
 
 ## Workflow Steps
 
