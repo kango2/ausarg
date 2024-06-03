@@ -1,7 +1,7 @@
 #!/bin/bash
-#PBS -N paftosyntent
+#PBS -N paftosynteny
 #PBS -P xl04
-#PBS -q express
+#PBS -q normal
 #PBS -l walltime=1:00:00
 #PBS -l mem=4GB
 #PBS -l ncpus=1
@@ -25,12 +25,13 @@
 
 module load samtools Rlib
 
-cd ${outdir}
+cd ${PBS_JOBFS}
 
-/g/data/xl04/ka6418/temp/buttonpaf/pafconvert.sh ${paf} ${targetname} ${refname} "${outdir}/regdata.tsv"
+/g/data/xl04/ka6418/temp/buttonpaf/pafconvert.sh ${paf} ${targetname} ${refname} "${PBS_JOBFS}/regdata.tsv"
 
 samtools faidx ${ref}
 samtools faidx ${target}
+outdir=${PBS_JOBFS}
 
 
 FAIDX_FILE="${ref}.fai"
@@ -68,8 +69,8 @@ while IFS=$'\t' read -r seqName seqLen rest; do
 done < "$FAIDX_FILE"
 
 echo "${targetname} $OUTPUT_FILE" >> "${outdir}/sequences.fofn"
-
-Rscript /g/data/xl04/ka6418/temp/chromsyn_testrun/github/chromsyn/chromsyn.R sequences="${outdir}/sequences.fofn" regdata="${outdir}/regdata.tsv" minlen=${minlen} regmirror=True focus=${ref} seqsort=focus orphans=F restrict=seq12,seq18 pdfwidth=60
+cd ${outputdir}
+Rscript /g/data/xl04/ka6418/temp/chromsyn_testrun/github/chromsyn/chromsyn.R sequences="${outdir}/sequences.fofn" regdata="${outdir}/regdata.tsv" minlen=${minlen} regmirror=True focus=CHM13 seqsort=CHM13 orphans=F basefile="${targetname}_${refname}" pdfwidth=${width}
 
 
 
