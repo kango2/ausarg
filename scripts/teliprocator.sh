@@ -1,8 +1,8 @@
 #!/bin/bash
 #PBS -N teliprocator
 #PBS -P xl04
-#PBS -q normal
-#PBS -l walltime=5:00:00
+#PBS -q express
+#PBS -l walltime=1:00:00
 #PBS -l mem=8GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/xl04+gdata/if89+gdata/te53

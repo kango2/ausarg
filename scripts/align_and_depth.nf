@@ -5,9 +5,9 @@ process align_ont {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04+gdata/te53'
 
     input:
 
@@ -168,9 +168,9 @@ process merge_ont {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
-    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
+    clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04+gdata/te53'
 
     input:
     
@@ -274,35 +274,34 @@ workflow {
 
    pbFiles = Channel.from(params.pbFiles.split(':')).view()
    ontFiles = Channel.from(params.ontFiles.split(':')).view()
-   //illuminaFiles = Channel.from(params.illuminaFiles.split(':'))
-   //             .map { row ->
-   //                 def (r1, r2) = row.split(';')
-   //                 return [r1, r2]
-   //             }.view()
+   illuminaFiles = Channel.from(params.illuminaFiles.split(':'))
+                .map { row ->
+                    def (r1, r2) = row.split(';')
+                    return [r1, r2]
+                }.view()
                 
    outdir = params.outdir
    sample = params.sample
    ref = params.ref
 
-   //index = bwa_index(ref)
+   index = bwa_index(ref)
 
    ontAligned = align_ont(ontFiles,ref,outdir)
    pbAligned = align_pb(pbFiles,ref,outdir)
-   //illumAligned = align_illumina(illuminaFiles,ref,outdir,index)
+   illumAligned = align_illumina(illuminaFiles,ref,outdir,index)
 
    ontAligned.collect().map { it.join(' ') }.set { ontConcat }
    pbAligned.collect().map { it.join(' ') }.set { pbConcat }
-   //illumAligned.collect().map { it.join(' ') }.set { illumConcat }
+   illumAligned.collect().map { it.join(' ') }.set { illumConcat }
 
    ontBAM = merge_ont(ontConcat,sample,outdir)
-   //illumBAM = merge_illumina(illumConcat,sample,outdir)
+   illumBAM = merge_illumina(illumConcat,sample,outdir)
    pbBAM = merge_pb(pbConcat,sample,outdir)
 
    //sortedMergedBAM = ontBAM.mix(illumBAM, pbBAM)
    //ontBAM.mix(illumBAM, pbBAM)
    //coverage(sortedMergedBAM,outdir)
 
- 
 }
 
 

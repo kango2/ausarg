@@ -25,6 +25,7 @@
 
 module load samtools Rlib
 
+PBS_JOBFS=${outdir}
 cd ${PBS_JOBFS}
 
 /g/data/xl04/ka6418/temp/buttonpaf/pafconvert.sh ${paf} ${targetname} ${refname} "${PBS_JOBFS}/regdata.tsv"
@@ -70,7 +71,7 @@ done < "$FAIDX_FILE"
 
 echo "${targetname} $OUTPUT_FILE" >> "${outdir}/sequences.fofn"
 cd ${outputdir}
-Rscript /g/data/xl04/ka6418/temp/chromsyn_testrun/github/chromsyn/chromsyn.R sequences="${outdir}/sequences.fofn" regdata="${outdir}/regdata.tsv" minlen=${minlen} regmirror=True focus=CHM13 seqsort=CHM13 orphans=F basefile="${targetname}_${refname}" pdfwidth=${width}
+Rscript /g/data/xl04/ka6418/temp/chromsyn_testrun/github/chromsyn/chromsyn.R sequences="${outdir}/sequences.fofn" regdata="${outdir}/regdata.tsv" minlen=${minlen} regmirror=True focus=${ref} seqsort=${ref} orphans=F basefile="${targetname}_${refname}" pdfwidth=${width}
 
 
 

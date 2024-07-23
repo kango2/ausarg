@@ -3,7 +3,7 @@ process meryl {
     executor = 'pbspro'
     queue = 'normal'
     project = 'xl04'
-    time = '10h'
+    time = '48h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
     input:
@@ -21,8 +21,9 @@ process meryl {
 
     script:
     """
+    module load merqury
     outputfolder=${output}/"\$(basename "${file}")"_"${kmer}"
-    /g/data/xl04/ka6418/bassiana/basequality/bassiana_illumina_notrim/meryl-1.4.1/bin/meryl count threads=\${PBS_NCPUS} k=${kmer} "${file}" output \${outputfolder}.meryl
+    meryl count threads=\${PBS_NCPUS} k=${kmer} "${file}" output \${outputfolder}.meryl
 
     """
 
@@ -33,7 +34,7 @@ process meryl_unionsum {
     executor = 'pbspro'
     queue = 'normal'
     project = 'xl04'
-    time = '1h'
+    time = '48h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
     input:
@@ -51,7 +52,8 @@ process meryl_unionsum {
 
     script:
     """
-    /g/data/xl04/ka6418/bassiana/basequality/bassiana_illumina_notrim/meryl-1.4.1/bin/meryl union-sum threads=\${PBS_NCPUS} output "${output}/${sample}_${tech}_${kmer}_combined.meryl" ${output}/*.meryl
+    module load merqury
+    meryl union-sum threads=\${PBS_NCPUS} output "${output}/${sample}_${tech}_${kmer}_combined.meryl" ${output}/*.meryl
 
     """
 
@@ -62,7 +64,7 @@ process merqury {
     executor = 'pbspro'
     queue = 'normal'
     project = 'xl04'
-    time = '10h'
+    time = '48h'
     clusterOptions = '-l ncpus=8,mem=16GB,storage=gdata/if89+gdata/xl04'
 
     input:
@@ -73,11 +75,8 @@ process merqury {
 
     script:
     """
-    # Activate conda environment
-    source /g/data/xl04/ka6418/miniconda/etc/profile.d/conda.sh
-    conda activate nanoplot_env
 
-    # Run Merqury
+    module load merqury
     cd $output
     \${MERQURY}/merqury.sh ${dataset} ${fasta} ${sample}
 

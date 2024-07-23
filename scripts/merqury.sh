@@ -10,4 +10,6 @@
 #PBS -M kirat.alreja@anu.edu.au
 
 module load nextflow 
+mkdir -p ${output}
+cd ${output}
 nextflow run /g/data/xl04/ka6418/github/ausarg/scripts/merqury.nf --fileList ${files} --sample ${sample} --tech ${tech} --kmer ${kmer} --output ${output} --fasta ${ref}

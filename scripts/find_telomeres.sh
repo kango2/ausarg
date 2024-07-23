@@ -1,11 +1,11 @@
 #!/bin/bash
 #PBS -N Telomere
-#PBS -q normalsr
+#PBS -q normal
 #PBS -P xl04
 #PBS -l storage=gdata/if89+gdata/xl04+gdata/te53
-#PBS -l walltime=8:00:00
-#PBS -l mem=512GB
-#PBS -l ncpus=104
+#PBS -l walltime=24:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -l wd
 #PBS -j oe
 #PBS -l jobfs=100GB
@@ -57,7 +57,7 @@ awk -F'\t' 'BEGIN {OFS=","}
     }
 ' $(basename "$inputfile" .fasta).gff3 >> $(basename "$inputfile" .fasta).csv
 
-python3 /g/data/xl04/ka6418/github/ausarg/scripts/clean_telomere_csv.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
+python3 /g/data/xl04/ka6418/github/ausarg/scripts/processtrftelo.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
 
 
 

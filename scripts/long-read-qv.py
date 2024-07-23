@@ -46,7 +46,7 @@ def process_fastq(input_fastq, output_path, flowcell_id, platform, sample, log_f
 
     log_progress("Starting FASTQ file processing.", log_file,flowcell_id, input_fastq)
 
-    with open(input_fastq, "rt") as f:
+    with gzip.open(input_fastq, "rt") as f:
         for record in SeqIO.parse(f, "fastq-sanger"):
             sequence_length = len(record.seq)
             avg_qv = round(sum(record.letter_annotations["phred_quality"]) / sequence_length)

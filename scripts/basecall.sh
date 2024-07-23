@@ -5,7 +5,7 @@
 #PBS -l ncpus=48
 #PBS -l ngpus=4
 #PBS -l mem=384GB
-#PBS -l walltime=15:00:00
+#PBS -l walltime=0:20:00
 #PBS -l wd
 #PBS -l storage=gdata/if89+scratch/xl04+gdata/xl04
 
@@ -76,6 +76,6 @@ test -e ${MERGED_SLOW5} || die "${MERGED_SLOW5} not found. Exiting."
 mkdir ${BASECALL_OUT} || die "Creating directory ${BASECALL_OUT} failed. Exiting."
 cd ${BASECALL_OUT} || die "${MERGED_SLOW5} not found. Exiting."
 
-/usr/bin/time -v  buttery-eel -i ${MERGED_SLOW5} -o ${BASECALL_OUT}/reads.fastq --guppy_bin ${ONT_DORADO_PATH} --port ${PORT} --use_tcp --config ${MODEL} -x cuda:all --guppy_batchsize 20000 --max_queued_reads 20000 --slow5_threads 10 --slow5_batchsize 100 --procs 20 --detect_mid_strand_adapter --trim_adapters --detect_adapter --do_read_splitting || die "basecalling failed"
+/usr/bin/time -v  buttery-eel -i ${MERGED_SLOW5} -o ${BASECALL_OUT}/reads.fastq --guppy_bin ${ONT_DORADO_PATH} --port ${PORT} --use_tcp --config ${MODEL} -x cuda:all --guppy_batchsize 20000 --max_queued_reads 20000 --slow5_threads 10 --slow5_batchsize 100 --procs 20 --detect_mid_strand_adapter --trim_adapters --detect_adapter --do_read_splitting --qscore 7 || die "basecalling failed"
 
 echo "basecalling success"

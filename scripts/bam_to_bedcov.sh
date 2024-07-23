@@ -1,12 +1,14 @@
 #!/bin/bash
 #PBS -N bedcov
 #PBS -P xl04
-#PBS -q normalsr
+#PBS -q normal
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l walltime=48:00:00
-#PBS -l mem=512GB
-#PBS -l ncpus=102 
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -l wd
+
+#usage qsub -v bam=,window=,outdir= 
 
 module load samtools
 module load parallel
@@ -28,6 +30,6 @@ export -f calculate_depth
 
 # Run depth calculation in parallel
 parallel --will-cite -a "${outdir}/${bambase}.${window}.bed" -j ${PBS_NCPUS} calculate_depth > "${outdir}/${bambase}.${window}.depth.tmp.bed"
-sort -k1,1 -k2,2n "${outdir}/${bambase}.depth.tmp.bed" > "${outdir}/${bambase}.${window}.depth.bed"
+sort -k1,1 -k2,2n "${outdir}/${bambase}.${window}.depth.tmp.bed" > "${outdir}/${bambase}.${window}.depth.bed"
 rm "${outdir}/${bambase}.${window}.bed"
 rm "${outdir}/${bambase}.depth.tmp.bed"
