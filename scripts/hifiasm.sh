@@ -10,7 +10,7 @@
 #PBS -l wd
 #PBS -j oe 
 
-set -e
+set -ex
 set -o pipefail
 set -u
 
@@ -27,7 +27,7 @@ mkdir -p ${outputdir}
 ont="${ont//:/,}"
 hifi="${hifi//:/ }"
 
-hifiasm --dual-scaf --telo-m CCCTAA -o "${outputdir}/${sample}" -t ${PBS_NCPUS} --ul ${ont} --h1 ${h1} --h2 ${h2} ${hifi}
+hifiasm --telo-m CCCTAA -o "${outputdir}/${sample}" -t ${PBS_NCPUS} --ul ${ont} --h1 ${h1} --h2 ${h2} ${hifi}
 
 
 
