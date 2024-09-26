@@ -12,4 +12,4 @@
 module load nextflow
 
 
-nextflow run /g/data/xl04/ka6418/github/ausarg/workflows/hic/hic.nf -config /g/data/xl04/ka6418/github/ausarg/workflows/hic/hic.config -profile NCI --inputcsv /g/data/xl04/ka6418/temp/hicwf/input/sample.csv
+nextflow run /g/data/xl04/ka6418/github/ausarg/workflows/hic/hic.nf -config /g/data/xl04/ka6418/github/ausarg/workflows/hic/hic.config -profile NCI --inputcsv /g/data/xl04/ka6418/temp/hicwf/input/sample.csv -resume

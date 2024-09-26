@@ -1,16 +1,13 @@
-#!/bin/bash
-
 #PBS -N BUSCO
 #PBS -P xl04
-#PBS -q normalsr
-#PBS -l walltime=20:00:00
-#PBS -l mem=512GB
-#PBS -l ncpus=104
+#PBS -q normal
+#PBS -l walltime=10:00:00
+#PBS -l mem=192GB
+#PBS -l ncpus=48
 #PBS -j oe
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
 #PBS -l jobfs=100GB
-#PBS -M kirat.alreja@anu.edu.au
 
 
 module load singularity

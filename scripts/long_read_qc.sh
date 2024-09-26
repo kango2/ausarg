@@ -11,5 +11,5 @@
 
 module load pythonlib/3.9.2
 
-python3 /g/data/xl04/ka6418/github/ausarg/scripts/long-read-qv.py --i ${input} --o ${output} --f ${flowcell} --p ${platform} --s ${sample}
+python3 /g/data/xl04/ka6418/github/ausarg/scripts/long_read_qv.py --i ${input} --o ${output} --f ${flowcell} --p ${platform} --s ${sample}
 

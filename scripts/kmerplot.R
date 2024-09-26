@@ -190,4 +190,15 @@ rm %>% mutate(l = end - start + 1) %>%
 ###########
 ###Merqury redrawing
 mer <- read_delim("/g/data/xl04/ka6418/bassiana/publication-v2/eval/merqury/curv1/illumina/trimmed/17/haplotype/BASDU_H1H2.spectra-asm.hist", delim="\t")
-head(mer)
+mer %>% 
+  filter(kmer_multiplicity<150 & Count<2e7) %>% 
+  mutate(Assembly = case_when(Assembly == "BASDU_SUP_DEEP_hifiasm_h1-only" ~ "hap1-specific", 
+                              Assembly == "BASDU_SUP_DEEP_hifiasm_h2-only" ~ "hap2-specific", 
+                              Assembly == "read-only" ~ "missing-in-asm", 
+                              Assembly == "shared" ~ "found-in-both", 
+                              TRUE ~ Assembly)) %>% 
+  ggplot(aes(x=kmer_multiplicity, y = Count, fill = Assembly)) + 
+  geom_area(alpha=0.4) + 
+  theme_bw() +
+  theme(text = element_text(size=16))
+

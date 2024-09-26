@@ -1,4 +1,5 @@
 import sys
+import argparse
 
 def read_agp_file(agp_file):
     agp_data = {}
@@ -34,13 +35,16 @@ def adjust_bed_file(bed_file, agp_data, output_file):
                 outfile.write(f'{scaffold}\t{new_start}\t{new_end}\t' + "\t".join(parts[3:]) + '\n')
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <input.bed> <input.agp>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Adjust BED file coordinates based on AGP file.")
+    parser.add_argument('-b', '--bed', required=True, help="Path to the input BED file.")
+    parser.add_argument('-a', '--agp', required=True, help="Path to the input AGP file.")
+    parser.add_argument('-o', '--output', required=True, help="Path to the output adjusted BED file.")
 
-    bed_file = sys.argv[1]
-    agp_file = sys.argv[2]
-    output_file = "adjusted_annotations.bed"
+    args = parser.parse_args()
+
+    bed_file = args.bed
+    agp_file = args.agp
+    output_file = args.output
 
     agp_data = read_agp_file(agp_file)
     adjust_bed_file(bed_file, agp_data, output_file)
