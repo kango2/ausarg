@@ -7,8 +7,9 @@
 #PBS -l ncpus=48
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
-#PBS -M kirat.alreja@anu.edu.au
+#PBS -j oe
 
+#usage : qsub -o /path/to/logs -v outputdir=/path/to/output,target=/path/to/target.fa,query=path/to/query.fa path/to/asm_vs_asm.sh
 
 module load minimap2
 
@@ -16,5 +17,3 @@ module load minimap2
 output_file="${outputdir}/$(basename ${target})_$(basename ${query}).paf"
 
 minimap2 -t ${PBS_NCPUS} -o ${output_file} -x asm20 ${target} ${query}  
-
-#sort -k1,1 -k4,4n

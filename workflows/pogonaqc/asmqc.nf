@@ -1,0 +1,10 @@
+process busco {
+
+script:
+
+"""
+
+"""
+
+
+}

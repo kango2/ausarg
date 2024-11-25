@@ -7,7 +7,6 @@
 #PBS -l ncpus=48
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
-#PBS -l jobfs=400GB
 #PBS -j oe
 #PBS -M kirat.alreja@anu.edu.au
 

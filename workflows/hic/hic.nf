@@ -16,6 +16,7 @@ Channel
     .set {inputCh}
 
 
+
 process arima {
 
     publishDir "${outputdir}", mode: 'copy'
@@ -140,7 +141,7 @@ process yahs {
     """
     module load yahs samtools
     samtools faidx ${fasta}
-    yahs -e GATC,GANTC,CTNAG,TTAA -r 10000,20000,50000,100000,200000,500000,1000000 -o ${sample} ${fasta} ${bam}
+    yahs -e GATC,GANTC,CTNAG,TTAA -r 10000,20000,50000,100000,200000,500000,1000000,1500000 -o ${sample} ${fasta} ${bam}
     mv ${sample}_scaffolds_final.fa ${sample}_YAHS.fasta
 
     """
@@ -148,14 +149,15 @@ process yahs {
 
 process generate_hicmap {
 
+    errorStrategy 'ignore'
+    
     publishDir "${outputdir}", mode: 'copy'
 
     input:
-    tuple val(sample), path(scaffolds), val(R1), val(R2), val(bam), val(outputdir)
+    tuple val(sample), val(scaffolds), val(R1), val(R2), val(bam), val(outputdir)
 
     output:
-    tuple path("*HifiASM_YAHS*")
-
+    path("*HifiASM_YAHS*")
 
 
     script:
@@ -216,8 +218,8 @@ process generate_hicmap {
 workflow {
     inputCh.view()
     arimaCh = arima(inputCh)
-    yahsCh = yahs(arimaCh)
-    generate_hicmapCh = generate_hicmap(yahsCh)
+    //yahsCh = yahs(arimaCh)
+    //generate_hicmapCh = generate_hicmap(yahsCh)
 
 
 }

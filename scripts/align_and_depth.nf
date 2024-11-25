@@ -41,7 +41,7 @@ process align_pb {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
@@ -77,7 +77,7 @@ process bwa_index {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
@@ -102,7 +102,7 @@ process align_illumina {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
@@ -140,7 +140,7 @@ process merge_illumina {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
@@ -196,7 +196,7 @@ process merge_pb {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '10h'
     clusterOptions = '-l ncpus=48,mem=192GB,storage=gdata/if89+gdata/xl04'
 
@@ -225,7 +225,7 @@ process coverage {
 
     executor = 'pbspro'
     queue = 'normal'
-    project = 'xl04'
+    project = 'te53'
     time = '1h'
     clusterOptions = '-l ncpus=1,mem=4GB,storage=gdata/if89+gdata/xl04'
 
@@ -241,23 +241,15 @@ process coverage {
     script:
 
     """
-    base=\$(basename "${bam}" .bed)
+    
+    bam=${bam}
+    export bam
 
-    module load samtools
-    samtools depth -a ${bam} | \
-    awk '{
-        total+=\$3;
-        if (NR % 1000 == 0) {
-            print \$1 "," NR-999 "," \$2 "," total/1000;
-            total=0;
-        }
-    }
-    END {
-        if (NR % 1000 != 0) {
-            print \$1 "," NR-(NR%1000)+1 "," \$2 "," total/(NR%1000);
-        }
-    }' | \
-    awk -F, 'BEGIN {OFS=FS; prev=""; count=1} NR==1 {print \$0; next} \$1 != prev {count=1; prev=\$1} {print \$1, count, count+999, \$4; count+=1000}' > "${outputdir}/\${base}.depth.csv"
+    outdir=${outdir}
+    export outdir
+
+    bash /g/data/xl04/ka6418/github/ausarg/scripts/bam_to_bedcov.sh
+
 
 
     """
@@ -298,8 +290,8 @@ workflow {
    illumBAM = merge_illumina(illumConcat,sample,outdir)
    pbBAM = merge_pb(pbConcat,sample,outdir)
 
-   //sortedMergedBAM = ontBAM.mix(illumBAM, pbBAM)
-   //ontBAM.mix(illumBAM, pbBAM)
+   sortedMergedBAM = ontBAM.mix(illumBAM, pbBAM)
+   ontBAM.mix(illumBAM, pbBAM)
    //coverage(sortedMergedBAM,outdir)
 
 }
