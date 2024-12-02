@@ -85,11 +85,11 @@ def extract_sequences(fasta_file, morphs_df, output_dir, sampleid):
                 sequence = sequence.reverse_complement()
             extracted_sequences.append((seq_id + ':' + str(start) + '-' + str(end) + ':' + strand, str(sequence)))
 
-    with open(os.path.join(output_dir, sampleid + "rDNA.morphs.fasta"), 'w') as output_handle:
+    with open(os.path.join(output_dir, sampleid + ".rDNA.morphs.fasta"), 'w') as output_handle:
         for seq_id, sequence in extracted_sequences:
             output_handle.write(f">{seq_id}\n{sequence}\n")
 
-    output_file = os.path.join(output_dir, sampleid + "rDNA.morphs.tsv")
+    output_file = os.path.join(output_dir, sampleid + ".rDNA.morphs.tsv")
     morphs_df.to_csv(output_file, sep='\t', index=False, header=False)
 
 def main():
