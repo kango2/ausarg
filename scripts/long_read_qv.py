@@ -65,29 +65,21 @@ def process_fastq(input_fastq, sample, output_folder):
     # Define file paths
     file_prefix = os.path.join(output_folder, sample)
     quality_output_csv = f"{file_prefix}_quality_freq.csv"
-    length_output_csv = f"{file_prefix}_length_freq.csv"
     stats_output_csv = f"{file_prefix}_stats.csv"
 
     # Write quality frequency data
     with open(quality_output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Sample", "Read_Length", "QV", "Read_Numbers"])
+        csv_writer.writerow(["sample", "readlength", "qv", "readnumbers"])
         for bin_key, bin_data in bins.items():
             length_bin, qv_bin = bin_key
             frequency = bin_data["count"]
             csv_writer.writerow([sample, length_bin, qv_bin, frequency])
 
-    # Write length frequency data
-    with open(length_output_csv, "w", newline="") as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Sample", "Read_Length", "Summed_Read_Numbers"])
-        for length_bin, count in length_sums.items():
-            csv_writer.writerow([sample, length_bin, count])
-
     # Write stats data
     with open(stats_output_csv, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["Sample", "Total_Bases", "Total_Reads", "Average_Read_Length", "N50", "N90", "L50", "L90", "Total_Ns"])
+        csv_writer.writerow(["sample", "totalbases", "totalreads", "averagereadlength", "n50", "n90", "l50", "l90", "totaln"])
         csv_writer.writerow([sample, total_bases, total_reads, average_read_length, n50, n90, l50, l90, total_ns])
 
 

@@ -1,9 +1,10 @@
 #PBS -N BUSCO
 #PBS -P xl04
-#PBS -q normalsr
+#PBS -q normal
 #PBS -l walltime=3:00:00
-#PBS -l mem=512GB
-#PBS -l ncpus=104
+#PBS -l mem=192GB
+#PBS -l ncpus=48
+#PBS -l jobfs=400GB
 #PBS -j oe
 #PBS -l storage=gdata/xl04+gdata/if89+gdata/te53
 #PBS -l wd
@@ -11,15 +12,8 @@
 # Inputs:
 #   - fasta: The path to the input fasta file (can be .fa, .fasta, .fa.gz, or .fasta.gz)
 #   - outdir: The directory where the BUSCO output will be stored
+#   - prefix: prefix for busco result (folder)
 
-usage() {
-	echo "Usage: qsub -v fasta=/path/to/genome.fasta,outdir=/path/to/store/busco/results ./busco.sh" >&2
-	echo
-	exit 1
-}
-
-[ -z "${fasta}" ] && usage
-[ -z "${outdir}" ] && usage
 
 
 die() {
@@ -30,14 +24,25 @@ die() {
 
 set -ex 
 module load singularity
+module load ezlabgva/busco/v5.8.2_cv1
 
 lineage=/g/data/if89/datalib/busco
-img=/g/data/if89/singularityimg/busco-5.4.7.sif
-
-prefix=$(basename "${fasta}" | sed -E 's/\.(fa|fasta)(\.gz)?$//')
 
 echo "Running BUSCO on ${fasta}, storing output in ${outdir}"
 
-singularity exec ${img} busco --out_path ${outdir} \
- -o run_$prefix --offline -i ${fasta} -l sauropsida_odb10 \
- --download_path ${lineage} --cpu ${PBS_NCPUS} -m genome --tar -f || die "BUSCO failed"
+
+
+# Check if the FASTA is gzipped
+if [[ "${fasta}" == *.gz ]]; then
+    echo "FASTA file is gzipped. Decompressing to jobfs with original base name."
+	fasta_base=$(basename "${fasta}" .gz)
+    fasta_to_use="${PBS_JOBFS}/${fasta_base}"
+    pigz -dc "${fasta}" > "${fasta_to_use}" || die "Failed to decompress FASTA file with pigz."
+else
+    fasta_to_use=${fasta}
+fi
+
+
+
+
+busco --out_path ${outdir} -o ${folder} --offline -i ${fasta_to_use} -l sauropsida_odb10 --download_path ${lineage} --cpu ${PBS_NCPUS} -m genome --tar -f || die "BUSCO failed"
