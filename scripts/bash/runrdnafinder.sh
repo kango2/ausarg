@@ -1,11 +1,9 @@
 #!/bin/bash
-#PBS -P xl04
 #PBS -q normal
-#PBS -l walltime=00:20:00
-#PBS -l mem=32GB
-#PBS -l ncpus=8
+#PBS -l walltime=01:00:00
+#PBS -l mem=64GB
+#PBS -l ncpus=16
 #PBS -j oe
-#PBS -o /g/data/xl04/genomeprojects/Pogona_vitticeps/logs/
 
 module load minimap2 samtools pythonlib
 
@@ -56,28 +54,41 @@ python3 /g/data/te53/hrp561/ausarg/scripts/python/rdnabuilder.py -p ${sampleid}.
 # Map assembly to the rDNA morphs to generate bed file for annotations
 # This won't be perfect as the morphs may be incomplete at the edge of contigs
 # Map assembly to rDNA morphs
-minimap2 -t ${PBS_NCPUS} --secondary=no -o ${sampleid}.asm2morphs.paf ${sampleid}.rDNA.morphs.fasta ${inputfasta}
+# minimap2 was failing due to memory issues. may be due to too many identical sequences
+# select one morph sequence and use that for alignments
+
+# Select the morph sequence
+samtools faidx ${sampleid}.rDNA.morphs.fasta
+refrdnamorph=$(perl -lne '@a=split("\t",$_); push(@l,$a[1]); $s{$a[1]}=$a[0]; END { @l = sort {$a<=>$b} @l; print $s{@l[int($#l/2)]}}' ${sampleid}.rDNA.morphs.fasta.fai)
+samtools faidx ${sampleid}.rDNA.morphs.fasta $refrdnamorph > ${sampleid}.rDNA.refmorph.fasta
+# map against the selected morph
+minimap2 -t ${PBS_NCPUS} --secondary=no -o ${sampleid}.asm2refmorph.paf ${sampleid}.rDNA.refmorph.fasta ${inputfasta}
+
+# Create a unique temporary file
+tempscript=$(mktemp tempfile.XXXXXXXX)
 
 # Create R script for processing the PAF output
-cat << 'EOF' > getrDNAregions.R
+cat << 'EOF' > ${tempscript}.R
 library(tidyverse)
 library(GenomicRanges)
 args <- commandArgs(trailingOnly = TRUE)
 paf_file <- args[1]
 output_file <- args[2]
 alnratio <- 0.8
-minlen <- 500
+minalnresidue <- 500
 edge <- 100
 gapwidth <- 100
 tmp <- read_delim(paf_file, delim = "\t", col_names = F, col_select = c(1:12))
+minregionlength <- tmp %>% filter(X10>minalnresidue & X10/X11>alnratio) %>% pull(X10) %>% median() / 2
 gr <- makeGRangesFromDataFrame(tmp %>% 
-    filter(X10>minlen & X10/X11>alnratio) %>% 
+    filter(X10>minalnresidue & X10/X11>alnratio) %>% 
     mutate(X3=case_when(X3<edge~0,TRUE~X3), 
            X4=case_when(X2-X4<edge~X2,TRUE~X4)) %>% 
     select(chr=X1,start=X3,end=X4))
 
 write_delim(
     data.frame(GenomicRanges::reduce(gr, min.gapwidth=gapwidth)) %>% 
+    filter(width > minregionlength) %>%
     select(c(1:3)), 
     output_file, 
     col_names = F, 
@@ -87,10 +98,10 @@ EOF
 
 # Run R script
 module load Rlib/4.3.1
-Rscript getrDNAregions.R "${sampleid}.asm2morphs.paf" "${sampleid}.rdnaregions.bed"
-
+Rscript ${tempscript}.R "${sampleid}.asm2refmorph.paf" "${sampleid}.rdnaregions.bed"
+rm ${tempscript}.R
 # Clean up
-rm getrDNAregions.R
+# rm getrDNAregions.R
 
 # Mark the task as completed
 touch "${checkpoint_file}.done"
