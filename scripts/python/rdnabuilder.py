@@ -71,6 +71,7 @@ def process_paf_alignments(data_df):
 def extract_sequences(fasta_file, morphs_df, output_dir, sampleid):
     sequences = SeqIO.to_dict(SeqIO.parse(fasta_file, "fasta"))
     extracted_sequences = []
+    valid_rows = []
 
     for _, row in morphs_df.iterrows():
         seq_id = row['Query sequence name']
@@ -82,15 +83,18 @@ def extract_sequences(fasta_file, morphs_df, output_dir, sampleid):
             sequence = sequences[seq_id].seq[start:end]
             if strand == '-':
                 sequence = sequence.reverse_complement()
-            extracted_sequences.append((seq_id + ':' + str(start) + '-' + str(end) + ':' + strand, str(sequence)))
+            sequence_str = str(sequence)
+            if 'N' not in sequence_str:
+                extracted_sequences.append((seq_id + ':' + str(start) + '-' + str(end) + ':' + strand, sequence_str))
+                valid_rows.append(row)
 
     with open(os.path.join(output_dir, sampleid + ".rDNA.morphs.fasta"), 'w') as output_handle:
         for seq_id, sequence in extracted_sequences:
-            
             output_handle.write(f">{seq_id}\n{sequence}\n")
 
+    valid_morphs_df = pd.DataFrame(valid_rows)
     output_file = os.path.join(output_dir, sampleid + ".rDNA.morphs.tsv")
-    morphs_df.to_csv(output_file, sep='\t', index=False, header=False)
+    valid_morphs_df.to_csv(output_file, sep='\t', index=False, header=False)
 
 def main():
     parser = argparse.ArgumentParser(description="Process PAF alignments and extract sequences.")
