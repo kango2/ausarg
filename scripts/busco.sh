@@ -43,6 +43,4 @@ else
 fi
 
 
-
-
 busco --out_path ${outdir} -o ${folder} --offline -i ${fasta_to_use} -l sauropsida_odb10 --download_path ${lineage} --cpu ${PBS_NCPUS} -m genome --tar -f || die "BUSCO failed"

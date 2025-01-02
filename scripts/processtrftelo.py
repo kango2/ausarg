@@ -1,7 +1,8 @@
-#Author: Hardip Patel, Kirat Alreja
+# Authors: Hardip Patel, Kirat Alreja
 
 import pandas as pd
 import sys
+
 print("Number of arguments:", len(sys.argv))
 print("Arguments:", sys.argv)
 
@@ -14,6 +15,7 @@ permatch = int(sys.argv[5])
 
 def parse_fasta_to_df(fasta_file_path):
     sequences = {}
+    cl_values = {}
     current_seq_name = ""
     current_seq = ""
     
@@ -24,7 +26,16 @@ def parse_fasta_to_df(fasta_file_path):
                 if current_seq_name != "":
                     sequences[current_seq_name] = len(current_seq)
                     current_seq = ""
-                current_seq_name = line[1:]  # Remove the '>' symbol
+                header_parts = line[1:].split()
+                current_seq_name = header_parts[0]  # Split and take the first part as the sequence ID
+                
+                # Extract CL: tag value if present
+                cl_value = None
+                for part in header_parts:
+                    if part.startswith("CL:"):
+                        cl_value = part[3:]
+                        break
+                cl_values[current_seq_name] = cl_value
             else:
                 current_seq += line
         
@@ -32,8 +43,9 @@ def parse_fasta_to_df(fasta_file_path):
         if current_seq_name != "":
             sequences[current_seq_name] = len(current_seq)
     
-    # Convert the dictionary to a DataFrame
+    # Convert the dictionaries to a DataFrame
     df = pd.DataFrame(list(sequences.items()), columns=['Sequence_ID', 'Length'])
+    df['CL'] = df['Sequence_ID'].map(cl_values)
     return df
 
 def get_reverse_complement(seq):
@@ -60,9 +72,9 @@ telomeric_variations = set(variations + reverse_complements)
 
 seq_lens = parse_fasta_to_df(fasta)
 result_df = trf.merge(seq_lens, on='Sequence_ID', how='left')
-result_df['Relative Start'] = (result_df['Start']/result_df['Length']).round(2)
-result_df['Relative End'] = (result_df['End']/result_df['Length']).round(2)
+result_df['Relative Start'] = (result_df['Start'] / result_df['Length']).round(2)
+result_df['Relative End'] = (result_df['End'] / result_df['Length']).round(2)
 result_df = result_df[result_df['cons_seq'].isin(telomeric_variations)]
-result_df = result_df[result_df['copies']>=copies]
-result_df = result_df[result_df['perc_match']>=permatch]
+result_df = result_df[result_df['copies'] >= copies]
+result_df = result_df[result_df['perc_match'] >= permatch]
 result_df.to_csv(output_csv, index=False)

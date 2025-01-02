@@ -387,4 +387,97 @@ repreduced %>%
   facet_wrap(~seqnames, scales = "free") +
   theme_bw()
 
+##run the following command to see if any can be decomposed further, only two can be
+##398 into 68bp and 3674 into 6bp telomeric sequence
+srfpaf <- read_paf("/g/data/xl04/genomeprojects/Pogona_vitticeps/analysis/SRF/POGVIT.v2.1.asm2srf.genome.paf", tibble = T)
+srfpaf <- srfpaf %>% separate(tname, c("sampleid", "repid"), sep = "#", remove = F) %>% mutate(replen = as.numeric(str_extract(repid, "\\d+$")))
+repids <- srfpaf %>% pull(tname) %>% unique()
 
+##merge consecutive repeats of the same type into a window
+repreduced <- NULL
+repreduced <- list()
+for (i in 1:length(repids)){
+  repaln <- srfpaf %>% filter(tname==repids[i]) %>% select(chr = qname, start = qstart, end = qend, de)
+  repaln <- makeGRangesFromDataFrame(repaln, keep.extra.columns = T)
+  ##merge two consecutive alignments as one if there is <=10bp gap between them, this can be increased to 100bp or corresponding to the gap width of scaffolds
+  ##merge can be based on length of repeats as well, i.e. if two consecutive repeats
+  repregions <- reduce(repaln, min.gapwidth = 10)
+  olap <- findOverlapPairs(repregions, repaln)
+  olap <- data.frame(olap) %>% group_by(first.seqnames, first.start, first.end, first.width) %>% summarise(alncounts = n(), meande = mean(second.de))
+  colnames(olap) <- c("chr","start", "end", "width", "alncounts", "meande")
+  olap$repid <- repids[i]
+  olap$replen <- as.numeric(str_extract(repids[i], "\\d+$"))
+  olap <- olap %>% mutate(rangeid = paste(chr, paste(start,end,sep = "-"), sep = ":"))
+  repreduced[[i]] <- olap
+}
+repreduced <- bind_rows(repreduced)
+print(paste(nrow(repreduced), " ranges before filtering", sep = ""))
+##tried filtering the raw alignments. however, this can loose partial alignments on the edges of a motif
+##so best to group them first and them remove them if they are too short
+##remove alignments less than 100bp long since enlong extends repeat units to min 200bp
+##remove alignments that are less than 10% of the repeat length to remove noisy alignments of long repeats
+#& alen > replen * 0.1 & qend - qstart > 100
+##get a copy estimate based on the width
+repreduced <- repreduced %>% filter(width > 100 & width > replen * 0.1) %>% mutate(rcopy = round(width/replen, digits = 0))
+print(paste(nrow(repreduced), " ranges after filtering", sep = ""))
+
+##find overlapping alignments of different repeats
+repranges <- makeGRangesFromDataFrame(repreduced, keep.extra.columns = T)
+repolap <- data.frame(findOverlapPairs(repranges, repranges, minoverlap=10))
+repolap <- repolap %>% group_by(first.rangeid, first.repid) %>% mutate(olapcount = n())
+repolap <- repolap %>% ungroup()
+##if there is only one overlapping repeat alignments, they are good to go
+selection1 <- repolap %>% 
+  filter(olapcount == 1) %>% 
+  select(chr = first.X.seqnames, 
+         start = first.X.start, 
+         end = first.X.end,
+         width = first.X.width, 
+         repid = first.repid, 
+         replen = first.replen, 
+         alncounts=first.alncounts, 
+         meande = first.meande, 
+         rcopy = first.rcopy, 
+         rangeid = first.rangeid, 
+         olapcount)
+
+print(paste(pull(selection1,rangeid) %>% unique() %>% length(), " ranges with no other overlapping ranges", sep = ""))
+
+### for overlapping repeats, discard the one with shorter overall width
+### logic is that smaller alignments overall within a larger alignment are likely to be spurious hits
+### also discard logic says that there is a bigger alignment compared to the discarded one. The biggest will never be discarded
+discard1 <- repolap %>% filter(olapcount > 1) %>% filter(first.X.repid != second.X.repid & first.X.rangeid != second.X.rangeid & first.X.width > second.X.width) %>%
+  pull(second.rangeid)
+
+discard2 <- repolap %>% filter(olapcount > 1) %>% filter(first.X.repid != second.X.repid & first.X.rangeid != second.X.rangeid & first.X.width < second.X.width) %>%
+  pull(first.rangeid)
+
+discard <- c(discard1, discard2)
+discard <- unique(discard)
+
+print(paste(length(discard), " ranges discarded in favour of the larger ones overlapping them", sep = ""))
+
+selection2 <- repolap %>% filter(olapcount > 1 & ! first.rangeid %in% discard) %>% select(chr = first.X.seqnames, 
+                                                            start = first.X.start, 
+                                                            end = first.X.end, 
+                                                            width = first.X.width, 
+                                                            repid = first.repid, 
+                                                            replen = first.replen, 
+                                                            alncounts=first.alncounts, 
+                                                            meande = first.meande, 
+                                                            rcopy = first.rcopy, 
+                                                            rangeid = first.rangeid, 
+                                                            olapcount)
+
+# selection2 needs to be of unique ranges. redundancy removed by selecting alignments with maximum overlap count, minimum row number and smallest meande
+selection2 <- selection2 %>% group_by(rangeid) %>% filter(olapcount == max(olapcount) & meande == min(meande)) %>% filter(row_number()==1)
+
+print(paste(nrow(selection2), " ranges selected in favour of the shorter/less optimal ones overlapping them", sep = ""))
+
+selection <- bind_rows(selection1, selection2) %>% arrange(chr, start)
+
+##extra filters can be applied here to focus on truely repetetive regions
+##srf can capture repeats that are scattered and dont fold on themselves
+write_delim(selection, "/g/data/xl04/genomeprojects/Pogona_vitticeps/analysis/SRF/POGVIT.v2.1.asm2srf.genome.rscript.txt", delim = "\t")
+write_delim(selection %>% filter(rcopy>10 & replen %in% c(151,115,230,300)))
+selection %>% filter(rcopy>10 & replen > 6 & replen < 1000) %>% arrange(chr,start) %>% View()

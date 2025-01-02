@@ -3,7 +3,7 @@
 #PBS -q normal
 #PBS -P xl04
 #PBS -l storage=gdata/if89+gdata/xl04+gdata/te53
-#PBS -l walltime=24:00:00
+#PBS -l walltime=1:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l wd
@@ -22,17 +22,46 @@ usage() {
 [ -z "${output}" ] && usage
 [ -z "${permatch}" ] && usage
 [ -z "${copies}" ] && usage
+[ -z "${sample}" ] && usage
 
-module load kentutils/0.0 TRF/4.09.1 biopython/1.79 parallel/20191022 
+module load kentutils/0.0 TRF/4.09.1 biopython/1.79 parallel/20191022 samtools
 
 inputfile="$input"
 outputdir="$output"
 percentage_match="$permatch"
 number_copies="$copies"
 
-faSplit sequence $inputfile 10000 ${PBS_JOBFS}/chunk
-
 cd ${PBS_JOBFS}
+
+cp ${inputfile} ${PBS_JOBFS} 
+
+# Determine the base filename without path and extension
+basename_input=$(basename "$inputfile")
+extension="${basename_input##*.}"
+base="${basename_input%.*}"
+
+# Handle compressed files and ensure the extension is .fasta
+if [[ "$extension" == "gz" ]]; then
+    # Unzip the file
+    gunzip -c "${PBS_JOBFS}/${basename_input}" > "${PBS_JOBFS}/${base}"
+    basename_input="$base"  # Update the base name after decompression
+    extension="${base##*.}"
+fi
+
+# Ensure the file has a .fasta extension
+if [[ "$extension" == "fa" || "$extension" == "fna" || "$extension" == "fasta" ]]; then
+    mv "${PBS_JOBFS}/${basename_input}" "${PBS_JOBFS}/${base}.fasta"
+    inputfile="${PBS_JOBFS}/${base}.fasta"
+fi
+
+samtools faidx ${inputfile}
+
+cutfasta="$(basename "$inputfile" .fasta).cut.fasta"
+
+python3 /g/data/xl04/ka6418/github/ausarg/scripts/cuttelofasta.py -input $inputfile -output "$(basename "$inputfile" .fasta).cut.fasta"
+
+faSplit sequence $cutfasta 10000 ${PBS_JOBFS}/chunk
+
 
 num_jobs=$(($PBS_NCPUS / 4))
 filelist=$(ls ${PBS_JOBFS}/chunk*)
@@ -54,16 +83,6 @@ awk -F'\t' 'BEGIN {OFS=","}
     }
 ' $(basename "$inputfile" .fasta).gff3 >> $(basename "$inputfile" .fasta).csv
 
-python3 /g/data/xl04/ka6418/github/ausarg/scripts/processtrftelo.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$outputdir/$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
+python3 /g/data/xl04/ka6418/github/ausarg/scripts/processtrftelo.py "$(basename "$inputfile" .fasta).csv" "$inputfile" "$(basename "$inputfile" .fasta)_Telomeres.csv" $number_copies $percentage_match
 
-
-
-
-
-
-
-
-
-
-
-
+python3 /g/data/xl04/ka6418/github/ausarg/scripts/chromsyntelomeres.py -csv "$(basename "$inputfile" .fasta)_Telomeres.csv" -fai "$inputfile.fai" -outtsv ${outputdir}/"${sample}_telochromsyn.tdt"
