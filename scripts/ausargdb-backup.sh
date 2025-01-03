@@ -34,7 +34,7 @@ else
     echo "${db_file} backup failed at ${timestamp}" >> "${db_dir}/logs/backlog.log"
 fi
 
-TIMES=("0400" "1400" "1900")
+TIMES=("0400")
 
 # Loop through the times and submit jobs
 for TIME in "${TIMES[@]}"; do

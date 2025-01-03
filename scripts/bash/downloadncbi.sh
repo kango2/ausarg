@@ -2,7 +2,7 @@
 #PBS -N downloadncbi
 #PBS -P xl04
 #PBS -q copyq
-#PBS -l walltime=10:00:00
+#PBS -l walltime=0:05:00
 #PBS -l mem=2GB
 #PBS -l ncpus=1
 #PBS -l storage=gdata/xl04+gdata/if89
@@ -13,40 +13,44 @@ set -ex
 
 module load ncbi-datasets-cli/16.6.0 htslib utils
 
-##Usage -v 
-#outdir : output directory
+## Usage -v 
+# outdir : output directory
+# taxon : taxon name (optional)
 
-if [[ -z "$outdir" ]]; then
-    echo "Error: outdir variable is missing. Terminating script."
-    exit 1
-fi
+outfile_prefix="$taxon"
 
-datasets summary genome taxon Squamata --assembly-level chromosome --as-json-lines > ${outdir}/squamata.$(date +"%Y%m%d").json
+# Replace spaces in prefix with underscores
+outfile_prefix=${outfile_prefix// /_}
 
+# Generate JSON summary
+datasets summary genome taxon "$taxon" --assembly-level chromosome --as-json-lines > ${outdir}/${outfile_prefix}.$(date +"%Y%m%d").json
+
+# Convert JSON to TSV
 dataformat tsv genome --fields accession,organism-common-name,organism-name,organism-tax-id,assminfo-status,assminfo-refseq-category \
-  --inputfile ${outdir}/squamata.$(date +"%Y%m%d").json | grep current | grep 'reference genome' | cut -f1,3,4 > ${outdir}/squamata.$(date +"%Y%m%d").tsv 
+  --inputfile ${outdir}/${outfile_prefix}.$(date +"%Y%m%d").json | grep current | grep 'reference genome' | cut -f1,3,4 > ${outdir}/${outfile_prefix}.$(date +"%Y%m%d").tsv 
 
-rm ${outdir}/squamata.$(date +"%Y%m%d").json
+rm ${outdir}/${outfile_prefix}.$(date +"%Y%m%d").json
 
+# Process each entry in the TSV
 while IFS=$'\t' read -r speciesid speciesname txid; do
 
-#speciesid to asmaccession
-#zip the genome
-#runcmd.sh from util 
-#add checkpoint
-
+    # Check if the directory exists
     if [ -d "${outdir}/${speciesid}.${speciesname// /_}.txid${txid}" ]; then
-        echo "Directory ${dirpath} already exists. Skipping..."
+        echo "Directory ${outdir}/${speciesid}.${speciesname// /_}.txid${txid} already exists. Skipping..."
         continue
     fi 
 
+    # Create directory and download genome
     mkdir -p "${outdir}/${speciesid}.${speciesname// /_}.txid${txid}"
     filename="${outdir}/${speciesid}.${speciesname// /_}.txid${txid}/${speciesid}.zip"
     datasets download genome accession ${speciesid} --include genome --filename ${filename}
+
+    # Unzip and process the genome data
     cd "${outdir}/${speciesid}.${speciesname// /_}.txid${txid}"
     unzip ${filename}
-    mv ${outdir}/${speciesid}.${speciesname// /_}.txid${txid}/ncbi_dataset/data/assembly_data_report.jsonl "${outdir}/${speciesid}.${speciesname// /_}.txid${txid}/${speciesid}_data_report.jsonl"
-    mv ${outdir}/${speciesid}.${speciesname// /_}.txid${txid}/ncbi_dataset/data/${speciesid}/*.fna "${outdir}/${speciesid}.${speciesname// /_}.txid${txid}"
+    mv ncbi_dataset/data/assembly_data_report.jsonl "${speciesid}_data_report.jsonl"
+    mv ncbi_dataset/data/${speciesid}/*.fna .
+    #add step to bgzip
     rm -rf ncbi_dataset
 
-done < ${outdir}/squamata.$(date +"%Y%m%d").tsv 
+done < ${outdir}/${outfile_prefix}.$(date +"%Y%m%d").tsv

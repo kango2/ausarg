@@ -76,9 +76,6 @@ common_organisms <- intersect(data_long$organismName, tree$tip.label)
 data_long_filtered <- data_long %>%
   filter(organismName %in% common_organisms)
 
-
-
-
 pruned_tree <- ape::drop.tip(tree, setdiff(tree$tip.label, common_organisms))
 pruned_tree$edge.length <- NULL
 p <- ggtree(pruned_tree) +
@@ -96,7 +93,7 @@ p <- p +
   ) +
   scale_fill_manual(values = complementary_pastel_colors) +  # Use custom colors
   scale_y_discrete() +  
-  theme_tree2() + xlim_expand(c(0, 20), "Tree") + xlim_expand(c(85, 100), "BUSCO") # Adjust theme for tree + data visualization
+  theme_tree2() + xlim_expand(c(0, 20), "Tree") # Adjust theme for tree + data visualization
 
 facet_widths(p, widths = c(1, 1))
 
