@@ -4,11 +4,21 @@ library(ggrepel)
 library(karyoploteR)
 library(tidygraph)
 library(Biostrings)
+library(readxl)
 
 projectdir <- "/g/data/xl04/genomeprojects/Pogona_vitticeps"
 
 setwd(projectdir)
 reffasta <- "./fasta/POGVIT.v2.1.fasta"
+refseqtable <- "./analysis/seqtables/POGVIT.v2.1_seqtable.csv"
+telomeres <- "./analysis/Telomeres/POGVIT.v2.1_Telomeres.csv"
+ilmnrd <- "./analysis/depth/rearranged/POGVIT.v2.1.merged.illum.10000.depth.bed"
+ontrd <- "./analysis/depth/rearranged/POGVIT.v2.1.merged.ont.10000.depth.bed"
+hifird <- "./analysis/depth/rearranged/POGVIT.v2.1.merged.pb.10000.depth.bed"
+gc <- "./analysis/gc/POGVIT.v2.1.fasta_GC.csv"
+gaps <- "./analysis/gaps/POGVIT.v2.1_Nregions.csv"
+hiczscores <- "././analysis/plots/hicinteractionszscores.tsv"
+rdna <- "./analysis/rDNA/POGVIT.v2.1.rdnaregions.bed"
 h1fasta <- "./fasta/yahs/POGVITdef.h1.corrected_YAHS.fasta"
 h2fasta <- "./fasta/yahs/POGVITdef.h2.corrected_YAHS.fasta"
 plotdir <- "./analysis/plots/"
@@ -119,6 +129,7 @@ qvcontourbases <- qvlen %>%
   guides(fill = guide_legend(title = "Base Fraction")) +
   ylab("Average Read QV") + xlab("Read Length (bp)") +
   theme(axis.text.y = element_text(size = 16), axis.text.x = element_text(hjust=1,angle=45, size = 16), legend.position = "bottom")
+
 qvcontourbases
 ##plot QV readnumbers
 ## for ONT, only few reads have >30QV. messes up the plot so we mutate >30 QV to 30 QV for ONT
