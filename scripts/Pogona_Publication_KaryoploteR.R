@@ -1,9 +1,9 @@
-.libPaths(c("/g/data/xl04/ka6418/temp/Rlibraries", .libPaths()))
+#.libPaths(c("/g/data/xl04/ka6418/temp/Rlibraries", .libPaths()))
 
-myLibPath <- "/g/data/xl04/ka6418/temp/Rlibraries"
+#myLibPath <- "/g/data/xl04/ka6418/temp/Rlibraries"
 
-.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
-.libPaths(c(myLibPath, .libPaths()))
+#.libPaths(c("/g/data/if89/apps/Rlib/4.3.1/", .libPaths()))
+#.libPaths(c(myLibPath, .libPaths()))
 
 library(karyoploteR)
 library(tidyverse)

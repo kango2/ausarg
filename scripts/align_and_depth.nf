@@ -248,6 +248,9 @@ process coverage {
     outdir=${outdir}
     export outdir
 
+    window=10000
+    export window
+
     bash /g/data/xl04/ka6418/github/ausarg/scripts/bam_to_bedcov.sh
 
 
@@ -292,7 +295,7 @@ workflow {
 
    sortedMergedBAM = ontBAM.mix(illumBAM, pbBAM)
    ontBAM.mix(illumBAM, pbBAM)
-   //coverage(sortedMergedBAM,outdir)
+   coverage(sortedMergedBAM,outdir)
 
 }
 

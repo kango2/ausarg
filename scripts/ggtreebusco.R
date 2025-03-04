@@ -1,12 +1,9 @@
-# Load necessary libraries
 library(DBI)
 library(tidyverse)
 
-# Connect to the SQLite database
 db_path <- "/g/data/xl04/genomeprojects/database/ausarg.db"
 conn <- dbConnect(RSQLite::SQLite(), db_path)
 
-# Query the database
 query <- "
 SELECT 
   organismName, 
@@ -19,10 +16,9 @@ FROM busco_metrics
 "
 data <- dbGetQuery(conn, query)
 
-# Close the database connection
+
 dbDisconnect(conn)
 
-# Calculate percentages for stacked bar chart
 data <- data %>%
   mutate(
     single_copy_buscos = single_copy_buscos / n_markers * 100,
@@ -32,7 +28,6 @@ data <- data %>%
   ) %>%
   select(organismName, single_copy_buscos, fragmented_percentage, missing_percentage, multi_copy_percentage)
 
-# Reshape data to long format
 data_long <- data %>%
   pivot_longer(
     cols = starts_with("single_copy_buscos"):starts_with("multi_copy_percentage"),
@@ -48,25 +43,7 @@ complementary_pastel_colors <- c(
   "multi_copy_percentage" = "#9E9AC8"  # Darker pastel purple
 )
 
-# Plot the horizontal stacked bar chart
-ggplot(data_long, aes(x = percentage, y = organismName, fill = category)) +
-  geom_bar(stat = "identity") +
-  labs(
-    title = "Horizontal Stacked Bar Chart of BUSCO Metrics",
-    x = "Percentage",
-    y = "Organism",
-    fill = "Category"
-  ) +
-  scale_x_continuous(breaks = seq(80, 100, by = 5)) +  # Adjust x-axis ticks
-  coord_cartesian(xlim = c(80, 100)) +  # Set Cartesian coordinates for the x-axis
-  scale_fill_manual(values = complementary_pastel_colors) +  # Apply pastel color scheme
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-
-
-
-##ggtree
 tree_path <- "/g/data/xl04/genomeprojects/referencedata/tmp/referencespecies.nwk"  
 tree <- read.tree(tree_path)
 

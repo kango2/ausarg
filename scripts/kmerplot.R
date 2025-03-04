@@ -146,10 +146,10 @@ ggsave(paste(plotdir, "qvvsreadnumhistogram.pdf", sep = ""), qvlenplot, width = 
 ##tech <- c("PB", "ONT", "illumina")
 
 setwd(projectdir)
-rawqcdir <- "./analysis/raweval/"
+rawqcdir <- "/g/data/te53/t2t2024/analyses/rawdataeval/ncig"
 setwd(rawqcdir)
 
-pbfiles <- list.files("./PB", "*_stats.csv", full.names = T)
+pbfiles <- list.files("/pb", "/*_stats.csv", full.names = T)
 pbmetrics <- NULL
 pbmetrics <- list()
 for (i in 1:length(pbfiles)) {
@@ -159,7 +159,7 @@ for (i in 1:length(pbfiles)) {
 }
 pbmetrics <- bind_rows(pbmetrics)
 
-ontfiles <- list.files("./ONT", "*_stats.csv", full.names = T)
+ontfiles <- list.files("/ont", "*_stats.csv", full.names = T)
 ontmetrics <- NULL
 ontmetrics <- list()
 for (i in 1:length(ontfiles)) {

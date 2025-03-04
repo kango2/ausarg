@@ -3,10 +3,11 @@
 #PBS -P xl04
 #PBS -q normal
 #PBS -l storage=gdata/xl04+gdata/if89
-#PBS -l walltime=1:00:00
+#PBS -l walltime=2:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l wd
+#PBS -j oe 
 
 #usage qsub -v bam=,window=,outdir= 
 
@@ -17,7 +18,7 @@ set -ex
 export WINDOW=${window}
 bambase="$(basename ${bam} .bam)"
 
-
+samtools index -b -@ ${PBS_NCPUS} ${bam}
 # Create BED file
 samtools view -H ${bam} | perl -lne 'if ($_=~/SN:(\S+)\tLN:(\d+)/){ $c=$1;$l=$2; for ($i=0;$i<$l;$i+=$ENV{"WINDOW"}) { print "$c\t$i\t". ((($i+$ENV{"WINDOW"}) > $l) ? $l : ($i+$ENV{"WINDOW"}))  }} ' > "${outdir}/${bambase}.${window}.bed"
 
