@@ -30,10 +30,7 @@ kmer_histograms <- function(projectdir,
                             plot.out = TRUE) {
   
   # Load required libraries
-  require(dplyr)
-  require(readr)
-  require(ggplot2)
-  require(stringr)
+  require(tidyverse)
   require(scales)
   
   # Store original working directory
