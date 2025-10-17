@@ -1061,11 +1061,12 @@ saveRDS(gr_by_asm_tech, "gr_by_asm_tech.RDS")
 
 
 
-# circles are telomeres 
-# triangles are gaps 
 
 # Include options for GC content and "extrastuff" - being telomeres and gaps 
 # Telomeres should be circles and gaps triangles in plot 
+# Actually sometimes telomeres are triangles and gaps are circles 
+# line 1140 - 1146 - shapes change based on number of optional "extras" 
+# maybe change to hard coding ie - telomeres - triangles gaps circles etc. 
 plot_karyo_depth_autotracks <- function(asm, 
                                         techMeth = c("illumina", "pb", "ont"),
                                         GC = TRUE, 
@@ -1159,7 +1160,7 @@ plot_karyo_depth_autotracks <- function(asm,
 # ---- Run for all asmids (post-filter) ----
 asm_ids <- rdtable_f %>% distinct(asmid) %>% pull(asmid)
 invisible(walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, 
-                                                      GC=T, 
+                                                      GC=TRUE, 
                                                       extraStuff = c("telomeres", "gap"))))
 
 
