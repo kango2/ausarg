@@ -813,3 +813,377 @@ write_delim(selection %>% filter(replen > 6 & replen < 1000 & (rcopy > 25 | widt
 )
 selection %>% filter(replen > 6 & replen < 1000 & (rcopy > 25 | width >25000)) %>% select(1,4,2,3)
 write_delim(selection %>% filter(replen > 6 & replen < 1000 & (rcopy > 25 | width >25000)) %>% select(1,4,2,3), "/g/data/xl04/genomeprojects/Pogona_vitticeps/analysis/SRF/putative.centro.csv", delim = ",")
+
+
+
+
+###########################                                                                           ###########################
+########################### ETHANS CODE FOR HARDIP - RUN FROM START TO FINISH AND WILL GENERATE PLOTS ###########################
+###########################                                                                           ###########################
+
+
+
+
+setwd(projectdir)
+
+asmtype <- c("hifiasm", "yahs")
+asmvariant <- c("p", "h1", "h2")
+tech <- c("illumina", "pb", "ont")
+
+
+seqinfotable <- NULL
+seqinfotable <- list()
+counter <- 0
+for (i in asmtype) {
+  for (j in asmvariant) {
+    counter <- counter + 1
+    files <- list.files(paste(asmqcdir, "/", i, "/", "seqtable/", j, sep = ""), "\\.csv$", full.names = T)
+    x <- read_delim(files[1], delim = ",")
+    seqinfotable[[counter]] <- x
+  }
+}
+seqinfotable <- bind_rows(seqinfotable)
+
+#refseqtable <- "./analysis/seqtables/POGVIT.v2.1_seqtable.csv"
+#refseqtable <- read_delim(refseqtable, delim = ",")
+#colnames(refseqtable) <- c("asmid", "seqid", "seqlen", "order", "md5")
+#analysis/asmqc/hifiasm/depth/illumina/p/TILRUE.illumina.hifiasm.p.10000.depth.bed
+##Kirat: use tabs instead of space for delimiters
+counter <- 0
+rdtable <- NULL
+rdtable <- list()
+for (a in asmtype) {
+  for (t in tech) {
+    for (av in asmvariant) {
+      counter <- counter + 1
+      f <- paste(asmqcdir, "/", a, "/", "depth/", "TILRUE.", t, ".", a, ".", av, ".10000.depth.bed", sep = "")
+      x <- read_delim(f, delim = " ", col_names = F)
+      colnames(x) <- c("seqid", "start", "end", "depth")
+      x$asmid <- paste("TILRUE.", a, ".", av, sep = "")
+      x$tech <- t
+      rdtable[[counter]] <- x
+    }
+  }
+}
+#saveRDS(rdtable, "rdtable_BASE.rds")
+
+rdtable <- bind_rows(rdtable)
+
+### update the seqtable with median read-depth values
+### this will be useful for identifying sex chromosomes
+
+seqinfotable <- left_join(seqinfotable, 
+                          rdtable %>% dplyr::group_by(asmid, tech, seqid) %>% 
+                            summarise(medianrd = median(depth)) %>% 
+                            pivot_wider(names_from = "tech", values_from = "medianrd")
+)
+
+
+gapinfotable <- NULL
+gapinfotable <- list()
+counter <- 0
+
+for (i in asmtype) {
+  for (j in asmvariant) {
+    counter <- counter + 1
+    files <- list.files(paste(asmqcdir, "/", i, "/", "gaps/", j, sep = ""), full.names = T)
+    if(file.size(files[1]) == 0){
+      gapinfotable[[counter]] <- NULL
+    }else{
+      x <- as.tibble(read.table(files[[1]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
+      asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
+      x <- cbind(asmid, x) %>%
+        {colnames(.) <- c("asmid", "seqid", "start", "end", "tech"); .} %>%
+        {.$tech <- rep("gap", nrow(.));.}
+      gapinfotable[[counter]] <- x
+    }
+  }
+}
+gapinfotable <- as.tibble(bind_rows(gapinfotable))
+gapinfotable
+
+
+telomereInfotable <- NULL
+telomereInfotable <- list()
+counter <- 0
+for (i in asmtype) {
+  for (j in asmvariant) {
+    counter <- counter + 1
+    files <- list.files(paste(asmqcdir, "/", i, "/", "telomeres/", j, sep = ""), full.names = T)
+    x <- as.tibble(read.table(files[[2]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
+    asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
+    tech <- rep("telomeres", nrow(x))
+    x <- cbind(asmid, x) %>%
+      {. <- cbind(., tech); .} %>%
+      {colnames(.) <- c("asmid", "seqid", "start", "end", "tech"); .}
+    telomereInfotable[[counter]] <- x
+  }
+}
+
+telomereInfotable <- as.tibble(bind_rows(telomereInfotable))
+telomereInfotable
+
+extrasInfotable <- rbind(gapinfotable, telomereInfotable) %>%
+  {.$depth <- rep(0, nrow(.)); .}
+
+
+
+GCinfoTable <- NULL
+GCinfoTable <- list()
+
+for (i in asmtype) {
+  for (j in asmvariant) {
+    counter <- counter + 1
+    files <- list.files(paste(asmqcdir, "/", i, "/", "gc/", j, sep = ""), full.names = T)
+    x <- as.tibble(read.table(files[[1]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
+    asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
+    tech <- rep("GC", nrow(x))
+    x <- cbind(asmid, x) %>%
+      {. <- cbind(., tech); .} %>%
+      {colnames(.) <- c("asmid", "seqid", "start", "end", "depth", "tech"); .}
+    x <- x[,-5]
+    GCinfoTable[[counter]] <- x
+  }
+}
+GCinfoTable <- as.tibble(bind_rows(GCinfoTable))
+GCinfoTable
+
+
+extrasInfotable <- rbind(gapinfotable, telomereInfotable, GCinfoTable) %>%
+  {.$depth <- rep(0, nrow(.)); .}
+
+
+
+
+
+# ---- Length cutoffs ----
+min_seqlen <- 1e6      # keep seqids >= this length
+max_seqlen <- Inf      # and <= this length (set a number if you want an upper bound)
+
+# ---- Seq length calc + filter (inclusive bounds) ----
+seqlens <- rdtable %>%
+  group_by(asmid, seqid) %>%
+  summarise(seqlen = max(end, na.rm = TRUE), .groups = "drop")
+
+keep_seqs <- seqlens %>%
+  filter(seqlen >= min_seqlen & seqlen <= max_seqlen)
+
+# Filter table to retained seqids
+rdtable_f <- rdtable %>%
+  semi_join(keep_seqs, by = c("asmid", "seqid"))
+
+rdtable_f <- rdtable_f %>%
+  {. <- rbind(., extrasInfotable); .}
+
+# (Optional) rebuild custom genome sorted by length desc, using the filtered set
+genomes_by_asm <- keep_seqs %>%
+  group_by(asmid) %>%
+  arrange(desc(seqlen), .by_group = TRUE) %>%
+  group_split() %>%
+  set_names(map_chr(., ~ unique(.x$asmid))) %>%
+  map(function(df) {
+    gr <- GRanges(seqnames = df$seqid, ranges = IRanges(1, df$seqlen))
+    seqlevels(gr) <- unique(as.character(seqnames(gr)))  # preserve sorted order
+    gr
+  })
+
+
+
+
+# ---- GRanges per (asmid, tech) with depth in mcols$y, using filtered data ----
+eps <- 1e-6  # guard for zero/negative depths
+
+gr_by_asm_tech <- rdtable_f %>%
+  group_by(asmid, tech) %>%
+  group_split() %>%
+  set_names(map_chr(., ~ paste0(unique(.x$asmid), "||", unique(.x$tech)))) %>%
+  map(function(df) {
+    # Build GRanges without extra columns
+    gr <- makeGRangesFromDataFrame(
+      df,
+      seqnames.field    = "seqid",
+      start.field       = "start",
+      end.field         = "end",
+      keep.extra.columns = FALSE
+    )
+    
+    d   <- as.numeric(df$depth)
+    med <- suppressWarnings(median(d[d > 0 & is.finite(d)], na.rm = TRUE))
+    if (!is.finite(med) || med <= 0) med <- suppressWarnings(median(pmax(d, eps), na.rm = TRUE))
+    y <- pmin(d, med * 3)
+    
+    # keep only 'y' to avoid kp... argument name collisions
+    mcols(gr) <- S4Vectors::DataFrame(y = y)
+    gr
+  })
+
+
+share_y    <- FALSE     
+###
+# ---- Helper: safe y-range with a bit of padding ----
+# yrange_with_pad <- function(y) {
+#   yr <- range(y, na.rm = TRUE)
+#   if (!all(is.finite(yr))) return(c(0, 1))
+#   pad <- max(1e-6, diff(yr) * 0.05)
+#   c(0, yr[2] + pad)
+#   #c(yr[1], yr[2])
+# }
+
+# For read-depth style y (non-log), use 0 to ceil(max/10)*10
+yrange_with_pad <- function(y) {
+  maxy <- suppressWarnings(max(y, na.rm = TRUE))
+  if (!is.finite(maxy)) maxy <- 1
+  # if everything is 0 after clipping, give a small headroom
+  if (maxy <= 0) maxy <- 1
+  ymax <- ceiling(maxy / 10) * 10
+  c(0, ymax)
+}
+
+
+# ---- Plot one asmid with all techs stacked as panels ----
+# Global tech → color map
+base_palette <- c(
+  "#0B775E", # deep teal
+  "#A84300", # dark orange
+  "#3B2F8C", # deep indigo
+  "#8A136F", # dark magenta
+  "#2E7D32", # dark green
+  "#7A6A00", # dark mustard
+  "#6B4F1D", # dark brown
+  "#444444", # dark gray
+  "#114D8C", # dark blue
+  "#3A5F0B"  # dark olive
+)
+all_techs <- rdtable_f %>% distinct(tech) %>% arrange(tech) %>% pull(tech)
+tech_cols <- setNames(rep_len(base_palette, length(all_techs)), all_techs)
+
+saveRDS(gr_by_asm_tech, "gr_by_asm_tech.RDS")
+
+
+
+# circles are telomeres 
+# triangles are gaps 
+
+# Include options for GC content and "extrastuff" - being telomeres and gaps 
+# Telomeres should be circles and gaps triangles in plot 
+plot_karyo_depth_autotracks <- function(asm, 
+                                        techMeth = c("illumina", "pb", "ont"),
+                                        GC = TRUE, 
+                                        extraStuff = NULL, 
+                                        outdir = "karyoplots", 
+                                        width = 12, 
+                                        height = 8) {
+  if (!asm %in% names(genomes_by_asm)) {
+    warning("No retained seqids for ", asm, " (min_seqlen=", min_seqlen, ")")
+    return(invisible(NULL))
+  }
+  
+  techs <- rdtable_f %>% filter(asmid == asm) %>% pull(tech) %>% unique()
+  if (length(techs) == 0) {
+    warning("No data for ", asm, " after filtering")
+    return(invisible(NULL))
+  }
+  
+  # Collect GRanges per tech (skip empty)
+  tech_key <- set_names(paste0(asm, "||", techs), techs)
+  gr_list  <- map(tech_key, ~ gr_by_asm_tech[[.x]]) %>% compact()
+  if (length(gr_list) == 0) {
+    warning("No GRanges for ", asm)
+    return(invisible(NULL))
+  }
+  
+  if(GC){
+    techMeth <- c(techMeth, "GC")
+  }
+  
+  # Y limits: shared or per-track
+  if (share_y) {
+    yl_all <- yrange_with_pad(unlist(map(gr_list, ~ mcols(.x)$y)))
+    ylims  <- map(gr_list, ~ yl_all)
+  } else {
+    ylims  <- map(gr_list, ~ yrange_with_pad(mcols(.x)$y))
+  }
+  # Open device
+  dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
+  outfile <- file.path(outdir, paste0("karyo_", asm, "_ALL_TECHS_min", min_seqlen, ".pdf"))
+  pdf(outfile, width = width, height = height)
+  
+  # Base plot
+  # Visualization
+  pp <- getDefaultPlotParams(plot.type = 1)
+  pp$data1inmargin <- 20
+  pp$data1outmargin <- 120
+  pp$leftmargin <- 0.15
+  
+  kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes="all", plot.params = pp)
+  
+  kpAddBaseNumbers(kp)
+  
+  # Number of tracks = number of techs for this asm
+  ntracks <- length(gr_list)
+  
+  # Iterate through tech tracks using autotrack()
+  i <- 1
+  for (tech in techMeth) {
+    gr <- gr_list[[tech]]
+    col_this <- tech_cols[[tech]]  # or track_cols[[tech]] if using Option B
+    yl <- ylims[[tech]]
+    at <- autotrack(current.track = i, total.tracks = ntracks)
+    
+    # axis + label
+    kpDataBackground(kp, r0 = at$r0, r1 = at$r1, color = "gray95")
+    kpAddLabels(kp, labels = tech, r0 = at$r0, r1 = at$r1, cex = 0.5, side = "right")
+    kpLines(kp, data = gr, r0 = at$r0, r1 = at$r1, col = col_this, lwd = 0.5, ymin = yl[1], ymax = yl[2])
+    kpAxis(kp, side = 1, r0 = at$r0, r1 = at$r1, ymin = yl[1], ymax = yl[2], cex = 0.5)
+    
+    if(!(is.null(extraStuff))){
+      shape = 1
+      for(i in 1:length(extraStuff)){
+        if(is.null(gr_list[[extraStuff[i]]])){
+          next
+        }else{
+          kpPoints(kp, data = gr_list[[extraStuff[i]]], y=0, cex = 1, pch = shape)
+          shape=shape+5
+        }
+      }
+    }
+    
+    i <- i + 1
+  }
+  dev.off()
+  message("Saved: ", outfile)
+  invisible(outfile)
+}
+
+
+# ---- Run for all asmids (post-filter) ----
+asm_ids <- rdtable_f %>% distinct(asmid) %>% pull(asmid)
+invisible(walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, 
+                                                      GC=T, 
+                                                      extraStuff = c("telomeres", "gap"))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
