@@ -822,8 +822,19 @@ write_delim(selection %>% filter(replen > 6 & replen < 1000 & (rcopy > 25 | widt
 ###########################                                                                           ###########################
 
 
+library(tidyverse)
+library(scales)
+library(ggrepel)
+library(karyoploteR)
+library(tidygraph)
+library(Biostrings)
+library(readxl)
 
-
+projectdir <- "/g/data/xl04/genomeprojects/TILRUE"
+plotdir <- "figures"
+tablesdir <- "tables"
+rawdataqcdir <- "rawdataqc"
+asmqcdir <- "analysis/asmqc"
 setwd(projectdir)
 
 asmtype <- c("hifiasm", "yahs")
@@ -865,7 +876,6 @@ for (a in asmtype) {
     }
   }
 }
-#saveRDS(rdtable, "rdtable_BASE.rds")
 
 rdtable <- bind_rows(rdtable)
 
@@ -951,7 +961,6 @@ GCinfoTable
 
 extrasInfotable <- rbind(gapinfotable, telomereInfotable, GCinfoTable) %>%
   {.$depth <- rep(0, nrow(.)); .}
-
 
 
 
@@ -1054,19 +1063,11 @@ base_palette <- c(
   "#114D8C", # dark blue
   "#3A5F0B"  # dark olive
 )
+
 all_techs <- rdtable_f %>% distinct(tech) %>% arrange(tech) %>% pull(tech)
 tech_cols <- setNames(rep_len(base_palette, length(all_techs)), all_techs)
 
-saveRDS(gr_by_asm_tech, "gr_by_asm_tech.RDS")
 
-
-
-
-# Include options for GC content and "extrastuff" - being telomeres and gaps 
-# Telomeres should be circles and gaps triangles in plot 
-# Actually sometimes telomeres are triangles and gaps are circles 
-# line 1140 - 1146 - shapes change based on number of optional "extras" 
-# maybe change to hard coding ie - telomeres - triangles gaps circles etc. 
 plot_karyo_depth_autotracks <- function(asm, 
                                         techMeth = c("illumina", "pb", "ont"),
                                         GC = TRUE, 
@@ -1077,6 +1078,10 @@ plot_karyo_depth_autotracks <- function(asm,
   if (!asm %in% names(genomes_by_asm)) {
     warning("No retained seqids for ", asm, " (min_seqlen=", min_seqlen, ")")
     return(invisible(NULL))
+  }
+  
+  if(GC){
+    techMeth <- c(techMeth, "GC")
   }
   
   techs <- rdtable_f %>% filter(asmid == asm) %>% pull(tech) %>% unique()
@@ -1093,9 +1098,6 @@ plot_karyo_depth_autotracks <- function(asm,
     return(invisible(NULL))
   }
   
-  if(GC){
-    techMeth <- c(techMeth, "GC")
-  }
   
   # Y limits: shared or per-track
   if (share_y) {
@@ -1122,7 +1124,7 @@ plot_karyo_depth_autotracks <- function(asm,
   
   # Number of tracks = number of techs for this asm
   ntracks <- length(gr_list)
-  
+
   # Iterate through tech tracks using autotrack()
   i <- 1
   for (tech in techMeth) {
@@ -1137,14 +1139,20 @@ plot_karyo_depth_autotracks <- function(asm,
     kpLines(kp, data = gr, r0 = at$r0, r1 = at$r1, col = col_this, lwd = 0.5, ymin = yl[1], ymax = yl[2])
     kpAxis(kp, side = 1, r0 = at$r0, r1 = at$r1, ymin = yl[1], ymax = yl[2], cex = 0.5)
     
+    #kpPoints(kp, data = gr_list[["telomeres"]], y=0, cex = 1, pch = 2, col="blue")
+    #kpPoints(kp, data = gr_list[["gap"]], y=0, cex = 1, pch = 5, col="blue")
+    colorSelect <- c("blue","red","orange", "green", "purple", "black")
+    
     if(!(is.null(extraStuff))){
-      shape = 1
-      for(i in 1:length(extraStuff)){
-        if(is.null(gr_list[[extraStuff[i]]])){
+      shape <- 1
+      colorNum <- 1
+      for(choice in extraStuff){
+        if(is.null(gr_list[[choice]])){
           next
         }else{
-          kpPoints(kp, data = gr_list[[extraStuff[i]]], y=0, cex = 1, pch = shape)
-          shape=shape+5
+          kpPoints(kp, data = gr_list[[choice]], y=0, cex = 1, pch = shape, col=colorSelect[colorNum])
+          shape <- shape+5
+          colorNum <- colorNum + 1
         }
       }
     }
@@ -1157,34 +1165,7 @@ plot_karyo_depth_autotracks <- function(asm,
 }
 
 
-# ---- Run for all asmids (post-filter) ----
+
 asm_ids <- rdtable_f %>% distinct(asmid) %>% pull(asmid)
-invisible(walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, 
-                                                      GC=TRUE, 
-                                                      extraStuff = c("telomeres", "gap"))))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, extraStuff = c("telomeres", "gap")))
 
