@@ -1067,6 +1067,10 @@ base_palette <- c(
 all_techs <- rdtable_f %>% distinct(tech) %>% arrange(tech) %>% pull(tech)
 tech_cols <- setNames(rep_len(base_palette, length(all_techs)), all_techs)
 
+# For hardip - fixed the error where it was only showing GC content (I think - works on my computer anyway)
+# Telomeres = blue circles 
+# Gaps = red triangles 
+
 
 plot_karyo_depth_autotracks <- function(asm, 
                                         techMeth = c("illumina", "pb", "ont"),
