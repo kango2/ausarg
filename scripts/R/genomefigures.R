@@ -831,11 +831,13 @@ library(readxl)
 
 # to do list 
 # - option to plot individual sequences 
+# - standardize function for reading in sequences and extras 
 # - include minimum for length - filtering inside function 
 # - include option of list to plot 
 # - centromeres - read depth dip 
 # - rDNA regions add to rdnaregions.bed ***
-
+# - add RDNA numnber of bases - add up width of RDNA to seqinfotbale ** 
+# - number of gaps - count of gaps **
 
 
 projectdir <- "/g/data/xl04/genomeprojects/TILRUE"
@@ -862,6 +864,8 @@ for (i in asmtype) {
   }
 }
 seqinfotable <- bind_rows(seqinfotable)
+
+
 
 #refseqtable <- "./analysis/seqtables/POGVIT.v2.1_seqtable.csv"
 #refseqtable <- read_delim(refseqtable, delim = ",")
@@ -897,100 +901,96 @@ seqinfotable <- left_join(seqinfotable,
 )
 
 
-gapinfotable <- NULL
-gapinfotable <- list()
-counter <- 0
 
-for (i in asmtype) {
-  for (j in asmvariant) {
-    counter <- counter + 1
-    files <- list.files(paste(asmqcdir, "/", i, "/", "gaps/", j, sep = ""), full.names = T)
-    if(file.size(files[1]) == 0){
-      gapinfotable[[counter]] <- NULL
-    }else{
-      x <- as.tibble(read.table(files[[1]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
-      asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
-      x$depth <- rep(0, nrow(x))
+
+readExtraInfoTable <- function(dir,
+                          fold1, 
+                          fold2, 
+                          mainfold, 
+                          filetype=".bed"){
+  
+  tableReturn <- NULL
+  tableReturn <- list()
+  counter <- 0
+  
+  for (i in fold1) {
+    for (j in fold2) {
+      counter <- counter + 1
+      files <- list.files(paste(dir, "/", i, "/", mainfold, "/", j, sep = ""), full.names = T)
+      asmidFirst <- paste0("TILRUE", ".", i, ".", j)
+      if(length(files) == 0){
+        next
+      }
+      bedNum <- 1
+      if(length(files) >1){
+        for(k in 1:length(files)){
+          breakup <- str_split(files[k], "/")
+          final_gap <- breakup[[1]][length(breakup[[1]])] %>%
+            {. <- str_split(., "\\.");.} 
+          if("bed" %in% final_gap[[1]]){
+            bedNum <- k
+          }else{next}
+        }
+      }
+      if(file.size(files[[bedNum]]) == 0){
+        next
+      }
+      if(filetype == ".bed"){
+        x <- as.tibble(read.table(files[[bedNum]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
+      }else{
+        x <- as.tibble(read.delim(files[[bedNum]],header = T, sep=",",stringsAsFactors=FALSE, quote=""))
+      }
+    
+      asmid <- rep(asmidFirst, nrow(x))
+      if(ncol(x)<4){
+        x$depth <- rep(0, nrow(x))
+      }
+      
+      tech <- rep(mainfold, nrow(x))
       x <- cbind(asmid, x) %>%
-        {colnames(.) <- c("asmid", "seqid", "start", "end", "depth", "tech"); .} %>%
-        {.$tech <- rep("gap", nrow(.));.}
-      gapinfotable[[counter]] <- x
+        {. <- cbind(., tech); .} %>%
+        {colnames(.) <- c("asmid", "seqid", "start", "end", "depth", "tech"); .}
+      if(x$start[1] > x$end[1]){colnames(x) <- c("asmid", "seqid", "end", "start", "depth", "tech")}
+      tableReturn[[counter]] <- x
     }
   }
-}
-gapinfotable <- as.tibble(bind_rows(gapinfotable))
 
-
-
-telomereInfotable <- NULL
-telomereInfotable <- list()
-counter <- 0
-for (i in asmtype) {
-  for (j in asmvariant) {
-    counter <- counter + 1
-    files <- list.files(paste(asmqcdir, "/", i, "/", "telomeres/", j, sep = ""), full.names = T)
-    x <- as.tibble(read.table(files[[2]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
-    asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
-    x$depth <- rep(0, nrow(x))
-    tech <- rep("telomeres", nrow(x))
-    x <- cbind(asmid, x) %>%
-      {. <- cbind(., tech); .} %>%
-      {colnames(.) <- c("asmid", "seqid", "start", "end", "depth", "tech"); .}
-    telomereInfotable[[counter]] <- x
-  }
+  tableReturn <- bind_rows(tableReturn) %>%
+    as.tibble()
+  
+  return(tableReturn)
+  
 }
 
-telomereInfotable <- as.tibble(bind_rows(telomereInfotable))
+riboRegionsTable <- readExtraInfoTable(asmqcdir, asmtype, asmvariant, "ribocop")
+GCinfoTable <- readExtraInfoTable(asmqcdir, asmtype, asmvariant, "gc")
+telomereInfotable <- readExtraInfoTable(asmqcdir, asmtype, asmvariant, "telomeres")
+gapinfotable <- readExtraInfoTable(asmqcdir, asmtype, asmvariant, "gaps")
 
 
-extrasInfotable <- rbind(gapinfotable, telomereInfotable) %>%
-  {.$depth <- rep(0, nrow(.)); .}
 
-
-GCinfoTable <- NULL
-GCinfoTable <- list()
-counter <- 0
-for (i in asmtype) {
-  for (j in asmvariant) {
-    counter <- counter + 1
-    files <- list.files(paste(asmqcdir, "/", i, "/", "gc/", j, sep = ""), full.names = T)
-    x <- as.tibble(read.table(files[[1]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
-    asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
-    tech <- rep("GC", nrow(x))
-    x <- cbind(asmid, x) %>%
-      {. <- cbind(., tech); .} %>%
-      {colnames(.) <- c("asmid", "seqid", "start", "end", "depth", "tech"); .}
-    x$depth <- (x$depth/(x$end-x$start)) * 100
-    GCinfoTable[[counter]] <- x
-  }
-}
-
-GCinfoTable <- as.tibble(bind_rows(GCinfoTable))
-
-
-riboRegionsTable <- NULL 
-riboRegionsTable <- list()
-counter <- 0
-for (i in asmtype[1]) {
-  for (j in asmvariant) {
-    counter <- counter + 1
-    files <- list.files(paste(asmqcdir, "/", i, "/", "ribocop/", j, sep = ""), full.names = T)
-    x <- as.tibble(read.table(files[[8]],header = F, sep="\t",stringsAsFactors=FALSE, quote=""))
-    asmid <- rep(paste0("TILRUE", ".", i, ".", j), nrow(x))
-    tech <- rep("ribo", nrow(x))
-    x <- cbind(asmid, x) %>%
-      {. <- cbind(., tech); .} %>%
-      {colnames(.) <- c("asmid", "seqid", "end", "start", "depth", "tech"); .}
-    x$depth <- rep(0, nrow(x))
-    riboRegionsTable[[counter]] <- x
-  }
-}
-
-riboRegionsTable <- bind_rows(riboRegionsTable) %>%
-  as.tibble()
-
+#slotextra2 <- readExtraInfoTable(asmqcdir, asmtype, asmvariant, "seqtable", ".csv")
+#slotextra2
 
 extrasInfotable <- rbind(gapinfotable, telomereInfotable, GCinfoTable, riboRegionsTable) 
+
+
+riboRegionsTable$ribolength <- riboRegionsTable$end - riboRegionsTable$start
+gapinfotable$numberGap <- rep(1, nrow(gapinfotable))
+seqinfotable$ribolength <- rep(1, nrow(seqinfotable))
+seqinfotable$numberGap <- rep(0, nrow(seqinfotable))
+
+seqinfotable <- seqinfotable %>%
+  left_join(gapinfotable %>% select(asmid, seqid, numberGap), by = c("asmid", "seqid"))
+
+seqinfotable <- seqinfotable %>%
+  left_join(riboRegionsTable %>% select(asmid, seqid, ribolength), by = c("asmid", "seqid"))
+
+seqinfotable <- seqinfotable %>%
+  {. <- .[,-c(9,10)];.} 
+seqinfotable[is.na(seqinfotable)] <- 0
+colnames(seqinfotable)[9:10] <- c("numberGap", "ribolength")
+
 
 
 
@@ -1085,7 +1085,7 @@ yrange_with_pad <- function(y) {
   ymax <- ceiling(maxy / 10) * 10
   c(0, ymax)
 }
-gr_by_asm_tech
+
 
 # ---- Plot one asmid with all techs stacked as panels ----
 # Global tech → color map
@@ -1104,7 +1104,6 @@ base_palette <- c(
 
 all_techs <- rdtable_f %>% distinct(tech) %>% arrange(tech) %>% pull(tech)
 tech_cols <- setNames(rep_len(base_palette, length(all_techs)), all_techs)
-
 
 
 plot_karyo_depth_autotracks <- function(asm, 
@@ -1148,7 +1147,7 @@ plot_karyo_depth_autotracks <- function(asm,
   #}
   
   if(GC){
-    techMeth <- c(techMeth, "GC")
+    techMeth <- c(techMeth, "gc")
   }
 
   
@@ -1220,7 +1219,9 @@ plot_karyo_depth_autotracks <- function(asm,
 
 asm_ids <- rdtable_f %>% distinct(asmid) %>% pull(asmid)
 walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, 
-                                            extraStuff = c("telomeres", "gap", "ribo"), 
+                                            extraStuff = c("telomeres", "gaps", "ribocop"), 
                                             height = 30))
+
+
 
 
