@@ -1110,158 +1110,155 @@ tech_cols <- setNames(rep_len(base_palette, length(all_techs)), all_techs)
 # etiher "all", a number - ie plot 1,2 etc or a list of exact scaffolds/chromosomes
 # to plot ie numPlots = c("scaffold_1, scaffold_2). 
 
-plot_karyo_depth_autotracks <- function(asm, 
-                                        minLength = 0, 
-                                        techMeth = c("illumina", "pb", "ont"),
-                                        GC = TRUE, 
-                                        extraStuff = NULL, 
-                                        outdir = "karyoplots", 
-                                        share_y = FALSE,
-                                        width = 12, 
-                                        height = 8, 
-                                        numPlots = "all") {
-  
+plot_karyo_depth_autotracks <- function(
+    asm,
+    minLength = 0,
+    techMeth = c("illumina", "pb", "ont"),
+    GC = TRUE,
+    extraStuff = NULL,
+    outdir = "karyoplots",
+    share_y = FALSE,
+    width = 12,
+    height = 8,
+    numPlots = "all"
+) {
+  # ───────────────────────────────
+  # 1. Validation and setup
+  # ───────────────────────────────
   if (!asm %in% names(genomes_by_asm)) {
     warning("No retained seqids for ", asm, " (min_seqlen=", min_seqlen, ")")
     return(invisible(NULL))
   }
-
-  techs <- rdtable_f %>% filter(asmid == asm) %>% pull(tech) %>% unique()
+  
+  techs <- rdtable_f %>%
+    filter(asmid == asm) %>%
+    pull(tech) %>%
+    unique()
+  
   if (length(techs) == 0) {
     warning("No data for ", asm, " after filtering")
     return(invisible(NULL))
   }
   
-  
-  # Collect GRanges per tech (skip empty)
+  # Collect GRanges per tech
   tech_key <- set_names(paste0(asm, "||", techs), techs)
-  gr_list  <- map(tech_key, ~ gr_by_asm_tech[[.x]]) %>% compact()
+  gr_list <- map(tech_key, ~ gr_by_asm_tech[[.x]]) %>% compact()
+  
   if (length(gr_list) == 0) {
     warning("No GRanges for ", asm)
     return(invisible(NULL))
   }
   
-  #numPlotOptions <- c("all", rep(1:length(gr_list)))
-  #if(!(numPlots %in% numPlotOptions)){
-    #stop("numPlots must be either 'all' or number within range of number of plots")
-  #}
-  #if(!(numPlots == "all")){
-  #  numPlots <- numPlots
-  #}else{
-  #  numPlots <- rep(1:length(gr_list))
-  #}
-  
-  if(GC){
+  # Include GC if requested
+  if (GC) {
     techMeth <- c(techMeth, "gc")
   }
-
   
-  # Y limits: shared or per-track
-  if (share_y) {
+  # ───────────────────────────────
+  # 2. Prepare y-axis limits
+  # ───────────────────────────────
+  ylims <- if (share_y) {
     yl_all <- yrange_with_pad(unlist(map(gr_list, ~ mcols(.x)$y)))
-    ylims  <- map(gr_list, ~ yl_all)
+    map(gr_list, ~ yl_all)
   } else {
-    ylims  <- map(gr_list, ~ yrange_with_pad(mcols(.x)$y))
+    map(gr_list, ~ yrange_with_pad(mcols(.x)$y))
   }
   
-  numWrong <- 0 
-  if(type(numPlots) == "character" && length(numPlots) > 1){
-    for(things in numPlots){
-      if(things %in% seqnames(genomes_by_asm[[asm]])){
-        numPlots <- numPlots
-      }else{
-        numWrong <- numWrong + 1
-        next
-      }
-    }
-    if(numWrong == length(numPlots)){
-      numPlots <- "all"
-    }
+  # ───────────────────────────────
+  # 3. Handle chromosome selection
+  # ───────────────────────────────
+  if (is.character(numPlots) && length(numPlots) > 1) {
+    valid_chroms <- seqnames(genomes_by_asm[[asm]])
+    numPlots <- intersect(numPlots, valid_chroms)
+    if (length(numPlots) == 0) numPlots <- "all"
   }
   
-  # Open device
+  # ───────────────────────────────
+  # 4. Output setup
+  # ───────────────────────────────
   dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
   outfile <- file.path(outdir, paste0("karyo_", asm, "_ALL_TECHS_min", min_seqlen, ".pdf"))
   pdf(outfile, width = width, height = height)
-
-  # Base plot
-  # Visualization
+  
+  # ───────────────────────────────
+  # 5. Create base plot
+  # ───────────────────────────────
   pp <- getDefaultPlotParams(plot.type = 1)
   pp$data1inmargin <- 20
   pp$data1outmargin <- 120
   pp$leftmargin <- 0.15
-  #if(!(numPlots) == "all"){
-  #  kp <- plotKaryotype(genome = genomes_by_asm[[asm]], 
-  #                      chromosomes=seqnames(genomes_by_asm[[asm]])[numPlots], plot.params = pp)
-  #}else{
-  #  kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes="all", plot.params = pp)
-  #}
   
-  if(!("all" %in% numPlots)){
-    if(type(numPlots) == "character"){
-      selectChrom <- genomes_by_asm[[asm]][seqnames(genomes_by_asm[[asm]]) == numPlots] 
-      kp <- plotKaryotype(genome = genomes_by_asm[[asm]][seqnames(genomes_by_asm[[asm]]) == numPlots], 
-                          chromosomes="all", plot.params = pp)
-    }else{
-      selectChrom <- as.character(seqnames(genomes_by_asm[[asm]][numPlots]))
-      }
-  }else{
-    kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes="all", plot.params = pp)
+  if ("all" %in% numPlots) {
+    kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes = "all", plot.params = pp)
+  } else {
+    selectChrom <- if (is.character(numPlots)) {
+      genomes_by_asm[[asm]][seqnames(genomes_by_asm[[asm]]) == numPlots]
+    } else {
+      as.character(seqnames(genomes_by_asm[[asm]][numPlots]))
+    }
+    kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes = selectChrom, plot.params = pp)
   }
   
   kpAddBaseNumbers(kp)
-
-  # Number of tracks = number of techs for this asm
+  
+  # ───────────────────────────────
+  # 6. Plot each technology track
+  # ───────────────────────────────
   ntracks <- length(gr_list)
-  # Iterate through tech tracks using autotrack()
-  i <- 1
-  for (tech in techMeth) {
+  colorSelect <- c("blue", "red", "orange", "green", "purple", "black")
+  
+  for (i in seq_along(techMeth)) {
+    tech <- techMeth[i]
     gr <- gr_list[[tech]]
     
-    #removeLen <- c()
-    #for(i in 1:length(gr)){
-    #  if(width(gr[i]) < minLength){
-    #    removeLen <- c(removeLen, i)
-    #  }
-    #}
-    #gr <- gr[-removeLen]
-    if(!("all" %in% numPlots)){
-      if(type(numPlots) == "character"){
-        gr <- gr[as.character(seqnames(gr)) == seqnames(selectChrom)]
-      }else{
-        gr <- gr[as.character(seqnames(gr)) == selectChrom]
-      }
+    if (is.null(gr)) next
+    
+    # Filter by chromosome selection
+    if (!("all" %in% numPlots)) {
+      chroms <- if (is.character(numPlots)) numPlots else selectChrom
+      gr <- gr[as.character(seqnames(gr)) %in% chroms]
     }
-    col_this <- tech_cols[[tech]]  # or track_cols[[tech]] if using Option B
+    
+    # Apply minimum length filter
+    gr <- gr[width(gr) >= minLength]
+    
+    # Get track-specific parameters
+    col_this <- tech_cols[[tech]]
     yl <- ylims[[tech]]
     at <- autotrack(current.track = i, total.tracks = ntracks)
     
-    # axis + label
+    # Draw data and labels
     kpDataBackground(kp, r0 = at$r0, r1 = at$r1, color = "gray95")
     kpAddLabels(kp, labels = tech, r0 = at$r0, r1 = at$r1, cex = 0.5, side = "right")
-    kpLines(kp, data = gr, r0 = at$r0, r1 = at$r1, col = col_this, lwd = 0.5, ymin = yl[1], ymax = yl[2])
-    kpAxis(kp, side = 1, r0 = at$r0, r1 = at$r1, ymin = yl[1], ymax = yl[2], cex = 0.5)
-    #kpPoints(kp, data = gr_list[["telomeres"]], y=0, cex = 1, pch = 2, col="blue")
-    #kpPoints(kp, data = gr_list[["gap"]], y=0, cex = 1, pch = 5, col="blue")
-    colorSelect <- c("blue","red","orange", "green", "purple", "black")
-
-    if(!(is.null(extraStuff))){
-      for(choice in extraStuff){
-        shape <- which(extraStuff == choice)
-        if(is.null(gr_list[[choice]])){
-          next
-        }else{
-          kpPoints(kp, data = gr_list[[choice]], y=-0.20, cex = 1, pch = shape, col=colorSelect[shape])
+    kpLines(kp, data = gr, r0 = at$r0, r1 = at$r1,
+            col = col_this, lwd = 0.5, ymin = yl[1], ymax = yl[2])
+    kpAxis(kp, side = 1, r0 = at$r0, r1 = at$r1,
+           ymin = yl[1], ymax = yl[2], cex = 0.5)
+    
+    # Add optional annotation layers
+    if (!is.null(extraStuff)) {
+      for (j in seq_along(extraStuff)) {
+        choice <- extraStuff[[j]]
+        if (!is.null(gr_list[[choice]])) {
+          kpPoints(kp,
+                   data = gr_list[[choice]],
+                   y = -0.20,
+                   cex = 1,
+                   pch = j,
+                   col = colorSelect[j])
         }
       }
     }
-    
-    i <- i + 1
   }
+  
+  # ───────────────────────────────
+  # 7. Finalize output
+  # ───────────────────────────────
   dev.off()
   message("Saved: ", outfile)
   invisible(outfile)
 }
+
 
 
 
