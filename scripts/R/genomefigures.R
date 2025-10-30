@@ -1106,7 +1106,12 @@ all_techs <- rdtable_f %>% distinct(tech) %>% arrange(tech) %>% pull(tech)
 tech_cols <- setNames(rep_len(base_palette, length(all_techs)), all_techs)
 
 
+# Included numPlots - can choose number of plots to include 
+# etiher "all", a number - ie plot 1,2 etc or a list of exact scaffolds/chromosomes
+# to plot ie numPlots = c("scaffold_1, scaffold_2). 
+
 plot_karyo_depth_autotracks <- function(asm, 
+                                        minLength = 0, 
                                         techMeth = c("illumina", "pb", "ont"),
                                         GC = TRUE, 
                                         extraStuff = NULL, 
@@ -1120,7 +1125,7 @@ plot_karyo_depth_autotracks <- function(asm,
     warning("No retained seqids for ", asm, " (min_seqlen=", min_seqlen, ")")
     return(invisible(NULL))
   }
-  
+
   techs <- rdtable_f %>% filter(asmid == asm) %>% pull(tech) %>% unique()
   if (length(techs) == 0) {
     warning("No data for ", asm, " after filtering")
@@ -1158,7 +1163,22 @@ plot_karyo_depth_autotracks <- function(asm,
   } else {
     ylims  <- map(gr_list, ~ yrange_with_pad(mcols(.x)$y))
   }
-
+  
+  numWrong <- 0 
+  if(type(numPlots) == "character" && length(numPlots) > 1){
+    for(things in numPlots){
+      if(things %in% seqnames(genomes_by_asm[[asm]])){
+        numPlots <- numPlots
+      }else{
+        numWrong <- numWrong + 1
+        next
+      }
+    }
+    if(numWrong == length(numPlots)){
+      numPlots <- "all"
+    }
+  }
+  
   # Open device
   dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
   outfile <- file.path(outdir, paste0("karyo_", asm, "_ALL_TECHS_min", min_seqlen, ".pdf"))
@@ -1170,11 +1190,27 @@ plot_karyo_depth_autotracks <- function(asm,
   pp$data1inmargin <- 20
   pp$data1outmargin <- 120
   pp$leftmargin <- 0.15
-  kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes="all", plot.params = pp)
-  #kp <- plotKaryotype(genome = genomes_by_asm[[asm]][numPlots], chromosomes="all", plot.params = pp)
+  #if(!(numPlots) == "all"){
+  #  kp <- plotKaryotype(genome = genomes_by_asm[[asm]], 
+  #                      chromosomes=seqnames(genomes_by_asm[[asm]])[numPlots], plot.params = pp)
+  #}else{
+  #  kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes="all", plot.params = pp)
+  #}
+  
+  if(!("all" %in% numPlots)){
+    if(type(numPlots) == "character"){
+      selectChrom <- genomes_by_asm[[asm]][seqnames(genomes_by_asm[[asm]]) == numPlots] 
+      kp <- plotKaryotype(genome = genomes_by_asm[[asm]][seqnames(genomes_by_asm[[asm]]) == numPlots], 
+                          chromosomes="all", plot.params = pp)
+    }else{
+      selectChrom <- as.character(seqnames(genomes_by_asm[[asm]][numPlots]))
+      }
+  }else{
+    kp <- plotKaryotype(genome = genomes_by_asm[[asm]], chromosomes="all", plot.params = pp)
+  }
   
   kpAddBaseNumbers(kp)
-  
+
   # Number of tracks = number of techs for this asm
   ntracks <- length(gr_list)
   # Iterate through tech tracks using autotrack()
@@ -1182,8 +1218,19 @@ plot_karyo_depth_autotracks <- function(asm,
   for (tech in techMeth) {
     gr <- gr_list[[tech]]
     
-    if(!(numPlots == "all")){
-      gr <- gr_list[[tech]]#[numPlots]
+    #removeLen <- c()
+    #for(i in 1:length(gr)){
+    #  if(width(gr[i]) < minLength){
+    #    removeLen <- c(removeLen, i)
+    #  }
+    #}
+    #gr <- gr[-removeLen]
+    if(!("all" %in% numPlots)){
+      if(type(numPlots) == "character"){
+        gr <- gr[as.character(seqnames(gr)) == seqnames(selectChrom)]
+      }else{
+        gr <- gr[as.character(seqnames(gr)) == selectChrom]
+      }
     }
     col_this <- tech_cols[[tech]]  # or track_cols[[tech]] if using Option B
     yl <- ylims[[tech]]
@@ -1197,7 +1244,7 @@ plot_karyo_depth_autotracks <- function(asm,
     #kpPoints(kp, data = gr_list[["telomeres"]], y=0, cex = 1, pch = 2, col="blue")
     #kpPoints(kp, data = gr_list[["gap"]], y=0, cex = 1, pch = 5, col="blue")
     colorSelect <- c("blue","red","orange", "green", "purple", "black")
-    
+
     if(!(is.null(extraStuff))){
       for(choice in extraStuff){
         shape <- which(extraStuff == choice)
@@ -1215,6 +1262,8 @@ plot_karyo_depth_autotracks <- function(asm,
   message("Saved: ", outfile)
   invisible(outfile)
 }
+
+
 
 
 asm_ids <- rdtable_f %>% distinct(asmid) %>% pull(asmid)
