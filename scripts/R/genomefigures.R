@@ -1263,15 +1263,27 @@ plot_karyo_depth_autotracks <- function(asm,
   invisible(outfile)
 }
 
-
-
-
-
-
+# Example with full asm_ids - ie all constructs
 asm_ids <- rdtable_f %>% distinct(asmid) %>% pull(asmid)
 walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, 
                                             extraStuff = c("telomeres", "gaps", "ribocop"), 
                                             height = 30))
+
+
+# Example with selecting only scaffold 1 and 2 
+walk(asm_ids, ~ plot_karyo_depth_autotracks(.x, 
+                                            extraStuff = c("telomeres", "gap", "ribo"), 
+                                            numPlots = c("scaffold_1", "scaffold_2")
+                                            height = 30))
+
+
+
+
+
+
+
+
+
 
 
 
