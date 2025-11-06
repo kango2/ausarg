@@ -8,7 +8,7 @@
 #PBS -l storage=gdata/xl04+gdata/if89
 #PBS -l wd
 #PBS -j oe
-#PBS -M kirat.alreja@anu.edu.au
 
 export CKAN_API_TOKEN="61beb2cd-aad9-4b96-b9e5-051fa2e6428e"
-bash ${script}
+cd ${outdir}
+bash ${script} -o

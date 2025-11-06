@@ -4,80 +4,68 @@ import hashlib
 from Bio import SeqIO
 import argparse
 import gzip
+from concurrent.futures import ProcessPoolExecutor
 
-def fasta_to_csv(fasta_file, output_dir):
-    # Extract the assembly ID from the input filename
+def calc_avg_gc(seq, window=10000):
+    if len(seq) == 0:
+        return 0.0
+    gc_total = 0
+    window_count = 0
+    for i in range(0, len(seq) - window + 1, window):
+        subseq = seq[i:i+window].upper()
+        gc = subseq.count('G') + subseq.count('C')
+        gc_total += (gc / window) * 100
+        window_count += 1
+    tail_start = (len(seq) // window) * window
+    if tail_start < len(seq):
+        tail = seq[tail_start:].upper()
+        gc = tail.count('G') + tail.count('C')
+        gc_total += (gc / len(tail)) * 100
+        window_count += 1
+    return round(gc_total / window_count, 2) if window_count else 0.0
+
+def process_record(args):
+    record, assembly_id = args
+    seq_id = record.id
+    seq = str(record.seq)
+    seq_length = len(seq)
+    md5_sum = hashlib.md5(seq.encode('utf-8')).hexdigest()
+    avg_gc = calc_avg_gc(seq)
+    return {
+        'asmid': assembly_id,
+        'seqid': seq_id,
+        'len': seq_length,
+        'md5': md5_sum,
+        'gc': avg_gc
+    }
+
+def fasta_to_csv_parallel(fasta_file, output_dir, threads):
     assembly_id = os.path.splitext(os.path.basename(fasta_file))[0]
-
-    # Define the output filename based on the assembly ID and input file name
     output_file = os.path.join(output_dir, f"{assembly_id}_seqtable.csv")
 
-    # Open the output CSV file for writing
+    is_compressed = fasta_file.endswith('.gz')
+    fasta_handle = gzip.open(fasta_file, 'rt') if is_compressed else open(fasta_file, 'r')
+    records = list(SeqIO.parse(fasta_handle, 'fasta'))
+    fasta_handle.close()
+
+    args_list = [(record, assembly_id) for record in records]
+
+    with ProcessPoolExecutor(max_workers=threads) as executor:
+        results = list(executor.map(process_record, args_list))
+
     with open(output_file, 'w', newline='') as csvfile:
-        # Define the fieldnames for the CSV
-        fieldnames = ['Assembly ID', 'Sequence ID', 'Length', 'OrderInFile', 'MD5']
-        csv_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-        # Write the header row to the CSV
-        csv_writer.writeheader()
-
-        # Determine if the input file is compressed (gzip format)
-        is_compressed = False
-        if os.path.splitext(fasta_file)[1] == '.gz':
-            is_compressed = True
-
-        # Open the input FASTA file for reading
-        if is_compressed:
-            fasta_handle = gzip.open(fasta_file, 'rt')
-        else:
-            fasta_handle = open(fasta_file, 'r')
-
-        # Parse the FASTA file
-        records = SeqIO.parse(fasta_handle, 'fasta')
-
-        # Iterate over the records in the input FASTA file
-        try:
-            for idx, record in enumerate(records):
-                # Extract the sequence ID and length from the current record
-                seq_id = record.id
-                seq_length = len(record.seq)
-
-                # Record the order of the current record in the input file
-                order_in_file = idx
-
-                # Calculate the MD5 hash of the current sequence
-                md5_sum = hashlib.md5(str(record.seq).encode('utf-8')).hexdigest()
-
-                # Create a dictionary representing the current row of the CSV
-                row = {
-                    'Assembly ID': assembly_id,
-                    'Sequence ID': seq_id,
-                    'Length': seq_length,
-                    'OrderInFile': order_in_file,
-                    'MD5': md5_sum
-                }
-
-                # Write the current row to the CSV
-                csv_writer.writerow(row)
-        finally:
-            fasta_handle.close()
+        fieldnames = ['asmid', 'seqid', 'len', 'md5', 'gc']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in results:
+            writer.writerow(row)
 
 if __name__ == '__main__':
-    # Define a command-line argument parser
-    parser = argparse.ArgumentParser(description='Convert a FASTA file to a CSV file with sequence information')
-
-    # Add an argument for the input FASTA file
-    parser.add_argument('-fasta', type=str, required=True, help='The path to the input FASTA file')
-    
-    # Add an argument for the output directory
-    parser.add_argument('-outputdir', type=str, required=True, help='The directory where the output CSV will be placed')
-
-    # Parse the command-line arguments
+    parser = argparse.ArgumentParser(description='Generate a sequence table with MD5 and GC% from FASTA (parallelized)')
+    parser.add_argument('-fasta', required=True, help='Input FASTA file (.fasta or .fasta.gz)')
+    parser.add_argument('-outputdir', required=True, help='Directory to write output CSV')
+    parser.add_argument('-p', '--processes', type=int, default=4, help='Number of parallel processes')
     args = parser.parse_args()
 
-    # Create output directory if it does not exist
-    if not os.path.exists(args.outputdir):
-        os.makedirs(args.outputdir)
-
-    # Call the fasta_to_csv function with the input FASTA file and output directory
-    fasta_to_csv(args.fasta, args.outputdir)
+    os.makedirs(args.outputdir, exist_ok=True)
+    fasta_to_csv_parallel(args.fasta, args.outputdir, args.processes)

@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -N hifiasm
 #PBS -P xl04
-#PBS -q hugemem
-#PBS -l walltime=48:00:00
-#PBS -l mem=1470GB
+#PBS -q normal
+#PBS -l walltime=4:00:00
+#PBS -l mem=192GB
 #PBS -l ncpus=48
 #PBS -l jobfs=400GB
 #PBS -l storage=gdata/if89+gdata/xl04
@@ -27,7 +27,7 @@ mkdir -p ${outputdir}
 ont="${ont//:/,}"
 hifi="${hifi//:/ }"
 
-hifiasm --telo-m CCCTAA -o "${outputdir}/${sample}" -t ${PBS_NCPUS} --ul ${ont} --h1 ${h1} --h2 ${h2} ${hifi}
+#hifiasm --telo-m CCCTAA -o "${outputdir}/${sample}" -t ${PBS_NCPUS} --ul ${ont} --h1 ${h1} --h2 ${h2} ${hifi}
 
-
+hifiasm --telo-m CCCTAA -o "${outputdir}/${sample}" -t ${PBS_NCPUS} --ul ${ont} ${hifi}
 

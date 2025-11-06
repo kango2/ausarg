@@ -5,7 +5,7 @@
 #PBS -l walltime=48:00:00
 #PBS -l mem=1470GB
 #PBS -l ncpus=48
-#PBS -l jobfs=400GB
+#PBS -l jobfs=1400GB
 #PBS -l storage=gdata/if89+gdata/xl04
 #PBS -l wd
 #PBS -j oe 
@@ -19,4 +19,7 @@
 set -ex 
 
 module load hifiasm/0.24.0
-hifiasm -t ${PBS_NCPUS} --ont -o ${outdir}/${outbase} "${inputfastq//:/ }"
+
+cat ${inputfastq//:/ } > ${PBS_JOBFS}/${outbase}.fastq.gz
+
+hifiasm -t ${PBS_NCPUS} --ont -o ${outdir}/${outbase} ${PBS_JOBFS}/${outbase}.fastq.gz

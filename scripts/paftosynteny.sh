@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N paftosynteny
 #PBS -P xl04
-#PBS -q normal
+#PBS -q express
 #PBS -l walltime=1:00:00
 #PBS -l mem=4GB
 #PBS -l ncpus=1

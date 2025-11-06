@@ -2,7 +2,7 @@
 #PBS -N bedcov
 #PBS -P xl04
 #PBS -q normal
-#PBS -l storage=gdata/xl04+gdata/if89
+#PBS -l storage=gdata/xl04+gdata/if89+gdata/te53
 #PBS -l walltime=2:00:00
 #PBS -l mem=192GB
 #PBS -l ncpus=48
@@ -11,8 +11,7 @@
 
 #usage qsub -v bam=,window=,outdir= 
 
-module load samtools
-module load parallel
+module load samtools parallel
 set -ex
 
 export WINDOW=${window}

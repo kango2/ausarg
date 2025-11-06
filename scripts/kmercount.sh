@@ -30,7 +30,7 @@ usage() {
 
 module load jellyfish/2.3.0 utils/0.0
 
-IFS=":" read -ra filelist <<< "$inputfiles"
+IFS=";" read -ra filelist <<< "$inputfiles"
 
 filecount=${#filelist[@]}
 
@@ -52,5 +52,5 @@ done
 runcmd.sh -c "jellyfish count --text -g ${PBS_JOBFS}/filegenerator.cmds -G ${filecount} --threads=$((PBS_NCPUS - filecount * 2)) -m ${klength} -o ${PBS_JOBFS}/$sampleID.dump -C -s 32G" -t ${sampleID}.kmercount -d ${OUTDIR}/$sampleID.kmercount.done -f false
 runcmd.sh -c "jellyfish histo -t ${PBS_NCPUS} -o ${OUTDIR}/$sampleID.histo ${PBS_JOBFS}/$sampleID.dump" -t ${sampleID}.kmerhisto -d ${OUTDIR}/$sampleID.kmerhisto.done -f false
 runcmd.sh -c "sort -k1,1 --parallel=${PBS_NCPUS} --buffer-size=80% -T ${PBS_JOBFS} -o ${PBS_JOBFS}/$sampleID.sorted.dump ${PBS_JOBFS}/$sampleID.dump" -t ${sampleID}.kmersort -d ${OUTDIR}/$sampleID.kmersort.done -f false
-runcmd.sh -c "pigz -q -p ${PBS_NCPUS} ${PBS_JOBFS}/$sampleID.sorted.dump" -t ${sampleID}.kmerzip -d ${OUTDIR}/$sampleID.kmerzip.done -f false
-runcmd.sh -c "rsync -a ${PBS_JOBFS}/$sampleID.sorted.dump.gz ${OUTDIR}/" -t ${sampleID}.kmerxfer -d ${OUTDIR}/$sampleID.kmerxfer.done -f false                              
+#runcmd.sh -c "pigz -q -p ${PBS_NCPUS} ${PBS_JOBFS}/$sampleID.sorted.dump" -t ${sampleID}.kmerzip -d ${OUTDIR}/$sampleID.kmerzip.done -f false
+#runcmd.sh -c "rsync -a ${PBS_JOBFS}/$sampleID.sorted.dump.gz ${OUTDIR}/" -t ${sampleID}.kmerxfer -d ${OUTDIR}/$sampleID.kmerxfer.done -f false                              

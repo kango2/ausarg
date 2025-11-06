@@ -22,47 +22,90 @@ data <- dbGetQuery(conn, query)
 # Close the database connection
 dbDisconnect(conn)
 
-# Calculate percentages for stacked bar chart
+
 data <- data %>%
   mutate(
-    single_copy_buscos = single_copy_buscos / n_markers * 100,
-    fragmented_percentage = fragmented_buscos / n_markers * 100,
-    missing_percentage = missing_buscos / n_markers * 100,
-    multi_copy_percentage = multi_copy_buscos / n_markers * 100
+    # Store original counts (for labels)
+    abs_single = single_copy_buscos,
+    abs_fragmented = fragmented_buscos,
+    abs_missing = missing_buscos,
+    abs_multi = multi_copy_buscos,
+    
+    # Create percentage columns (for stacked bar plot)
+    single_copy_buscos = abs_single / n_markers * 100,
+    fragmented_percentage = abs_fragmented / n_markers * 100,
+    missing_percentage = abs_missing / n_markers * 100,
+    multi_copy_percentage = abs_multi / n_markers * 100
   ) %>%
-  select(organismName, single_copy_buscos, fragmented_percentage, missing_percentage, multi_copy_percentage)
+  select(organismName, n_markers,
+         single_copy_buscos, fragmented_percentage, missing_percentage, multi_copy_percentage,
+         abs_single, abs_fragmented, abs_missing, abs_multi)
+
+data <- data %>%
+  mutate(
+    complete_buscos = abs_single + abs_multi,
+    tlabel = paste0(
+      "C:", complete_buscos,
+      " [S:", abs_single,
+      ", D:", abs_multi,
+      "], F:", abs_fragmented,
+      ", M:", abs_missing
+    )
+  )
+
+
+species_filter_path <- "/g/data/xl04/genomeprojects/referencedata/tmp/plot/secondpass/species.txt"
+species_to_include <- readLines(species_filter_path)
+
+data <- data %>%
+  filter(organismName %in% species_to_include) %>%
+  mutate(organismName = factor(organismName, levels = rev(species_to_include)))
 
 # Reshape data to long format
 data_long <- data %>%
   pivot_longer(
-    cols = starts_with("single_copy_buscos"):starts_with("multi_copy_percentage"),
+    cols = c("single_copy_buscos", "multi_copy_percentage", "fragmented_percentage", "missing_percentage"),
     names_to = "category",
     values_to = "percentage"
-  )
+  ) 
+# %>%
+#   mutate(category = factor(category, levels = c(
+#     "single_copy_buscos",
+#     "multi_copy_percentage",
+#     "fragmented_percentage",
+#     "missing_percentage"
+#   )))
+# 
 
 # Define pastel colors for the categories
 complementary_pastel_colors <- c(
-  "single_copy_buscos" = "#6BAED6",  # Darker pastel blue
-  "fragmented_percentage" = "#FC9272",  # Darker pastel pink
-  "missing_percentage" = "#A1D99B",  # Darker pastel green
-  "multi_copy_percentage" = "#9E9AC8"  # Darker pastel purple
+  "multi_copy_percentage" = "#9E9AC8",
+  "fragmented_percentage" = "#FC9272",
+  "single_copy_buscos" = "#6BAED6",
+  "missing_percentage" = "#A1D99B"
 )
 
+
+
 # Plot the horizontal stacked bar chart
-ggplot(data_long, aes(x = percentage, y = organismName, fill = category)) +
-  geom_bar(stat = "identity") +
+data_long %>%
+  ggplot(aes(x = percentage, y = organismName, fill = category)) +
+  geom_bar(stat = "identity",width = 0.6) +
+  geom_text(data = data, aes(x = 80, y = organismName, label = tlabel),inherit.aes = FALSE, hjust = 0, size = 3.3) +
   labs(
-    title = "Horizontal Stacked Bar Chart of BUSCO Metrics",
+    title = "BUSCO Metrics",
     x = "Percentage",
     y = "Organism",
     fill = "Category"
   ) +
   scale_x_continuous(breaks = seq(80, 100, by = 5)) +  # Adjust x-axis ticks
   coord_cartesian(xlim = c(80, 100)) +  # Set Cartesian coordinates for the x-axis
-  scale_fill_manual(values = complementary_pastel_colors) +  # Apply pastel color scheme
+  scale_fill_manual(values = c("#6BAED6", "#FC9272", "#A1D99B", "#9E9AC8")) +  # Apply pastel color scheme
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+
+ggsave("/g/data/xl04/genomeprojects/Pogona_vitticeps/analysis/plots/busco_plot.pdf", width = 10, height = 6)
 
 
 
